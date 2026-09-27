@@ -122,6 +122,11 @@ class BlogPost extends Model
         return $this->hasMany(Comment::class)->whereNull('parent_id')->latest();
     }
 
+    public function reactions(): HasMany
+    {
+        return $this->hasMany(PostReaction::class);
+    }
+
     public function getRouteKeyName(): string
     {
         return 'slug';

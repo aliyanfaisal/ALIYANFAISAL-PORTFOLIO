@@ -24,7 +24,7 @@ class BlogController extends Controller
     {
         $post = BlogPost::published()
             ->where('slug', $slug)
-            ->with(['categories', 'tags', 'comments.reactions', 'comments.replies.reactions'])
+            ->with(['categories', 'tags', 'reactions', 'comments.reactions', 'comments.replies.reactions'])
             ->firstOrFail();
 
         // A page view must not bump updated_at, which feeds the sitemap lastmod and schema dateModified.

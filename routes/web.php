@@ -8,6 +8,7 @@ use App\Http\Controllers\ContactController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\LinkedInAuthController;
 use App\Http\Controllers\NewsletterController;
+use App\Http\Controllers\PostReactionController;
 use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\ServiceController;
 use App\Http\Controllers\SitemapController;
@@ -18,6 +19,7 @@ Route::get('/sitemap.xml', [SitemapController::class, 'index'])->name('sitemap')
 Route::get('/blog', [BlogController::class, 'index'])->name('blog.index');
 Route::get('/blog/category/{category:slug}', [BlogController::class, 'category'])->name('blog.category');
 Route::get('/blog/{slug}', [BlogController::class, 'show'])->name('blog.show');
+Route::post('/blog/{slug}/reactions', [PostReactionController::class, 'store'])->name('blog.reactions.store');
 Route::post('/blog/{slug}/comments', [CommentController::class, 'store'])->name('blog.comments.store');
 Route::post('/blog/{slug}/comments/{comment}/replies', [CommentController::class, 'reply'])->name('blog.comments.reply');
 Route::put('/blog/{slug}/comments/{comment}', [CommentController::class, 'update'])->name('blog.comments.update');

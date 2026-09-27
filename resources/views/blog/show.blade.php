@@ -24,6 +24,11 @@
     ];
     $faqs = $post->faqs;
     $totalComments = $post->comments->sum(fn ($comment) => 1 + $comment->replies->count());
+    $sessionId = session()->getId();
+    // Cast to an object so an empty result serializes as {} rather than [] — a bare [] would
+    // give the Alpine component's `counts` an array shape instead of the object one it expects.
+    $postReactionCounts = (object) $post->reactions->groupBy('emoji')->map->count()->all();
+    $myPostReaction = $post->reactions->firstWhere('session_id', $sessionId)?->emoji;
 @endphp
 <x-layouts.app :title="$post->title.' — '.$settings->site_name" :description="$metaDescription">
     <x-slot:head>
@@ -155,6 +160,67 @@
             <img src="{{ asset('storage/'.$post->image_path) }}" alt="{{ $post->title }}" width="{{ $imageWidth }}" height="{{ $imageHeight }}" fetchpriority="high" decoding="async" class="mt-8 h-auto w-full rounded-2xl">
         @endif
 
+        <div class="mt-4 flex flex-wrap items-center justify-between gap-3">
+            <div
+                x-data="{
+                    counts: {{ \Illuminate\Support\Js::from($postReactionCounts) }},
+                    mine: {{ \Illuminate\Support\Js::from($myPostReaction) }},
+                    react(emoji) {
+                        fetch({{ \Illuminate\Support\Js::from(route('blog.reactions.store', $post)) }}, {
+                            method: 'POST',
+                            headers: {
+                                'X-CSRF-TOKEN': document.querySelector('meta[name=csrf-token]').content,
+                                'Accept': 'application/json',
+                                'Content-Type': 'application/json',
+                            },
+                            body: JSON.stringify({ emoji }),
+                        })
+                            .then((response) => response.ok ? response.json() : Promise.reject())
+                            .then((data) => { this.counts = data.counts ?? {}; this.mine = data.mine ?? null; })
+                            .catch(() => {});
+                    },
+                }"
+                class="flex flex-wrap items-center gap-1.5"
+            >
+                @foreach (\App\Models\PostReaction::EMOJIS as $emoji)
+                    <button
+                        type="button"
+                        @click="react('{{ $emoji }}')"
+                        aria-label="React with {{ $emoji }}"
+                        class="inline-flex items-center gap-1 rounded-full border px-2.5 py-1 text-xs transition"
+                        :class="mine === '{{ $emoji }}' ? 'border-indigo-400 bg-indigo-500/10 text-indigo-500 dark:text-indigo-400' : 'border-zinc-200 text-zinc-500 hover:border-indigo-300 dark:border-white/10 dark:text-zinc-400'"
+                    >
+                        <span>{{ $emoji }}</span>
+                        <span x-show="counts['{{ $emoji }}']" x-text="counts['{{ $emoji }}']"></span>
+                    </button>
+                @endforeach
+            </div>
+
+            <div x-data="{ copied: false }" class="flex flex-wrap items-center gap-3">
+                <a href="https://twitter.com/intent/tweet?text={{ urlencode($post->title) }}&url={{ urlencode($postUrl) }}" target="_blank" rel="noopener" aria-label="Share on X" class="grid size-9 place-items-center rounded-full border border-zinc-300 text-zinc-600 transition hover:border-indigo-400 hover:text-indigo-500 dark:border-white/15 dark:text-zinc-300">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="size-4" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+                </a>
+
+                <a href="https://www.linkedin.com/sharing/share-offsite/?url={{ urlencode($postUrl) }}" target="_blank" rel="noopener" aria-label="Share on LinkedIn" class="grid size-9 place-items-center rounded-full border border-zinc-300 text-zinc-600 transition hover:border-indigo-400 hover:text-indigo-500 dark:border-white/15 dark:text-zinc-300">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="size-4" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 110-4.124 2.062 2.062 0 010 4.124zM7.114 20.452H3.56V9h3.554v11.452z"/></svg>
+                </a>
+
+                <a href="https://www.facebook.com/sharer/sharer.php?u={{ urlencode($postUrl) }}" target="_blank" rel="noopener" aria-label="Share on Facebook" class="grid size-9 place-items-center rounded-full border border-zinc-300 text-zinc-600 transition hover:border-indigo-400 hover:text-indigo-500 dark:border-white/15 dark:text-zinc-300">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="size-4" fill="currentColor"><path d="M22 12.06C22 6.505 17.523 2 12 2S2 6.505 2 12.06c0 5.02 3.657 9.184 8.438 9.94v-7.03H7.898v-2.91h2.54V9.845c0-2.507 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.459h-1.26c-1.243 0-1.63.771-1.63 1.562v1.875h2.773l-.443 2.91h-2.33V22c4.78-.756 8.437-4.92 8.437-9.94z"/></svg>
+                </a>
+
+                <button
+                    type="button"
+                    @click="navigator.clipboard.writeText(@js($postUrl)); copied = true; setTimeout(() => copied = false, 2000)"
+                    aria-label="Copy link"
+                    class="grid size-9 place-items-center rounded-full border border-zinc-300 text-zinc-600 transition hover:border-indigo-400 hover:text-indigo-500 dark:border-white/15 dark:text-zinc-300"
+                >
+                    <svg x-show="!copied" xmlns="http://www.w3.org/2000/svg" class="size-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13.19 8.688a4.5 4.5 0 011.242 7.244l-4.5 4.5a4.5 4.5 0 01-6.364-6.364l1.757-1.757m13.35-.622l1.757-1.757a4.5 4.5 0 00-6.364-6.364l-4.5 4.5a4.5 4.5 0 001.242 7.244"/></svg>
+                    <svg x-show="copied" x-cloak xmlns="http://www.w3.org/2000/svg" class="size-4 text-emerald-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 13l4 4L19 7"/></svg>
+                </button>
+            </div>
+        </div>
+
         <div class="prose dark:prose-invert prose-zinc mt-8 max-w-none prose-a:text-indigo-500 dark:prose-a:text-indigo-400">
             {!! $post->body_html !!}
         </div>
@@ -166,32 +232,6 @@
                 @endforeach
             </div>
         @endif
-
-        <div x-data="{ copied: false }" class="mt-10 flex flex-wrap items-center gap-3 border-t border-zinc-200 pt-6 dark:border-white/10">
-            <span class="text-sm font-medium text-zinc-600 dark:text-zinc-300">Share this article:</span>
-
-            <a href="https://twitter.com/intent/tweet?text={{ urlencode($post->title) }}&url={{ urlencode($postUrl) }}" target="_blank" rel="noopener" aria-label="Share on X" class="grid size-9 place-items-center rounded-full border border-zinc-300 text-zinc-600 transition hover:border-indigo-400 hover:text-indigo-500 dark:border-white/15 dark:text-zinc-300">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="size-4" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
-            </a>
-
-            <a href="https://www.linkedin.com/sharing/share-offsite/?url={{ urlencode($postUrl) }}" target="_blank" rel="noopener" aria-label="Share on LinkedIn" class="grid size-9 place-items-center rounded-full border border-zinc-300 text-zinc-600 transition hover:border-indigo-400 hover:text-indigo-500 dark:border-white/15 dark:text-zinc-300">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="size-4" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 110-4.124 2.062 2.062 0 010 4.124zM7.114 20.452H3.56V9h3.554v11.452z"/></svg>
-            </a>
-
-            <a href="https://www.facebook.com/sharer/sharer.php?u={{ urlencode($postUrl) }}" target="_blank" rel="noopener" aria-label="Share on Facebook" class="grid size-9 place-items-center rounded-full border border-zinc-300 text-zinc-600 transition hover:border-indigo-400 hover:text-indigo-500 dark:border-white/15 dark:text-zinc-300">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="size-4" fill="currentColor"><path d="M22 12.06C22 6.505 17.523 2 12 2S2 6.505 2 12.06c0 5.02 3.657 9.184 8.438 9.94v-7.03H7.898v-2.91h2.54V9.845c0-2.507 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.459h-1.26c-1.243 0-1.63.771-1.63 1.562v1.875h2.773l-.443 2.91h-2.33V22c4.78-.756 8.437-4.92 8.437-9.94z"/></svg>
-            </a>
-
-            <button
-                type="button"
-                @click="navigator.clipboard.writeText(@js($postUrl)); copied = true; setTimeout(() => copied = false, 2000)"
-                aria-label="Copy link"
-                class="grid size-9 place-items-center rounded-full border border-zinc-300 text-zinc-600 transition hover:border-indigo-400 hover:text-indigo-500 dark:border-white/15 dark:text-zinc-300"
-            >
-                <svg x-show="!copied" xmlns="http://www.w3.org/2000/svg" class="size-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13.19 8.688a4.5 4.5 0 011.242 7.244l-4.5 4.5a4.5 4.5 0 01-6.364-6.364l1.757-1.757m13.35-.622l1.757-1.757a4.5 4.5 0 00-6.364-6.364l-4.5 4.5a4.5 4.5 0 001.242 7.244"/></svg>
-                <svg x-show="copied" x-cloak xmlns="http://www.w3.org/2000/svg" class="size-4 text-emerald-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 13l4 4L19 7"/></svg>
-            </button>
-        </div>
 
         <div id="comments" class="mt-14 border-t border-zinc-200 pt-10 dark:border-white/10">
             <h2 class="text-xl font-bold text-zinc-900 dark:text-white">
