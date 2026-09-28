@@ -93,7 +93,7 @@
         <div
             class="mt-10 flex flex-col items-center justify-between gap-4 border-t border-zinc-200 pt-6 text-xs text-zinc-400 dark:border-white/10 sm:flex-row">
             <p>&copy; {{ date('Y') }} {{ $settings->site_name }}. All rights reserved.</p>
-            <!-- <p>Built with Laravel &amp; Tailwind CSS.</p> -->
+            <a href="{{ route('privacy-policy') }}" class="hover:text-indigo-500 dark:hover:text-indigo-400">Privacy Policy</a>
         </div>
     </div>
 </footer>
