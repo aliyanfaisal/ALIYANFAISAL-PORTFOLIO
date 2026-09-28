@@ -41,6 +41,7 @@ class BlogPostController extends Controller
             'tags' => ['nullable', 'array'],
             'tags.*' => ['string', 'max:100'],
             'published_at' => ['nullable', 'date'],
+            'status' => ['nullable', 'in:draft,published'],
             'send_to_cuelara' => ['nullable', 'boolean'],
         ]);
 
@@ -53,6 +54,8 @@ class BlogPostController extends Controller
         }
 
         $autoApprove = Setting::current()->auto_approve_posts;
+        $wantsDraft = ($data['status'] ?? 'published') === 'draft';
+        $publishNow = ! $wantsDraft && $autoApprove;
 
         $post = BlogPost::create([
             'title' => $data['title'],
@@ -61,19 +64,21 @@ class BlogPostController extends Controller
             'body' => $data['body'],
             'image_path' => $imagePath,
             'source_image_url' => $data['image_url'] ?? null,
-            'published_at' => $autoApprove ? ($data['published_at'] ?? now()) : null,
+            'published_at' => $publishNow ? ($data['published_at'] ?? now()) : null,
         ]);
 
         $post->categories()->sync($this->resolveTerms(Category::class, $data['categories'] ?? []));
         $post->tags()->sync($this->resolveTerms(Tag::class, $data['tags'] ?? []));
 
-        if ($request->boolean('send_to_cuelara', true)) {
+        // A draft has nothing worth syncing yet — Cuelara only hears about a post once it's
+        // actually published (here, or later when an edit flips it from draft to published).
+        if ($post->status === 'published' && $request->boolean('send_to_cuelara', true)) {
             PushBlogPostToCuelara::dispatch($post)->afterResponse();
         }
 
         return response()->json([
             'id' => $post->id,
-            'status' => $autoApprove ? 'published' : 'pending_review',
+            'status' => $wantsDraft ? 'draft' : ($publishNow ? 'published' : 'pending_review'),
             'url' => url('/blog/'.$post->slug),
             'image_url' => $post->image_path ? asset('storage/'.$post->image_path) : null,
             'slug' => $post->slug,

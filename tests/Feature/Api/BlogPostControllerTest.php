@@ -81,6 +81,38 @@ class BlogPostControllerTest extends TestCase
 
         $post = BlogPost::where('slug', 'needs-review')->firstOrFail();
         $this->assertNull($post->published_at);
+        $this->assertSame('draft', $post->status);
+    }
+
+    public function test_it_saves_as_a_draft_when_status_is_explicitly_requested(): void
+    {
+        Setting::current()->update(['auto_approve_posts' => true]);
+
+        $response = $this->postJson('/api/blog-posts', [
+            'title' => 'Save For Later',
+            'body' => 'Body text.',
+            'status' => 'draft',
+        ], $this->headers());
+
+        $response->assertStatus(201)->assertJson(['status' => 'draft']);
+
+        $post = BlogPost::where('slug', 'save-for-later')->firstOrFail();
+        $this->assertNull($post->published_at);
+        $this->assertSame('draft', $post->status);
+    }
+
+    public function test_it_does_not_sync_a_draft_to_cuelara(): void
+    {
+        Queue::fake();
+        Setting::current()->update(['auto_approve_posts' => true]);
+
+        $this->postJson('/api/blog-posts', [
+            'title' => 'Draft Not Synced',
+            'body' => 'Body text.',
+            'status' => 'draft',
+        ], $this->headers())->assertStatus(201);
+
+        Queue::assertNotPushed(PushBlogPostToCuelara::class);
     }
 
     public function test_it_derives_a_plain_text_excerpt_from_markdown_body(): void

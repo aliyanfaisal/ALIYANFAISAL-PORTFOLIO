@@ -10,6 +10,8 @@
     <title>{{ $title ?? 'Aliyan Faisal — Full-Stack Laravel & WordPress Developer' }}</title>
     <meta name="description"
         content="{{ $description ?? 'Aliyan Faisal is a full-stack web developer specializing in Laravel, WordPress, WooCommerce and AI-powered web applications.' }}">
+
+    <!-- <meta name="google-adsense-account" content="ca-pub-7016936530509372"> -->
     <link rel="icon" type="image/svg+xml" href="{{ asset('favicon.svg') }}">
 
     {{ $head ?? '' }}

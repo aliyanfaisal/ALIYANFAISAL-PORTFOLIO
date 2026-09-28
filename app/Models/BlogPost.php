@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Jobs\PushBlogPostToCuelara;
 use App\Jobs\SubmitUrlToGoogleIndexing;
 use App\Services\BlogPostFaqFormatter;
 use App\Services\GoogleIndexingService;
@@ -16,7 +17,7 @@ class BlogPost extends Model
 {
     protected $fillable = [
         'title', 'slug', 'excerpt', 'body', 'image_path', 'source_image_url', 'published_at',
-        'cuelara_synced_at',
+        'status', 'cuelara_synced_at',
     ];
 
     /**
@@ -38,11 +39,27 @@ class BlogPost extends Model
 
     protected static function booted(): void
     {
-        static::created(fn (BlogPost $post) => $post->notifyGoogleOfChange());
+        // `status` mirrors `published_at` rather than being independently editable, so every
+        // save path (the API, Filament, factories) keeps a single source of truth for it.
+        static::saving(function (BlogPost $post): void {
+            $post->status = ($post->published_at !== null && $post->published_at->lessThanOrEqualTo(now()))
+                ? 'published'
+                : 'draft';
+        });
+
+        static::created(function (BlogPost $post): void {
+            $post->notifyGoogleOfChange();
+        });
 
         static::updated(function (BlogPost $post): void {
             if ($post->wasChanged(self::INDEXABLE_ATTRIBUTES)) {
                 $post->notifyGoogleOfChange();
+            }
+
+            // Only sync to Cuelara the moment a post actually flips from draft to published —
+            // never on an ordinary edit to an already-published or still-draft post.
+            if ($post->wasChanged('status') && $post->status === 'published') {
+                PushBlogPostToCuelara::dispatch($post)->afterCommit();
             }
         });
 
@@ -66,7 +83,7 @@ class BlogPost extends Model
 
     public function scopePublished(Builder $query): void
     {
-        $query->whereNotNull('published_at')->where('published_at', '<=', now());
+        $query->where('status', 'published')->whereNotNull('published_at')->where('published_at', '<=', now());
     }
 
     /**

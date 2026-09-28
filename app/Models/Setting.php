@@ -19,6 +19,7 @@ class Setting extends Model
     {
         return self::query()->firstOrCreate(['id' => 1], [
             'site_name' => config('app.name'),
+            'auto_approve_posts' => true,
         ]);
     }
 }
