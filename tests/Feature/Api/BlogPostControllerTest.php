@@ -409,4 +409,13 @@ class BlogPostControllerTest extends TestCase
         $this->deleteJson('/api/blog-posts/gone')->assertStatus(401);
         $this->assertNotNull($post->fresh());
     }
+
+    public function test_destroy_redirects_the_old_url_when_the_post_was_published(): void
+    {
+        BlogPost::create(['title' => 'Live', 'slug' => 'live', 'body' => 'x', 'published_at' => now()]);
+
+        $this->deleteJson('/api/blog-posts/live', [], $this->headers())->assertOk();
+
+        $this->get('/blog/live')->assertRedirect('/blog')->assertStatus(301);
+    }
 }

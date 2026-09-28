@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\BlogPost;
+use App\Models\BlogPostRedirect;
 use App\Models\Category;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 
@@ -20,12 +22,22 @@ class BlogController extends Controller
         return $this->listing($request, $category);
     }
 
-    public function show(string $slug): View
+    public function show(string $slug): View|RedirectResponse
     {
         $post = BlogPost::published()
             ->where('slug', $slug)
             ->with(['categories', 'tags', 'reactions', 'comments.reactions', 'comments.replies.reactions'])
-            ->firstOrFail();
+            ->first();
+
+        if ($post === null) {
+            // A deleted post redirects (301) to wherever still suits it, instead of 404ing away
+            // whatever SEO value/backlinks the URL had built up.
+            $redirect = BlogPostRedirect::where('from_slug', $slug)->first();
+
+            abort_if($redirect === null, 404);
+
+            return redirect($redirect->to_url, 301);
+        }
 
         // A page view must not bump updated_at, which feeds the sitemap lastmod and schema dateModified.
         BlogPost::withoutTimestamps(fn () => $post->increment('views'));

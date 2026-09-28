@@ -162,6 +162,62 @@ class BlogControllerTest extends TestCase
         $this->get('/blog/'.$post->slug)->assertNotFound();
     }
 
+    public function test_show_returns_404_for_a_slug_that_never_existed(): void
+    {
+        $this->get('/blog/never-existed')->assertNotFound();
+    }
+
+    public function test_deleting_a_published_post_redirects_its_old_url_to_its_category(): void
+    {
+        $category = Category::create(['name' => 'Laravel', 'slug' => 'laravel']);
+        $post = BlogPost::create([
+            'title' => 'Old Post', 'slug' => 'old-post', 'body' => 'Body', 'published_at' => now()->subDay(),
+        ]);
+        $post->categories()->attach($category);
+
+        $post->delete();
+
+        $this->get('/blog/old-post')
+            ->assertRedirect('/blog/category/laravel')
+            ->assertStatus(301);
+    }
+
+    public function test_deleting_an_uncategorized_published_post_redirects_to_the_blog_index(): void
+    {
+        $post = BlogPost::create([
+            'title' => 'Old Post', 'slug' => 'old-post', 'body' => 'Body', 'published_at' => now()->subDay(),
+        ]);
+
+        $post->delete();
+
+        $this->get('/blog/old-post')->assertRedirect('/blog')->assertStatus(301);
+    }
+
+    public function test_deleting_a_draft_that_was_never_published_does_not_create_a_redirect(): void
+    {
+        $post = BlogPost::create([
+            'title' => 'Draft', 'slug' => 'never-live', 'body' => 'Body', 'published_at' => null,
+        ]);
+
+        $post->delete();
+
+        $this->get('/blog/never-live')->assertNotFound();
+    }
+
+    public function test_a_new_post_reusing_a_deleted_slug_reclaims_it_instead_of_redirecting(): void
+    {
+        $old = BlogPost::create([
+            'title' => 'Old Post', 'slug' => 'reused-slug', 'body' => 'Body', 'published_at' => now()->subDay(),
+        ]);
+        $old->delete();
+
+        BlogPost::create([
+            'title' => 'New Post', 'slug' => 'reused-slug', 'body' => 'Body', 'published_at' => now()->subDay(),
+        ]);
+
+        $this->get('/blog/reused-slug')->assertOk()->assertSee('New Post');
+    }
+
     public function test_show_promotes_faq_questions_to_h3_and_emits_schema(): void
     {
         $post = BlogPost::create([

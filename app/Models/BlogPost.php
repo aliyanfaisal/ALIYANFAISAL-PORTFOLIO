@@ -49,6 +49,10 @@ class BlogPost extends Model
 
         static::created(function (BlogPost $post): void {
             $post->notifyGoogleOfChange();
+
+            // A brand-new post reclaiming a slug that used to redirect elsewhere should render
+            // normally, not get bounced away by a stale redirect from whatever was deleted before it.
+            BlogPostRedirect::where('from_slug', $post->slug)->delete();
         });
 
         static::updated(function (BlogPost $post): void {
@@ -61,6 +65,19 @@ class BlogPost extends Model
             if ($post->wasChanged('status') && $post->status === 'published') {
                 PushBlogPostToCuelara::dispatch($post)->afterCommit();
             }
+        });
+
+        // Runs before the cascade-deletes the category/tag pivot rows, so the post's own
+        // categories are still readable when picking the redirect's destination.
+        static::deleting(function (BlogPost $post): void {
+            if ($post->published_at === null) {
+                return;
+            }
+
+            $category = $post->categories()->first();
+            $destination = $category ? route('blog.category', $category) : route('blog.index');
+
+            BlogPostRedirect::updateOrCreate(['from_slug' => $post->slug], ['to_url' => $destination]);
         });
 
         static::deleted(function (BlogPost $post): void {
