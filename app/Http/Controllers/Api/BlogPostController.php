@@ -88,6 +88,131 @@ class BlogPostController extends Controller
     }
 
     /**
+     * List posts (draft and published alike) so a caller can check on what it's created.
+     */
+    public function index(Request $request): JsonResponse
+    {
+        $data = $request->validate([
+            'status' => ['nullable', 'in:draft,published'],
+            'per_page' => ['nullable', 'integer', 'min:1', 'max:100'],
+        ]);
+
+        $posts = BlogPost::query()
+            ->when($data['status'] ?? null, fn ($query, string $status) => $query->where('status', $status))
+            ->latest('id')
+            ->paginate($data['per_page'] ?? 20);
+
+        return response()->json([
+            'data' => $posts->getCollection()->map($this->summarize(...))->all(),
+            'meta' => [
+                'current_page' => $posts->currentPage(),
+                'last_page' => $posts->lastPage(),
+                'total' => $posts->total(),
+            ],
+        ]);
+    }
+
+    public function show(BlogPost $blogPost): JsonResponse
+    {
+        return response()->json($this->present($blogPost->load(['categories', 'tags'])));
+    }
+
+    /**
+     * Update a post's content and/or its draft/published state.
+     *
+     * Setting `status` to "published" (or supplying `published_at`) on a post that was
+     * previously a draft is what actually flips it live — the model then takes care of syncing
+     * it to Cuelara itself, exactly once, the moment that transition happens.
+     */
+    public function update(Request $request, BlogPost $blogPost): JsonResponse
+    {
+        $data = $request->validate([
+            'title' => ['sometimes', 'string', 'max:255'],
+            'excerpt' => ['nullable', 'string', 'max:500'],
+            'body' => ['sometimes', 'string'],
+            'image_url' => ['nullable', 'url', 'max:2048'],
+            'categories' => ['sometimes', 'array'],
+            'categories.*' => ['string', 'max:100'],
+            'tags' => ['sometimes', 'array'],
+            'tags.*' => ['string', 'max:100'],
+            'published_at' => ['nullable', 'date'],
+            'status' => ['sometimes', 'in:draft,published'],
+        ]);
+
+        if (array_key_exists('image_url', $data) && $data['image_url']) {
+            $blogPost->image_path = $this->resolveUploadedImagePath($data['image_url'])
+                ?? $this->downloadImage($data['image_url'], $blogPost->slug);
+            $blogPost->source_image_url = $data['image_url'];
+        }
+
+        $blogPost->fill(collect($data)->only(['title', 'excerpt', 'body'])->all());
+
+        if (($data['status'] ?? null) === 'draft') {
+            $blogPost->published_at = null;
+        } elseif (array_key_exists('published_at', $data)) {
+            $blogPost->published_at = $data['published_at'];
+        } elseif (($data['status'] ?? null) === 'published' && $blogPost->published_at === null) {
+            $blogPost->published_at = now();
+        }
+
+        $blogPost->save();
+
+        if (array_key_exists('categories', $data)) {
+            $blogPost->categories()->sync($this->resolveTerms(Category::class, $data['categories']));
+        }
+
+        if (array_key_exists('tags', $data)) {
+            $blogPost->tags()->sync($this->resolveTerms(Tag::class, $data['tags']));
+        }
+
+        return response()->json($this->present($blogPost->fresh(['categories', 'tags'])));
+    }
+
+    public function destroy(BlogPost $blogPost): JsonResponse
+    {
+        $blogPost->delete();
+
+        return response()->json(['status' => 'deleted', 'id' => $blogPost->id]);
+    }
+
+    /**
+     * @return array<string, mixed>
+     */
+    private function present(BlogPost $post): array
+    {
+        return [
+            'id' => $post->id,
+            'title' => $post->title,
+            'slug' => $post->slug,
+            'status' => $post->status,
+            'excerpt' => $post->excerpt,
+            'body' => $post->body,
+            'url' => url('/blog/'.$post->slug),
+            'image_url' => $post->image_path ? asset('storage/'.$post->image_path) : null,
+            'categories' => $post->categories->pluck('name'),
+            'tags' => $post->tags->pluck('name'),
+            'published_at' => $post->published_at?->toIso8601String(),
+            'created_at' => $post->created_at?->toIso8601String(),
+            'updated_at' => $post->updated_at?->toIso8601String(),
+        ];
+    }
+
+    /**
+     * @return array<string, mixed>
+     */
+    private function summarize(BlogPost $post): array
+    {
+        return [
+            'id' => $post->id,
+            'title' => $post->title,
+            'slug' => $post->slug,
+            'status' => $post->status,
+            'url' => url('/blog/'.$post->slug),
+            'published_at' => $post->published_at?->toIso8601String(),
+        ];
+    }
+
+    /**
      * List the image URLs of the most recent posts so new runs can avoid reusing them.
      */
     public function recentImages(): JsonResponse

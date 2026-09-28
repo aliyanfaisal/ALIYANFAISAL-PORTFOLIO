@@ -10,9 +10,27 @@ Route::post('/blog-posts', [BlogPostController::class, 'store'])
     ->middleware('blog.api.token')
     ->name('api.blog-posts.store');
 
+// Must stay ahead of the {blogPost} wildcard routes below, or "recent-images" would be
+// resolved as a slug instead.
 Route::get('/blog-posts/recent-images', [BlogPostController::class, 'recentImages'])
     ->middleware('blog.api.token')
     ->name('api.blog-posts.recent-images');
+
+Route::get('/blog-posts', [BlogPostController::class, 'index'])
+    ->middleware('blog.api.token')
+    ->name('api.blog-posts.index');
+
+Route::get('/blog-posts/{blogPost}', [BlogPostController::class, 'show'])
+    ->middleware('blog.api.token')
+    ->name('api.blog-posts.show');
+
+Route::match(['put', 'patch'], '/blog-posts/{blogPost}', [BlogPostController::class, 'update'])
+    ->middleware('blog.api.token')
+    ->name('api.blog-posts.update');
+
+Route::delete('/blog-posts/{blogPost}', [BlogPostController::class, 'destroy'])
+    ->middleware('blog.api.token')
+    ->name('api.blog-posts.destroy');
 
 Route::post('/automation-logs', [AutomationLogController::class, 'store'])
     ->middleware('blog.api.token')

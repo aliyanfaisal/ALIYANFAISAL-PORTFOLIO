@@ -287,4 +287,126 @@ class BlogPostControllerTest extends TestCase
 
         Queue::assertNotPushed(PushBlogPostToCuelara::class);
     }
+
+    public function test_index_rejects_requests_without_a_valid_token(): void
+    {
+        $this->getJson('/api/blog-posts')->assertStatus(401);
+    }
+
+    public function test_index_lists_drafts_and_published_posts_together(): void
+    {
+        BlogPost::create(['title' => 'Draft', 'slug' => 'draft', 'body' => 'x', 'published_at' => null]);
+        BlogPost::create(['title' => 'Live', 'slug' => 'live', 'body' => 'x', 'published_at' => now()]);
+
+        $response = $this->getJson('/api/blog-posts', $this->headers())->assertOk();
+
+        $response->assertJsonCount(2, 'data');
+        $response->assertJsonPath('meta.total', 2);
+    }
+
+    public function test_index_filters_by_status(): void
+    {
+        BlogPost::create(['title' => 'Draft', 'slug' => 'draft', 'body' => 'x', 'published_at' => null]);
+        BlogPost::create(['title' => 'Live', 'slug' => 'live', 'body' => 'x', 'published_at' => now()]);
+
+        $response = $this->getJson('/api/blog-posts?status=draft', $this->headers())->assertOk();
+
+        $response->assertJsonCount(1, 'data');
+        $response->assertJsonPath('data.0.slug', 'draft');
+    }
+
+    public function test_show_returns_the_full_post(): void
+    {
+        BlogPost::create([
+            'title' => 'A Post', 'slug' => 'a-post', 'excerpt' => 'Ex', 'body' => 'Full body', 'published_at' => null,
+        ]);
+
+        $response = $this->getJson('/api/blog-posts/a-post', $this->headers())->assertOk();
+
+        $response->assertJson([
+            'title' => 'A Post',
+            'slug' => 'a-post',
+            'status' => 'draft',
+            'excerpt' => 'Ex',
+            'body' => 'Full body',
+        ]);
+    }
+
+    public function test_show_returns_404_for_an_unknown_slug(): void
+    {
+        $this->getJson('/api/blog-posts/missing', $this->headers())->assertNotFound();
+    }
+
+    public function test_update_can_change_content_fields(): void
+    {
+        BlogPost::create(['title' => 'Old Title', 'slug' => 'old-title', 'body' => 'Old body', 'published_at' => null]);
+
+        $response = $this->patchJson('/api/blog-posts/old-title', [
+            'title' => 'New Title',
+            'body' => 'New body',
+        ], $this->headers())->assertOk();
+
+        $response->assertJson(['title' => 'New Title', 'body' => 'New body']);
+        $this->assertSame('New Title', BlogPost::where('slug', 'old-title')->firstOrFail()->title);
+    }
+
+    public function test_update_can_resync_categories_and_tags(): void
+    {
+        $post = BlogPost::create(['title' => 'Post', 'slug' => 'post', 'body' => 'x', 'published_at' => null]);
+
+        $response = $this->patchJson('/api/blog-posts/post', [
+            'categories' => ['Laravel'],
+            'tags' => ['php', 'eloquent'],
+        ], $this->headers())->assertOk();
+
+        $response->assertJson(['categories' => ['Laravel'], 'tags' => ['php', 'eloquent']]);
+        $this->assertSame(['Laravel'], $post->categories()->pluck('name')->all());
+    }
+
+    public function test_update_publishing_a_draft_syncs_it_to_cuelara(): void
+    {
+        Queue::fake();
+        $post = BlogPost::create(['title' => 'Draft', 'slug' => 'draft', 'body' => 'x', 'published_at' => null]);
+
+        $response = $this->patchJson('/api/blog-posts/draft', ['status' => 'published'], $this->headers())->assertOk();
+
+        $response->assertJson(['status' => 'published']);
+        $this->assertNotNull($post->fresh()->published_at);
+        Queue::assertPushed(PushBlogPostToCuelara::class);
+    }
+
+    public function test_update_can_unpublish_a_post_back_to_draft(): void
+    {
+        Queue::fake();
+        BlogPost::create(['title' => 'Live', 'slug' => 'live', 'body' => 'x', 'published_at' => now()]);
+
+        $response = $this->patchJson('/api/blog-posts/live', ['status' => 'draft'], $this->headers())->assertOk();
+
+        $response->assertJson(['status' => 'draft']);
+        $this->assertNull(BlogPost::where('slug', 'live')->firstOrFail()->published_at);
+    }
+
+    public function test_update_returns_404_for_an_unknown_slug(): void
+    {
+        $this->patchJson('/api/blog-posts/missing', ['title' => 'x'], $this->headers())->assertNotFound();
+    }
+
+    public function test_destroy_deletes_the_post(): void
+    {
+        BlogPost::create(['title' => 'Gone', 'slug' => 'gone', 'body' => 'x', 'published_at' => null]);
+
+        $this->deleteJson('/api/blog-posts/gone', [], $this->headers())
+            ->assertOk()
+            ->assertJson(['status' => 'deleted']);
+
+        $this->assertDatabaseMissing('blog_posts', ['slug' => 'gone']);
+    }
+
+    public function test_destroy_rejects_requests_without_a_valid_token(): void
+    {
+        $post = BlogPost::create(['title' => 'Gone', 'slug' => 'gone', 'body' => 'x', 'published_at' => null]);
+
+        $this->deleteJson('/api/blog-posts/gone')->assertStatus(401);
+        $this->assertNotNull($post->fresh());
+    }
 }
