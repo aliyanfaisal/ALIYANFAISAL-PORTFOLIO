@@ -13,18 +13,23 @@ class SubmitUrlToGoogleIndexing implements ShouldQueue
 {
     use Queueable;
 
-    public int $tries = 3;
+    public int $tries = 7;
 
     public int $timeout = 30;
 
     public function __construct(public string $slug, public string $type = GoogleIndexingService::URL_UPDATED) {}
 
     /**
+     * Google's Indexing API enforces a daily quota that resets at US Pacific
+     * midnight. A failure here is usually 429 quota exhaustion rather than a
+     * real error, so retries are spread out over ~29 hours to guarantee at
+     * least one attempt lands after the next quota reset.
+     *
      * @return array<int, int>
      */
     public function backoff(): array
     {
-        return [60, 300];
+        return [300, 1800, 3600, 10800, 21600, 64800];
     }
 
     public function handle(GoogleIndexingService $indexing): void
