@@ -70,8 +70,15 @@ class BlogPostForm
                             ->required()
                             ->unique(Tag::class, 'slug'),
                     ]),
+                Select::make('status')
+                    ->options(['draft' => 'Draft', 'published' => 'Published'])
+                    ->default('draft')
+                    ->required()
+                    ->native(false)
+                    ->helperText('Published goes live at the moment you save.'),
                 DateTimePicker::make('published_at')
-                    ->helperText('Leave blank to save as a draft. Set a future date to schedule.')
+                    ->label('Scheduled / published at')
+                    ->helperText('For a draft, set a future date and time to publish it automatically then. Set to Published, this shows when it went live.')
                     ->native(false),
                 DateTimePicker::make('cuelara_synced_at')
                     ->label('Last sent to Cuelara')

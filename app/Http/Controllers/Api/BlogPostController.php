@@ -64,6 +64,7 @@ class BlogPostController extends Controller
             'body' => $data['body'],
             'image_path' => $imagePath,
             'source_image_url' => $data['image_url'] ?? null,
+            'status' => $publishNow ? 'published' : 'draft',
             'published_at' => $publishNow ? ($data['published_at'] ?? now()) : null,
         ]);
 
@@ -147,12 +148,16 @@ class BlogPostController extends Controller
 
         $blogPost->fill(collect($data)->only(['title', 'excerpt', 'body'])->all());
 
-        if (($data['status'] ?? null) === 'draft') {
+        if (($data['status'] ?? null) === 'draft' && ! array_key_exists('published_at', $data)) {
             $blogPost->published_at = null;
         } elseif (array_key_exists('published_at', $data)) {
             $blogPost->published_at = $data['published_at'];
-        } elseif (($data['status'] ?? null) === 'published' && $blogPost->published_at === null) {
-            $blogPost->published_at = now();
+        }
+
+        if (isset($data['status'])) {
+            $blogPost->status = $data['status'];
+        } elseif (array_key_exists('published_at', $data)) {
+            $blogPost->status = $data['published_at'] === null ? 'draft' : 'published';
         }
 
         $blogPost->save();

@@ -8,7 +8,7 @@ use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
 use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Columns\TextColumn;
-use Filament\Tables\Filters\TernaryFilter;
+use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
 
 class BlogPostsTable
@@ -31,10 +31,14 @@ class BlogPostsTable
                     ->badge()
                     ->color('gray')
                     ->label('Tags'),
+                TextColumn::make('status')
+                    ->badge()
+                    ->formatStateUsing(fn ($state, $record): string => $state === 'draft' && $record->published_at ? 'Scheduled' : ucfirst($state))
+                    ->color(fn ($state, $record): string => $state === 'published' ? 'success' : ($record->published_at ? 'warning' : 'gray')),
                 TextColumn::make('published_at')
                     ->dateTime()
                     ->sortable()
-                    ->placeholder('Draft'),
+                    ->placeholder('—'),
                 TextColumn::make('cuelara_synced_at')
                     ->label('Sent to Cuelara')
                     ->sortable()
@@ -52,16 +56,8 @@ class BlogPostsTable
             ])
             ->defaultSort('created_at', 'desc')
             ->filters([
-                TernaryFilter::make('published_at')
-                    ->label('Status')
-                    ->nullable()
-                    ->placeholder('All')
-                    ->trueLabel('Published')
-                    ->falseLabel('Draft')
-                    ->queries(
-                        true: fn ($query) => $query->whereNotNull('published_at')->where('published_at', '<=', now()),
-                        false: fn ($query) => $query->whereNull('published_at')->orWhere('published_at', '>', now()),
-                    ),
+                SelectFilter::make('status')
+                    ->options(['published' => 'Published', 'draft' => 'Draft']),
             ])
             ->recordActions([
                 EditAction::make(),

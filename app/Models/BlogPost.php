@@ -39,12 +39,8 @@ class BlogPost extends Model
 
     protected static function booted(): void
     {
-        // `status` mirrors `published_at` rather than being independently editable, so every
-        // save path (the API, Filament, factories) keeps a single source of truth for it.
         static::saving(function (BlogPost $post): void {
-            $post->status = ($post->published_at !== null && $post->published_at->lessThanOrEqualTo(now()))
-                ? 'published'
-                : 'draft';
+            $post->reconcileStatusAndPublishDate();
         });
 
         static::created(function (BlogPost $post): void {
@@ -85,6 +81,38 @@ class BlogPost extends Model
                 SubmitUrlToGoogleIndexing::dispatch($post->slug, GoogleIndexingService::URL_DELETED)->afterCommit();
             }
         });
+    }
+
+    /**
+     * Keeps `status` and `published_at` consistent on every save path (Filament, API, scheduler).
+     *
+     * - Published with no date, or flipped to published while still holding a future date, goes live now.
+     * - A future date the editor just entered is a schedule: the post stays a draft until that time.
+     * - A draft never keeps a past date; only a future one, which the scheduler later publishes.
+     * - A post saved with no explicit status, or with only its date changed, takes the status its date implies.
+     */
+    private function reconcileStatusAndPublishDate(): void
+    {
+        $dateAlone = $this->isDirty('published_at') && ! $this->isDirty('status');
+        $status = ($this->status === null || $dateAlone)
+            ? (($this->published_at !== null && $this->published_at->lessThanOrEqualTo(now())) ? 'published' : 'draft')
+            : $this->status;
+
+        if ($status === 'published') {
+            if ($this->published_at === null) {
+                $this->published_at = now();
+            } elseif ($this->published_at->isFuture()) {
+                if ($this->isDirty('published_at')) {
+                    $status = 'draft';
+                } else {
+                    $this->published_at = now();
+                }
+            }
+        } elseif ($this->published_at !== null && ! $this->published_at->isFuture()) {
+            $this->published_at = null;
+        }
+
+        $this->status = $status;
     }
 
     private function notifyGoogleOfChange(): void
