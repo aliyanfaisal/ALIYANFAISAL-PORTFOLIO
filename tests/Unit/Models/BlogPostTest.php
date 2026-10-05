@@ -15,7 +15,7 @@ class BlogPostTest extends TestCase
 
         $html = $post->body_html;
 
-        $this->assertStringContainsString('<h2>Heading</h2>', $html);
+        $this->assertStringContainsString('<h2 id="heading">Heading</h2>', $html);
         $this->assertStringContainsString('<pre><code class="language-php">', $html);
     }
 

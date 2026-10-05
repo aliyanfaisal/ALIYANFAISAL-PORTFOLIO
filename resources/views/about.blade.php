@@ -1,18 +1,28 @@
-<x-layouts.app title="About — Aliyan Faisal">
+@php
+    $aboutTitle = 'About Aliyan Faisal — Full-Stack Developer & AI / LLM Systems Engineer';
+    $aboutDescription = config('seo.descriptions.about');
+    $graph = [
+        \App\Support\Seo\Schema::person(),
+        \App\Support\Seo\Schema::website(),
+        \App\Support\Seo\Schema::profilePage(route('about'), $aboutTitle, $aboutDescription),
+        \App\Support\Seo\Schema::breadcrumbs([['name' => 'Home', 'url' => route('home')], ['name' => 'About', 'url' => route('about')]], route('about')),
+    ];
+@endphp
+<x-layouts.app :title="$aboutTitle" :description="$aboutDescription" og-type="profile" :graph="$graph">
     <section class="mx-auto grid max-w-5xl items-center gap-10 px-6 py-16 md:grid-cols-[1fr_20rem]">
         <div class="text-center md:text-left">
             <p class="text-sm font-semibold uppercase tracking-widest text-indigo-500 dark:text-indigo-400">About Me</p>
             <h1 class="mt-3 text-4xl font-bold text-zinc-900 dark:text-white">Hi, I'm Aliyan Faisal.</h1>
             <p class="mt-6 max-w-2xl text-lg text-zinc-600 dark:text-zinc-400">
-                A full-stack web developer specializing in custom WordPress, Laravel and WooCommerce builds
-                — with growing expertise in integrating AI, APIs and automation into websites and business workflows.
+                A full-stack developer and AI/LLM systems engineer — I integrate LLMs, RAG and automation into real products,
+                and build and deploy the web apps (Laravel, Node.js, React, WordPress and WooCommerce) and servers behind them.
                 I've spent 5+ years building for clients on Fiverr, Upwork and locally, delivering 300+ orders along the way.
             </p>
         </div>
 
         <div class="relative mx-auto w-64 md:w-full">
             <div class="absolute -inset-4 -z-10 rounded-full bg-gradient-to-br from-indigo-500/20 via-violet-500/15 to-cyan-400/20 blur-2xl"></div>
-            <img src="{{ asset('images/aliyan_whiteshirt_redtie_cutout.png') }}" alt="Aliyan Faisal" class="fade-top relative z-10 h-auto w-full rounded-b-[50%] drop-shadow-[0_20px_40px_rgba(79,70,229,0.35)]">
+            <img src="{{ asset('images/aliyan_whiteshirt_redtie_cutout.png') }}" alt="Aliyan Faisal, full-stack developer and AI/LLM systems engineer" width="699" height="764" fetchpriority="high" decoding="async" class="fade-top relative z-10 h-auto w-full rounded-b-[50%] drop-shadow-[0_20px_40px_rgba(79,70,229,0.35)]">
         </div>
     </section>
 

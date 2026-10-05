@@ -1,31 +1,37 @@
 @php
-    $pageTitle = $activeCategory ? $activeCategory->name.' Articles — Aliyan Faisal' : 'Blog — Aliyan Faisal';
+    use App\Support\Seo\Schema;
+    use App\Support\Seo\Seo;
+
+    $page = $posts->currentPage();
+    $pageSuffix = $page > 1 ? " — Page {$page}" : '';
+    $pageTitle = ($activeCategory ? $activeCategory->name.' Articles — Aliyan Faisal' : 'Blog — AI, LLM & Full-Stack Engineering — Aliyan Faisal').$pageSuffix;
     $metaDescription = $activeCategory
-        ? "Articles about {$activeCategory->name} from Aliyan Faisal."
-        : 'Articles on software development, web engineering, and building with AI from Aliyan Faisal.';
-    $canonicalUrl = $activeCategory ? route('blog.category', $activeCategory) : route('blog.index');
+        ? ($activeCategory->description ?: "Articles about {$activeCategory->name} from Aliyan Faisal.")
+        : config('seo.descriptions.blog');
+    $canonicalUrl = Seo::canonical();
+    $listingUrl = $activeCategory ? route('blog.category', $activeCategory) : route('blog.index');
+    $crumbs = [['name' => 'Home', 'url' => route('home')], ['name' => 'Blog', 'url' => route('blog.index')]];
+    if ($activeCategory) {
+        $crumbs[] = ['name' => $activeCategory->name, 'url' => $listingUrl];
+    }
+    $breadcrumb = Schema::breadcrumbs($crumbs, $listingUrl);
+    $graph = [
+        Schema::personLite(),
+        Schema::blog(),
+        Schema::collectionPage($canonicalUrl, $pageTitle, $metaDescription, $breadcrumb['@id'], Schema::postList($posts->getCollection())),
+        $breadcrumb,
+    ];
+    // Search results are thin, near-duplicate views of the listing: keep them out of the index.
+    $robots = $search !== '' ? 'noindex, follow' : null;
 @endphp
-<x-layouts.app :title="$pageTitle" :description="$metaDescription">
-    <x-slot:head>
-        <link rel="canonical" href="{{ $canonicalUrl }}">
-
-        <meta property="og:title" content="{{ $pageTitle }}">
-        <meta property="og:description" content="{{ $metaDescription }}">
-        <meta property="og:url" content="{{ $canonicalUrl }}">
-        <meta property="og:type" content="website">
-
-        <meta name="twitter:card" content="summary">
-        <meta name="twitter:title" content="{{ $pageTitle }}">
-        <meta name="twitter:description" content="{{ $metaDescription }}">
-    </x-slot:head>
-
+<x-layouts.app :title="$pageTitle" :description="$metaDescription" :canonical="$canonicalUrl" :robots="$robots" :graph="$graph">
     <section class="mx-auto max-w-4xl px-6 py-16 text-center">
         <p class="text-sm font-semibold uppercase tracking-widest text-indigo-500 dark:text-indigo-400">Blog</p>
         <h1 class="mt-3 text-4xl font-bold text-zinc-900 dark:text-white">
             {{ $activeCategory ? $activeCategory->name : 'Articles & Insights' }}
         </h1>
         <p class="mx-auto mt-4 max-w-2xl text-lg text-zinc-600 dark:text-zinc-400">
-            Notes on software development, tooling, and building things on the web.
+            {{ $activeCategory?->description ?: 'Notes on LLM integration, AI automation, full-stack development and running it all on your own servers.' }}
         </p>
     </section>
 
@@ -67,7 +73,7 @@
         @else
             <div class="mt-10 grid grid-cols-1 gap-6 md:grid-cols-3">
                 @foreach ($posts as $post)
-                    <x-blog-card :post="$post" />
+                    <x-blog-card :post="$post" heading="h2" />
                 @endforeach
             </div>
 

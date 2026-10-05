@@ -1,4 +1,4 @@
-<x-layouts.app title="Page Not Found — Aliyan Faisal" :full-bleed="true">
+<x-layouts.app title="Page Not Found — Aliyan Faisal" robots="noindex, follow" :full-bleed="true">
     <section class="glow-gradient relative flex min-h-[calc(100vh-5rem)] items-center overflow-hidden pt-20">
         <div class="bg-grid absolute inset-0 -z-10"></div>
 

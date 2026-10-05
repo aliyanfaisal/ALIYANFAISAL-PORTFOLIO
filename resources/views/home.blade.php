@@ -1,4 +1,13 @@
-<x-layouts.app title="Aliyan Faisal — AI-Powered Full-Stack Laravel & WordPress Developer" description="Aliyan Faisal builds AI-powered Laravel and WordPress products — integrating OpenAI, Claude and Gemini into automated, production-ready web apps.">
+@php
+    $homeTitle = config('seo.default_title');
+    $homeDescription = config('seo.default_description');
+    $graph = [
+        \App\Support\Seo\Schema::person(),
+        \App\Support\Seo\Schema::website(),
+        \App\Support\Seo\Schema::profilePage(url('/'), $homeTitle, $homeDescription),
+    ];
+@endphp
+<x-layouts.app :title="$homeTitle" :description="$homeDescription" :graph="$graph">
     {{-- Hero --}}
     <section class="glow-gradient relative overflow-hidden pt-20">
         <div class="bg-grid absolute inset-0 -z-10"></div>
@@ -26,10 +35,11 @@
                 </p>
 
                 <h1 class="mt-6 text-4xl font-bold tracking-tight text-zinc-900 sm:text-5xl dark:text-white">
+                    <span class="block text-base font-semibold tracking-normal text-indigo-500 sm:text-lg dark:text-indigo-300">Aliyan Faisal &mdash; Full-Stack Developer &amp; AI / LLM Systems Engineer</span>
                     Building
                     <span
                         x-data="{
-                            words: ['AI-Powered', 'Laravel & WordPress', 'AI-Automated', 'Chatbot-Ready', 'Production-Ready', 'API-Integrated', 'WooCommerce-Driven', 'Automation-First', 'Scalable', 'Custom Full-Stack'],
+                            words: ['AI-Powered', 'LLM-Integrated', 'RAG-Driven', 'Agentic', 'Automation-First', 'Commerce-Automated', 'Full-Stack', 'Production-Ready', 'Self-Hosted', 'DevOps-Hardened'],
                             i: 0,
                             visible: true,
                         }"
@@ -42,7 +52,7 @@
                 </h1>
 
                 <p class="mt-6 max-w-xl text-lg text-zinc-600 dark:text-zinc-400">
-                    I'm Aliyan Faisal, a full-stack developer who builds custom Laravel and WordPress products — and increasingly, bakes AI directly in: chatbots, automation, and API integrations with OpenAI, Claude and Gemini. 5+ years turning ideas into production-ready web apps for clients worldwide.
+                    I'm Aliyan Faisal, a full-stack developer and AI/LLM systems engineer. I build LLM integrations, RAG pipelines, chatbots and workflow automations with OpenAI, Claude and Gemini — plus the full-stack apps (Laravel, Node.js, React, WordPress) and server setups they run on. 5+ years shipping production systems for clients worldwide.
                 </p>
 
                 <div class="mt-8 flex flex-wrap gap-4">
@@ -112,7 +122,7 @@
                 <div class="glass-card animate-float absolute -left-2 bottom-10 z-20 w-44 lg:-left-16" style="animation-delay: 2.4s">
                     <div class="grid size-8 place-items-center rounded-lg bg-gradient-to-br from-cyan-500/15 via-indigo-500/15 to-transparent text-cyan-500 dark:text-cyan-300"><x-icon name="bolt" class="size-4" /></div>
                     <p class="mt-1.5 text-xs font-semibold text-zinc-800 dark:text-zinc-100">300+ Orders Delivered</p>
-                    <p class="text-[11px] text-zinc-500 dark:text-zinc-400">Laravel · WordPress · AI</p>
+                    <p class="text-[11px] text-zinc-500 dark:text-zinc-400">Full-Stack · AI · Automation</p>
                 </div>
 
                 <div class="glass-card animate-float absolute -right-6 bottom-0 z-20 hidden w-36 sm:block lg:-right-14" style="animation-delay: 3.2s">
@@ -128,7 +138,7 @@
             <div class="overflow-hidden">
                 <div class="animate-marquee flex w-max items-center gap-12 text-sm font-medium text-zinc-400 dark:text-zinc-500">
                     @php
-                        $stack = ['Laravel', 'WordPress', 'WooCommerce', 'OpenAI', 'Claude', 'Gemini', 'Groq', 'Tailwind CSS', 'MySQL', 'REST APIs', 'Elementor Pro', 'React / Node.js / Next.js'];
+                        $stack = ['OpenAI', 'Claude', 'Gemini', 'Groq', 'RAG', 'Vector DBs', 'LLM Agents', 'n8n / Automation', 'Laravel', 'Node.js', 'React / Next.js', 'WordPress / WooCommerce', 'MySQL', 'REST APIs', 'Linux / Nginx / Docker'];
                         $stack = array_merge($stack, $stack);
                     @endphp
                     @foreach ($stack as $tech)
@@ -326,7 +336,7 @@
                         </p>
                         <h2 class="mt-4 text-3xl font-bold text-zinc-900 dark:text-white">I build AI into the web apps I ship.</h2>
                         <p class="mt-4 text-zinc-600 dark:text-zinc-400">
-                            Beyond Laravel and WordPress, I integrate AI agent APIs — OpenAI, Claude, Gemini and Groq — to automate the repetitive parts of running a store or site: customer support, order handling, content and SEO.
+                            I integrate LLM APIs — OpenAI, Claude, Gemini and Groq — into real products: RAG chatbots over your own data, support and order-handling automation, content and SEO pipelines, and agentic workflows, all deployed and monitored on servers I configure myself.
                         </p>
                         <a href="{{ route('services.show', $aiService) }}" class="mt-6 inline-flex items-center gap-1 text-sm font-semibold text-indigo-500 hover:underline dark:text-indigo-400">
                             See the AI automation service &rarr;
@@ -457,7 +467,7 @@
         <div class="glow-gradient relative mx-auto max-w-4xl overflow-hidden rounded-3xl border border-indigo-500/20 px-6 py-16 text-center">
             <div class="bg-grid absolute inset-0 -z-10 opacity-50"></div>
             <h2 class="text-3xl font-bold text-zinc-900 dark:text-white">Have a project in mind?</h2>
-            <p class="mt-4 text-zinc-600 dark:text-zinc-400">Let's talk about what you're building and how I can help you ship it — Laravel, WordPress, or AI-powered from the ground up.</p>
+            <p class="mt-4 text-zinc-600 dark:text-zinc-400">Let's talk about what you're building and how I can help you ship it — an LLM integration, an automation, or a full-stack product from the ground up.</p>
             <div class="mt-8 flex flex-wrap items-center justify-center gap-4">
                 <a href="{{ route('contact.create') }}" class="rounded-full bg-zinc-900 px-8 py-3 text-sm font-semibold text-white transition hover:bg-indigo-600 dark:bg-white dark:text-zinc-900 dark:hover:bg-indigo-400">
                     Get in Touch

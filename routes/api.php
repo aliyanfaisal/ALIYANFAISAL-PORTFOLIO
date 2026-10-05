@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Api\AutomationLogController;
 use App\Http\Controllers\Api\BlogPostController;
+use App\Http\Controllers\Api\CategoryController;
 use App\Http\Controllers\Api\ImageUploadController;
 use App\Http\Controllers\Api\LinkedInPostController;
 use Illuminate\Support\Facades\Route;
@@ -31,6 +32,22 @@ Route::match(['put', 'patch'], '/blog-posts/{blogPost}', [BlogPostController::cl
 Route::delete('/blog-posts/{blogPost}', [BlogPostController::class, 'destroy'])
     ->middleware('blog.api.token')
     ->name('api.blog-posts.destroy');
+
+Route::get('/categories', [CategoryController::class, 'index'])
+    ->middleware('blog.api.token')
+    ->name('api.categories.index');
+
+Route::post('/categories', [CategoryController::class, 'store'])
+    ->middleware('blog.api.token')
+    ->name('api.categories.store');
+
+Route::get('/categories/{category}', [CategoryController::class, 'show'])
+    ->middleware('blog.api.token')
+    ->name('api.categories.show');
+
+Route::match(['put', 'patch'], '/categories/{category}', [CategoryController::class, 'update'])
+    ->middleware('blog.api.token')
+    ->name('api.categories.update');
 
 Route::post('/automation-logs', [AutomationLogController::class, 'store'])
     ->middleware('blog.api.token')

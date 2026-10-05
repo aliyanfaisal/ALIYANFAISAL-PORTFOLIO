@@ -229,14 +229,14 @@ class BlogControllerTest extends TestCase
 
         $response = $this->get('/blog/'.$post->slug)->assertOk();
 
-        $response->assertSee('<h3>Why does it loop?</h3>', false);
-        $response->assertSee('<h3>Is it only useState?</h3>', false);
+        $response->assertSee('<h3 id="why-does-it-loop">Why does it loop?</h3>', false);
+        $response->assertSee('<h3 id="is-it-only-usestate">Is it only useState?</h3>', false);
         $response->assertSee('<p><strong>Bold note?</strong></p>', false);
-        $response->assertSee('"@type":"FAQPage"', false);
+        // FAQ rich results are no longer shown for sites like this one, so no FAQPage schema is emitted.
+        $response->assertDontSee('FAQPage', false);
         $response->assertSee('"@type":"BreadcrumbList"', false);
         $response->assertSee('"@context":"https://schema.org"', false);
         $response->assertSee('aria-label="Breadcrumb"', false);
-        $this->assertSame(2, substr_count($response->getContent(), '"@type":"Question"'));
     }
 
     public function test_show_omits_faq_schema_when_the_post_has_no_faq_section(): void

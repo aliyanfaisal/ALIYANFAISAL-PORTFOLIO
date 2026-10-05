@@ -1,4 +1,16 @@
-<x-layouts.app :title="ucfirst($service->title).' — Aliyan Faisal'">
+@php
+    $serviceDescription = \Illuminate\Support\Str::limit(trim(preg_replace('/\s+/', ' ', (string) $service->description)), 157);
+    $graph = [
+        \App\Support\Seo\Schema::personLite(),
+        ...\App\Support\Seo\Schema::services(collect([$service])),
+        \App\Support\Seo\Schema::breadcrumbs([
+            ['name' => 'Home', 'url' => route('home')],
+            ['name' => 'Services', 'url' => route('services.index')],
+            ['name' => \Illuminate\Support\Str::title($service->title), 'url' => route('services.show', $service)],
+        ], route('services.show', $service)),
+    ];
+@endphp
+<x-layouts.app :title="\Illuminate\Support\Str::title($service->title).' — Aliyan Faisal'" :description="$serviceDescription" :graph="$graph">
     <section class="mx-auto max-w-6xl px-6 py-12">
         <a href="{{ route('services.index') }}" class="inline-flex items-center gap-1 text-sm font-medium text-zinc-500 hover:text-indigo-500 dark:text-zinc-400 dark:hover:text-indigo-400">
             <svg xmlns="http://www.w3.org/2000/svg" class="size-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>

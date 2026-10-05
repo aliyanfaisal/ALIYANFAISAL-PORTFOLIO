@@ -10,8 +10,8 @@
                     {{ strtoupper($settings->site_name) }}<span class="text-gradient">.</span>
                 </a>
                 <p class="mt-3 max-w-xs text-sm text-zinc-500 dark:text-zinc-400">
-                    Full-stack developer building Laravel, WordPress and AI-powered web applications for clients
-                    worldwide.
+                    Full-stack developer and AI/LLM systems engineer building LLM integrations, automations and
+                    production web applications for clients worldwide.
                 </p>
             </div>
 

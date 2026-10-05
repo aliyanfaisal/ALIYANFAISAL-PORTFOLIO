@@ -14,7 +14,7 @@ class SettingSeeder extends Seeder
     {
         Setting::updateOrCreate(['id' => 1], [
             'site_name' => 'Aliyan Faisal',
-            'site_description' => 'Aliyan Faisal builds custom Laravel & WordPress web apps, WooCommerce stores, and AI-powered chatbots & automation for clients worldwide. 5+ years experience.',
+            'site_description' => 'Aliyan Faisal is a full-stack developer and AI/LLM systems engineer building LLM integrations, RAG chatbots, automations and production web apps for clients worldwide. 5+ years experience.',
             'contact_email' => 'aliyanfaisal15@gmail.com',
             'github_url' => 'https://github.com/aliyanfaisal',
             'linkedin_url' => 'https://www.linkedin.com/in/aliyan-faisal-5162261b7/',

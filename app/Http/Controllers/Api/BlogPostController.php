@@ -8,6 +8,7 @@ use App\Models\BlogPost;
 use App\Models\Category;
 use App\Models\Setting;
 use App\Models\Tag;
+use App\Services\ImageOptimizer;
 use Illuminate\Http\Client\ConnectionException;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -16,6 +17,7 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Illuminate\Validation\Rule;
 use Illuminate\Validation\ValidationException;
+use Throwable;
 
 class BlogPostController extends Controller
 {
@@ -37,7 +39,7 @@ class BlogPostController extends Controller
             'body' => ['required', 'string'],
             'image_url' => ['nullable', 'url', 'max:2048'],
             'categories' => ['nullable', 'array'],
-            'categories.*' => ['string', 'max:100'],
+            'categories.*' => [$this->categoryRule(...)],
             'tags' => ['nullable', 'array'],
             'tags.*' => ['string', 'max:100'],
             'published_at' => ['nullable', 'date'],
@@ -47,10 +49,9 @@ class BlogPostController extends Controller
 
         $slug = $data['slug'] ?? $this->generateUniqueSlug($data['title']);
 
-        $imagePath = null;
+        $image = null;
         if (! empty($data['image_url'])) {
-            $imagePath = $this->resolveUploadedImagePath($data['image_url'])
-                ?? $this->downloadImage($data['image_url'], $slug);
+            $image = $this->storeOptimizedImage($data['image_url'], $slug);
         }
 
         $autoApprove = Setting::current()->auto_approve_posts;
@@ -62,13 +63,15 @@ class BlogPostController extends Controller
             'slug' => $slug,
             'excerpt' => $data['excerpt'] ?? $this->deriveExcerpt($data['body']),
             'body' => $data['body'],
-            'image_path' => $imagePath,
+            'image_path' => $image['path'] ?? null,
+            'image_width' => $image['width'] ?? null,
+            'image_height' => $image['height'] ?? null,
             'source_image_url' => $data['image_url'] ?? null,
             'status' => $publishNow ? 'published' : 'draft',
             'published_at' => $publishNow ? ($data['published_at'] ?? now()) : null,
         ]);
 
-        $post->categories()->sync($this->resolveTerms(Category::class, $data['categories'] ?? []));
+        $post->categories()->sync($this->resolveCategories($data['categories'] ?? []));
         $post->tags()->sync($this->resolveTerms(Tag::class, $data['tags'] ?? []));
 
         // A draft has nothing worth syncing yet — Cuelara only hears about a post once it's
@@ -133,7 +136,7 @@ class BlogPostController extends Controller
             'body' => ['sometimes', 'string'],
             'image_url' => ['nullable', 'url', 'max:2048'],
             'categories' => ['sometimes', 'array'],
-            'categories.*' => ['string', 'max:100'],
+            'categories.*' => [$this->categoryRule(...)],
             'tags' => ['sometimes', 'array'],
             'tags.*' => ['string', 'max:100'],
             'published_at' => ['nullable', 'date'],
@@ -141,8 +144,10 @@ class BlogPostController extends Controller
         ]);
 
         if (array_key_exists('image_url', $data) && $data['image_url']) {
-            $blogPost->image_path = $this->resolveUploadedImagePath($data['image_url'])
-                ?? $this->downloadImage($data['image_url'], $blogPost->slug);
+            $image = $this->storeOptimizedImage($data['image_url'], $blogPost->slug);
+            $blogPost->image_path = $image['path'];
+            $blogPost->image_width = $image['width'];
+            $blogPost->image_height = $image['height'];
             $blogPost->source_image_url = $data['image_url'];
         }
 
@@ -163,7 +168,7 @@ class BlogPostController extends Controller
         $blogPost->save();
 
         if (array_key_exists('categories', $data)) {
-            $blogPost->categories()->sync($this->resolveTerms(Category::class, $data['categories']));
+            $blogPost->categories()->sync($this->resolveCategories($data['categories']));
         }
 
         if (array_key_exists('tags', $data)) {
@@ -237,9 +242,55 @@ class BlogPostController extends Controller
     }
 
     /**
+     * A category is either a plain name or {"name": "...", "description": "..."}.
+     */
+    private function categoryRule(string $attribute, mixed $value, \Closure $fail): void
+    {
+        $name = is_array($value) ? ($value['name'] ?? null) : $value;
+        $description = is_array($value) ? ($value['description'] ?? null) : null;
+
+        if (! is_string($name) || trim($name) === '' || mb_strlen($name) > 100) {
+            $fail('Each category must be a name (max 100 characters) or an object with a "name".');
+        } elseif ($description !== null && (! is_string($description) || mb_strlen($description) > 300)) {
+            $fail('A category description must be a string of at most 300 characters.');
+        }
+    }
+
+    /**
+     * Find or create each category and return their ids for syncing. A supplied description is only
+     * written to a category that has none yet; use PATCH /api/categories/{slug} to overwrite one.
+     *
+     * @param  array<int, string|array{name: string, description?: string|null}>  $categories
+     * @return array<int, int>
+     */
+    private function resolveCategories(array $categories): array
+    {
+        return collect($categories)
+            ->map(fn ($category) => is_array($category)
+                ? ['name' => trim($category['name']), 'description' => trim((string) ($category['description'] ?? ''))]
+                : ['name' => trim($category), 'description' => ''])
+            ->filter(fn (array $category) => $category['name'] !== '')
+            ->unique('name')
+            ->map(function (array $category): int {
+                $model = Category::firstOrCreate(
+                    ['slug' => Str::slug($category['name'])],
+                    ['name' => $category['name'], 'description' => $category['description'] ?: null],
+                );
+
+                if ($category['description'] !== '' && blank($model->description)) {
+                    $model->update(['description' => $category['description']]);
+                }
+
+                return $model->id;
+            })
+            ->values()
+            ->all();
+    }
+
+    /**
      * Find or create each named term and return their ids for syncing.
      *
-     * @param  class-string<Category|Tag>  $model
+     * @param  class-string<Tag>  $model
      * @param  array<int, string>  $names
      * @return array<int, int>
      */
@@ -311,7 +362,34 @@ class BlogPostController extends Controller
         return Storage::disk('public')->exists($relativePath) ? $relativePath : null;
     }
 
-    private function downloadImage(string $url, string $slug): string
+    /**
+     * Fetch the image (an earlier upload-image upload, or a remote URL), then crop it to 16:9, shrink it
+     * to at most 1600x900 and store it as WebP so the hero image doesn't wreck LCP.
+     *
+     * @return array{path: string, width: int, height: int}
+     */
+    private function storeOptimizedImage(string $url, string $slug): array
+    {
+        $uploadedPath = $this->resolveUploadedImagePath($url);
+        $contents = $uploadedPath !== null
+            ? Storage::disk('public')->get($uploadedPath)
+            : $this->downloadImage($url);
+
+        try {
+            $result = app(ImageOptimizer::class)->optimize($contents);
+        } catch (Throwable) {
+            throw ValidationException::withMessages([
+                'image_url' => 'The provided image could not be processed (jpg, png, gif or webp expected).',
+            ]);
+        }
+
+        $path = "blog/{$slug}.webp";
+        Storage::disk('public')->put($path, $result['contents']);
+
+        return ['path' => $path, 'width' => $result['width'], 'height' => $result['height']];
+    }
+
+    private function downloadImage(string $url): string
     {
         try {
             $response = Http::timeout(15)->get($url);
@@ -328,18 +406,13 @@ class BlogPostController extends Controller
         }
 
         $contentType = strtolower(explode(';', $response->header('Content-Type') ?? '')[0]);
-        $extension = self::IMAGE_EXTENSIONS[$contentType] ?? null;
 
-        if (! $extension) {
+        if (! isset(self::IMAGE_EXTENSIONS[$contentType])) {
             throw ValidationException::withMessages([
                 'image_url' => 'The provided URL does not point to a supported image type (jpg, png, gif, webp).',
             ]);
         }
 
-        $path = "blog/{$slug}.{$extension}";
-
-        Storage::disk('public')->put($path, $response->body());
-
-        return $path;
+        return $response->body();
     }
 }

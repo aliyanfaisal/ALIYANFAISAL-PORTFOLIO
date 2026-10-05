@@ -18,6 +18,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/sitemap.xml', [SitemapController::class, 'index'])->name('sitemap');
 Route::get('/blog', [BlogController::class, 'index'])->name('blog.index');
+Route::get('/blog/feed', [BlogController::class, 'feed'])->name('blog.feed');
 Route::get('/blog/category/{category:slug}', [BlogController::class, 'category'])->name('blog.category');
 Route::get('/blog/{slug}', [BlogController::class, 'show'])->name('blog.show');
 Route::post('/blog/{slug}/reactions', [PostReactionController::class, 'store'])->name('blog.reactions.store');

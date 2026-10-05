@@ -1,4 +1,4 @@
-@props(['service', 'bestSeller' => false])
+@props(['service', 'bestSeller' => false, 'heading' => 'h3'])
 
 <a href="{{ route('services.show', $service) }}" class="group relative flex flex-col overflow-hidden rounded-2xl border border-zinc-200 bg-white transition hover:-translate-y-1 hover:border-indigo-400/50 hover:shadow-lg hover:shadow-indigo-500/5 dark:border-white/10 dark:bg-zinc-900">
     @if ($bestSeller)
@@ -18,7 +18,7 @@
             <span class="text-xs font-medium uppercase tracking-wide text-indigo-500 dark:text-indigo-400">{{ $service->category }}</span>
         @endif
 
-        <h3 class="mt-2 font-semibold capitalize text-zinc-900 dark:text-white">{{ $service->title }}</h3>
+        <{{ $heading }} class="mt-2 font-semibold capitalize text-zinc-900 dark:text-white">{{ $service->title }}</{{ $heading }}>
 
         <div class="mt-4 flex items-center gap-1 text-sm text-amber-500">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="size-4"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.958a1 1 0 00.95.69h4.162c.969 0 1.371 1.24.588 1.81l-3.37 2.448a1 1 0 00-.363 1.118l1.287 3.957c.3.922-.755 1.688-1.538 1.118l-3.37-2.448a1 1 0 00-1.176 0l-3.37 2.448c-.783.57-1.838-.196-1.539-1.118l1.287-3.957a1 1 0 00-.363-1.118l-3.37-2.448c-.782-.57-.38-1.81.588-1.81h4.163a1 1 0 00.95-.69l1.285-3.958z"/></svg>

@@ -1,15 +1,21 @@
-@props(['title' => null, 'description' => null, 'fullBleed' => false])
+@props([
+    'title' => null,
+    'description' => null,
+    'fullBleed' => false,
+    'canonical' => null,
+    'image' => null,
+    'ogType' => 'website',
+    'robots' => null,
+    'graph' => [],
+])
 <!DOCTYPE html>
 <html lang="en" class="dark">
 
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="msvalidate.01" content="3C3AC06C5BDC26DF8A5D4C04239D0370" />
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>{{ $title ?? 'Aliyan Faisal — Full-Stack Laravel & WordPress Developer' }}</title>
-    <meta name="description"
-        content="{{ $description ?? 'Aliyan Faisal is a full-stack web developer specializing in Laravel, WordPress, WooCommerce and AI-powered web applications.' }}">
+    @include('partials.seo')
 
     <link rel="icon" type="image/svg+xml" href="{{ asset('favicon.svg') }}">
 

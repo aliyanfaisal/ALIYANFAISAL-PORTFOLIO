@@ -8,6 +8,7 @@ use App\Models\Category;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Illuminate\View\View;
 
 class BlogController extends Controller
@@ -20,6 +21,15 @@ class BlogController extends Controller
     public function category(Category $category, Request $request): View
     {
         return $this->listing($request, $category);
+    }
+
+    public function feed(): Response
+    {
+        $posts = BlogPost::published()->with(['categories', 'tags'])->orderByDesc('published_at')->limit(20)->get();
+
+        return response()
+            ->view('blog.feed', ['posts' => $posts], 200)
+            ->header('Content-Type', 'application/rss+xml; charset=UTF-8');
     }
 
     public function show(string $slug): View|RedirectResponse
@@ -38,6 +48,8 @@ class BlogController extends Controller
 
             return redirect($redirect->to_url, 301);
         }
+
+        $post->setRelation('related', $post->relatedPosts());
 
         // A page view must not bump updated_at, which feeds the sitemap lastmod and schema dateModified.
         BlogPost::withoutTimestamps(fn () => $post->increment('views'));

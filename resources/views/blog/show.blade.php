@@ -1,28 +1,43 @@
 @php
+    use App\Support\Seo\Schema;
+    use App\Support\Seo\Seo;
+
     $settings = \App\Models\Setting::current();
-    $fallbackOgImage = $settings->default_og_image
-        ? asset('storage/'.$settings->default_og_image)
-        : asset('images/aliyan-headshot-cutout.png');
-    $ogImage = $post->image_path ? asset('storage/'.$post->image_path) : $fallbackOgImage;
-    $postUrl = url('/blog/'.$post->slug);
+    $postUrl = route('blog.show', $post);
     $metaDescription = \Illuminate\Support\Str::limit(
         $post->excerpt ?: trim(preg_replace('/\s+/', ' ', strip_tags($post->body_html))),
         160,
     );
-    $imageWidth = 1200;
-    $imageHeight = 630;
-    if ($post->image_path) {
+
+    $imageWidth = $post->image_width ?: 1600;
+    $imageHeight = $post->image_height ?: 900;
+    if ($post->image_path && ! $post->image_width) {
+        // Not yet converted by `blog:optimize-images`: read the real size rather than guessing.
         $imageSize = @getimagesize(storage_path('app/public/'.$post->image_path));
         if ($imageSize) {
             [$imageWidth, $imageHeight] = $imageSize;
         }
     }
-    $authorSameAs = array_values(array_filter([$settings->github_url, $settings->linkedin_url]));
+    $seoImage = $post->image_path
+        ? ['url' => $post->imageUrl(), 'width' => $imageWidth, 'height' => $imageHeight]
+        : ($settings->default_og_image
+            ? ['url' => asset('storage/'.$settings->default_og_image), 'width' => 1200, 'height' => 630]
+            : Seo::defaultImage());
+
+    $graph = Schema::blogPosting($post, $metaDescription, $seoImage);
+    $category = $post->categories->first();
     $breadcrumbs = [
         ['name' => 'Home', 'url' => route('home')],
         ['name' => 'Blog', 'url' => route('blog.index')],
     ];
-    $faqs = $post->faqs;
+    if ($category) {
+        $breadcrumbs[] = ['name' => $category->name, 'url' => route('blog.category', $category)];
+    }
+
+    $isUpdated = $post->updated_at && $post->updated_at->greaterThanOrEqualTo($post->published_at->copy()->addDay());
+    $tocHeadings = collect($post->headings)->where('level', 2)->values();
+    $showToc = $tocHeadings->count() >= 4;
+    $related = $post->related ?? collect();
     $totalComments = $post->comments->sum(fn ($comment) => 1 + $comment->replies->count());
     $sessionId = session()->getId();
     // Cast to an object so an empty result serializes as {} rather than [] — a bare [] would
@@ -30,84 +45,20 @@
     $postReactionCounts = (object) $post->reactions->groupBy('emoji')->map->count()->all();
     $myPostReaction = $post->reactions->firstWhere('session_id', $sessionId)?->emoji;
 @endphp
-<x-layouts.app :title="$post->title.' — '.$settings->site_name" :description="$metaDescription">
+<x-layouts.app :title="$post->title.' — '.$settings->site_name" :description="$metaDescription" :image="$seoImage" og-type="article" :graph="$graph">
     <x-slot:head>
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css" media="print" onload="this.media='all'">
+        <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css"></noscript>
 
-        <link rel="canonical" href="{{ $postUrl }}">
-
-        <meta property="og:title" content="{{ $post->title }}">
-        <meta property="og:description" content="{{ $metaDescription }}">
-        <meta property="og:image" content="{{ $ogImage }}">
-        <meta property="og:url" content="{{ $postUrl }}">
-        <meta property="og:type" content="article">
-        <meta property="og:site_name" content="{{ $settings->site_name }}">
         <meta property="article:published_time" content="{{ $post->published_at->toIso8601String() }}">
-        @if ($post->categories->isNotEmpty())
-            <meta property="article:section" content="{{ $post->categories->first()->name }}">
+        <meta property="article:modified_time" content="{{ $post->updated_at->toIso8601String() }}">
+        <meta property="article:author" content="{{ route('about') }}">
+        @if ($category)
+            <meta property="article:section" content="{{ $category->name }}">
         @endif
         @foreach ($post->tags as $tag)
             <meta property="article:tag" content="{{ $tag->name }}">
         @endforeach
-
-        <meta name="twitter:card" content="summary_large_image">
-        <meta name="twitter:title" content="{{ $post->title }}">
-        <meta name="twitter:description" content="{{ $metaDescription }}">
-        <meta name="twitter:image" content="{{ $ogImage }}">
-
-        <script type="application/ld+json">
-            {!! json_encode([
-                '@@context' => 'https://schema.org',
-                '@type' => 'BlogPosting',
-                'headline' => $post->title,
-                'description' => $metaDescription,
-                'image' => $ogImage,
-                'datePublished' => $post->published_at->toIso8601String(),
-                'dateModified' => $post->updated_at->toIso8601String(),
-                'mainEntityOfPage' => ['@type' => 'WebPage', '@id' => $postUrl],
-                'author' => array_filter([
-                    '@type' => 'Person',
-                    'name' => $settings->site_name,
-                    'url' => route('about'),
-                    'sameAs' => $authorSameAs,
-                ]),
-                'publisher' => [
-                    '@type' => 'Organization',
-                    'name' => $settings->site_name,
-                    'logo' => ['@type' => 'ImageObject', 'url' => asset('images/aliyan-headshot-cutout.png')],
-                ],
-            ], JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE | JSON_HEX_TAG) !!}
-        </script>
-
-        <script type="application/ld+json">
-            {!! json_encode([
-                '@@context' => 'https://schema.org',
-                '@type' => 'BreadcrumbList',
-                'itemListElement' => [
-                    ...collect($breadcrumbs)->map(fn ($crumb, $index) => [
-                        '@type' => 'ListItem',
-                        'position' => $index + 1,
-                        'name' => $crumb['name'],
-                        'item' => $crumb['url'],
-                    ])->all(),
-                    ['@type' => 'ListItem', 'position' => count($breadcrumbs) + 1, 'name' => $post->title],
-                ],
-            ], JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE | JSON_HEX_TAG) !!}
-        </script>
-
-        @if (count($faqs) > 0)
-            <script type="application/ld+json">
-                {!! json_encode([
-                    '@@context' => 'https://schema.org',
-                    '@type' => 'FAQPage',
-                    'mainEntity' => collect($faqs)->map(fn ($faq) => [
-                        '@type' => 'Question',
-                        'name' => $faq['question'],
-                        'acceptedAnswer' => ['@type' => 'Answer', 'text' => $faq['answer']],
-                    ])->all(),
-                ], JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE | JSON_HEX_TAG) !!}
-            </script>
-        @endif
 
         <script>
             window.renderTurnstileWhenReady = function (el) {
@@ -148,7 +99,11 @@
         <h1 class="mt-3 text-4xl font-bold text-zinc-900 dark:text-white">{{ $post->title }}</h1>
 
         <div class="mt-3 flex flex-wrap items-center gap-3 text-sm text-zinc-500 dark:text-zinc-400">
-            <span>{{ $post->published_at->format('F j, Y') }}</span>
+            <span>Published <time datetime="{{ $post->published_at->toIso8601String() }}">{{ $post->published_at->format('F j, Y') }}</time></span>
+            @if ($isUpdated)
+                <span class="text-zinc-300 dark:text-zinc-700">&middot;</span>
+                <span>Updated <time datetime="{{ $post->updated_at->toIso8601String() }}">{{ $post->updated_at->format('F j, Y') }}</time></span>
+            @endif
             <span class="text-zinc-300 dark:text-zinc-700">&middot;</span>
             <span class="inline-flex items-center gap-1.5">
                 <x-icon name="eye" class="size-4" />
@@ -157,7 +112,7 @@
         </div>
 
         @if ($post->image_path)
-            <img src="{{ asset('storage/'.$post->image_path) }}" alt="{{ $post->title }}" width="{{ $imageWidth }}" height="{{ $imageHeight }}" fetchpriority="high" decoding="async" class="mt-8 h-auto w-full rounded-2xl">
+            <img src="{{ $post->imageUrl() }}" alt="{{ $post->title }}" width="{{ $imageWidth }}" height="{{ $imageHeight }}" fetchpriority="high" decoding="async" class="mt-8 h-auto w-full rounded-2xl">
         @endif
 
         <div class="mt-4 flex flex-wrap items-center justify-between gap-3">
@@ -221,6 +176,17 @@
             </div>
         </div>
 
+        @if ($showToc)
+            <nav aria-label="Table of contents" class="mt-8 rounded-2xl border border-zinc-200 bg-zinc-50 p-6 dark:border-white/10 dark:bg-white/[0.03]">
+                <p class="text-sm font-semibold uppercase tracking-wide text-zinc-900 dark:text-white">In this article</p>
+                <ol class="mt-3 list-inside list-decimal space-y-1.5 text-sm text-zinc-600 dark:text-zinc-400">
+                    @foreach ($tocHeadings as $heading)
+                        <li><a href="#{{ $heading['id'] }}" class="transition hover:text-indigo-500 dark:hover:text-indigo-400">{{ $heading['text'] }}</a></li>
+                    @endforeach
+                </ol>
+            </nav>
+        @endif
+
         <div class="prose dark:prose-invert prose-zinc mt-8 max-w-none prose-a:text-indigo-500 dark:prose-a:text-indigo-400">
             {!! $post->body_html !!}
         </div>
@@ -231,6 +197,36 @@
                     <span class="rounded-full border border-zinc-300 px-3 py-1 text-xs font-medium text-zinc-600 dark:border-white/15 dark:text-zinc-400">#{{ $tag->name }}</span>
                 @endforeach
             </div>
+        @endif
+
+        <aside class="mt-10 flex flex-wrap items-center justify-between gap-4 rounded-2xl border border-indigo-500/30 bg-indigo-500/10 p-6">
+            <p class="max-w-xl text-sm font-medium text-zinc-800 dark:text-zinc-100">Need this built? I do LLM integration, AI automation and full-stack development work.</p>
+            <a href="{{ route('services.index') }}" class="rounded-full bg-zinc-900 px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-indigo-600 dark:bg-white dark:text-zinc-900 dark:hover:bg-indigo-400">See my services &rarr;</a>
+        </aside>
+
+        <section aria-label="About the author" class="mt-10 flex flex-col gap-5 rounded-2xl border border-zinc-200 bg-white p-6 dark:border-white/10 dark:bg-zinc-900 sm:flex-row sm:items-center">
+            <img src="{{ asset(config('seo.person.image')) }}" alt="{{ config('seo.person.name') }}" width="80" height="80" loading="lazy" decoding="async" class="size-20 shrink-0 rounded-full bg-indigo-500/10 object-cover object-top">
+            <div>
+                <p class="text-xs font-semibold uppercase tracking-wide text-indigo-500 dark:text-indigo-400">Written by</p>
+                <p class="mt-1 text-lg font-bold text-zinc-900 dark:text-white">{{ config('seo.person.name') }}</p>
+                <p class="mt-1 text-sm text-zinc-600 dark:text-zinc-400">{{ config('seo.person.short_bio') }}</p>
+                <div class="mt-3 flex flex-wrap items-center gap-x-4 gap-y-1 text-sm font-medium">
+                    <a href="{{ route('about') }}" class="text-indigo-500 hover:underline dark:text-indigo-400">About me</a>
+                    <a href="{{ config('seo.person.github') }}" target="_blank" rel="noopener me" class="text-zinc-600 hover:text-indigo-500 dark:text-zinc-300 dark:hover:text-indigo-400">GitHub</a>
+                    <a href="{{ config('seo.person.linkedin') }}" target="_blank" rel="noopener me" class="text-zinc-600 hover:text-indigo-500 dark:text-zinc-300 dark:hover:text-indigo-400">LinkedIn</a>
+                </div>
+            </div>
+        </section>
+
+        @if ($related->isNotEmpty())
+            <section aria-labelledby="related-posts" class="mt-14">
+                <h2 id="related-posts" class="text-xl font-bold text-zinc-900 dark:text-white">Related posts</h2>
+                <div class="mt-6 grid grid-cols-1 gap-6 sm:grid-cols-2">
+                    @foreach ($related as $relatedPost)
+                        <x-blog-card :post="$relatedPost" />
+                    @endforeach
+                </div>
+            </section>
         @endif
 
         <div id="comments" class="mt-14 border-t border-zinc-200 pt-10 dark:border-white/10">
@@ -285,7 +281,7 @@
         </div>
     </article>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
-    <script>hljs.highlightAll();</script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js" defer></script>
+    <script>document.addEventListener('DOMContentLoaded', () => window.hljs && hljs.highlightAll());</script>
     <script src="https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit" async defer></script>
 </x-layouts.app>

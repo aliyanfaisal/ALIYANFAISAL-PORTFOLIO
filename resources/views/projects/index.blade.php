@@ -1,4 +1,13 @@
-<x-layouts.app title="Projects — Aliyan Faisal">
+@php
+    $projectsTitle = 'Projects & Case Studies — Aliyan Faisal, Full-Stack & AI Engineer';
+    $projectsDescription = config('seo.descriptions.projects');
+    $graph = [
+        \App\Support\Seo\Schema::personLite(),
+        \App\Support\Seo\Schema::collectionPage(route('projects.index'), $projectsTitle, $projectsDescription, route('projects.index').'#breadcrumb', \App\Support\Seo\Schema::projectList($projects)),
+        \App\Support\Seo\Schema::breadcrumbs([['name' => 'Home', 'url' => route('home')], ['name' => 'Projects', 'url' => route('projects.index')]], route('projects.index')),
+    ];
+@endphp
+<x-layouts.app :title="$projectsTitle" :description="$projectsDescription" :graph="$graph">
     <section class="mx-auto max-w-4xl px-6 py-16 text-center">
         <p class="text-sm font-semibold uppercase tracking-widest text-indigo-500 dark:text-indigo-400">Portfolio</p>
         <h1 class="mt-3 text-4xl font-bold text-zinc-900 dark:text-white">Selected Work</h1>

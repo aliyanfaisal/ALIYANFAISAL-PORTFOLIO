@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources\Categories\Schemas;
 
+use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Schemas\Schema;
 use Illuminate\Support\Str;
@@ -22,6 +23,12 @@ class CategoryForm
                     ->maxLength(100)
                     ->unique(ignoreRecord: true)
                     ->alphaDash(),
+                Textarea::make('description')
+                    ->label('Description')
+                    ->helperText('2–3 sentences. Shown under the category heading and used as the meta description.')
+                    ->rows(3)
+                    ->maxLength(300)
+                    ->columnSpanFull(),
             ]);
     }
 }

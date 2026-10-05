@@ -4,6 +4,7 @@ namespace Tests\Feature\Api;
 
 use App\Jobs\PushBlogPostToCuelara;
 use App\Models\BlogPost;
+use App\Models\Category;
 use App\Models\Setting;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Http;
@@ -163,9 +164,14 @@ class BlogPostControllerTest extends TestCase
         $response->assertStatus(201);
 
         $post = BlogPost::where('slug', 'with-image')->firstOrFail();
-        $this->assertSame('blog/with-image.jpg', $post->image_path);
+        $this->assertSame('blog/with-image.webp', $post->image_path);
         $this->assertSame('https://example.com/cover.jpg', $post->source_image_url);
-        Storage::disk('public')->assertExists('blog/with-image.jpg');
+        Storage::disk('public')->assertExists('blog/with-image.webp');
+
+        // 699x764 source: cropped to 16:9 and never upscaled.
+        $this->assertSame(699, $post->image_width);
+        $this->assertSame(393, $post->image_height);
+        $this->assertSame([699, 393], array_slice(getimagesizefromstring(Storage::disk('public')->get($post->image_path)), 0, 2));
     }
 
     public function test_it_returns_a_clear_error_when_the_image_download_fails(): void
@@ -234,7 +240,7 @@ class BlogPostControllerTest extends TestCase
     {
         Storage::fake('public');
         Http::fake();
-        Storage::disk('public')->put('generated/hero.png', 'fake-image');
+        Storage::disk('public')->put('generated/hero.png', file_get_contents(base_path('public/images/aliyan-headshot-cutout.png')));
 
         $response = $this->postJson('/api/blog-posts', [
             'title' => 'Reuse Post',
@@ -243,17 +249,17 @@ class BlogPostControllerTest extends TestCase
         ], $this->headers());
 
         $response->assertStatus(201)
-            ->assertJsonPath('image_url', asset('storage/generated/hero.png'));
+            ->assertJsonPath('image_url', asset('storage/blog/reuse-post.webp'));
 
         Http::assertNothingSent();
-        $this->assertSame('generated/hero.png', BlogPost::firstOrFail()->image_path);
-        Storage::disk('public')->assertMissing('blog/reuse-post.png');
+        $this->assertSame('blog/reuse-post.webp', BlogPost::firstOrFail()->image_path);
+        Storage::disk('public')->assertExists('blog/reuse-post.webp');
     }
 
     public function test_it_does_not_reuse_paths_that_escape_the_upload_directory(): void
     {
         Storage::fake('public');
-        Http::fake(['*' => Http::response('img', 200, ['Content-Type' => 'image/png'])]);
+        Http::fake(['*' => Http::response(file_get_contents(base_path('public/images/aliyan-headshot-cutout.png')), 200, ['Content-Type' => 'image/png'])]);
         Storage::disk('public')->put('secret.png', 'x');
 
         $this->postJson('/api/blog-posts', [
@@ -262,7 +268,7 @@ class BlogPostControllerTest extends TestCase
             'image_url' => asset('storage/generated/../secret.png'),
         ], $this->headers())->assertStatus(201);
 
-        $this->assertSame('blog/traversal-post.png', BlogPost::firstOrFail()->image_path);
+        $this->assertSame('blog/traversal-post.webp', BlogPost::firstOrFail()->image_path);
     }
 
     public function test_it_queues_a_push_to_cuelara_by_default(): void
@@ -417,5 +423,45 @@ class BlogPostControllerTest extends TestCase
         $this->deleteJson('/api/blog-posts/live', [], $this->headers())->assertOk();
 
         $this->get('/blog/live')->assertRedirect('/blog')->assertStatus(301);
+    }
+
+    public function test_categories_accept_names_or_objects_with_a_description(): void
+    {
+        Category::create(['name' => 'Curated', 'slug' => 'curated', 'description' => 'Hand-written.']);
+
+        $this->postJson('/api/blog-posts', [
+            'title' => 'Mixed Categories',
+            'body' => 'Body',
+            'categories' => [
+                'Plain',
+                ['name' => 'RAG Systems', 'description' => 'Retrieval-augmented generation in production.'],
+                ['name' => 'Curated', 'description' => 'Should not overwrite.'],
+            ],
+        ], $this->headers())->assertStatus(201);
+
+        $this->assertEqualsCanonicalizing(['Plain', 'RAG Systems', 'Curated'], \App\Models\BlogPost::firstOrFail()->categories->pluck('name')->all());
+
+        $this->assertDatabaseHas('categories', ['slug' => 'plain', 'description' => null]);
+        $this->assertDatabaseHas('categories', ['slug' => 'rag-systems', 'description' => 'Retrieval-augmented generation in production.']);
+        $this->assertDatabaseHas('categories', ['slug' => 'curated', 'description' => 'Hand-written.']);
+    }
+
+    public function test_it_fills_in_a_missing_description_on_an_existing_category(): void
+    {
+        Category::create(['name' => 'RAG', 'slug' => 'rag']);
+
+        $this->postJson('/api/blog-posts', [
+            'title' => 'Fill', 'body' => 'Body', 'categories' => [['name' => 'RAG', 'description' => 'Now described.']],
+        ], $this->headers())->assertStatus(201);
+
+        $this->assertDatabaseHas('categories', ['slug' => 'rag', 'description' => 'Now described.']);
+    }
+
+    public function test_it_rejects_invalid_category_shapes(): void
+    {
+        $this->postJson('/api/blog-posts', ['title' => 'T', 'body' => 'B', 'categories' => [['description' => 'no name']]], $this->headers())
+            ->assertStatus(422)->assertJsonValidationErrors(['categories.0']);
+        $this->postJson('/api/blog-posts', ['title' => 'T', 'body' => 'B', 'categories' => [['name' => 'X', 'description' => str_repeat('a', 301)]]], $this->headers())
+            ->assertStatus(422)->assertJsonValidationErrors(['categories.0']);
     }
 }
