@@ -6,7 +6,9 @@
     $postUrl = route('blog.show', $post);
     $metaDescription = \Illuminate\Support\Str::limit(
         $post->excerpt ?: trim(preg_replace('/\s+/', ' ', strip_tags($post->body_html))),
-        160,
+        150,
+        '…',
+        true,
     );
 
     $imageWidth = $post->image_width ?: 1600;
