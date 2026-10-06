@@ -138,7 +138,7 @@
             <div class="overflow-hidden">
                 <div class="animate-marquee flex w-max items-center gap-12 text-sm font-medium text-zinc-400 dark:text-zinc-500">
                     @php
-                        $stack = ['OpenAI', 'Claude', 'Gemini', 'Groq', 'RAG', 'Vector DBs', 'LLM Agents', 'n8n / Automation', 'Laravel', 'Node.js', 'React / Next.js', 'WordPress / WooCommerce', 'MySQL', 'REST APIs', 'Linux / Nginx / Docker'];
+                        $stack = ['OpenAI', 'Claude', 'Gemini', 'Groq', 'RAG Systems', 'LangChain', 'Vector DBs', 'LLM Agents', 'n8n / Automation', 'Laravel', 'Node.js', 'React / Next.js', 'WordPress / WooCommerce', 'MySQL', 'PostgreSQL', 'MongoDB', 'Redis', 'NumPy / Pandas', 'REST APIs', 'Linux / Nginx', 'Docker'];
                         $stack = array_merge($stack, $stack);
                     @endphp
                     @foreach ($stack as $tech)
@@ -336,7 +336,7 @@
                         </p>
                         <h2 class="mt-4 text-3xl font-bold text-zinc-900 dark:text-white">I build AI into the web apps I ship.</h2>
                         <p class="mt-4 text-zinc-600 dark:text-zinc-400">
-                            I integrate LLM APIs — OpenAI, Claude, Gemini and Groq — into real products: RAG chatbots over your own data, support and order-handling automation, content and SEO pipelines, and agentic workflows, all deployed and monitored on servers I configure myself.
+                            I integrate LLM APIs — OpenAI, Claude, Gemini and Groq — into real products: RAG systems and chatbots over your own data (ingestion, embeddings, vector search, cited answers), support and order-handling automation, content and SEO pipelines, and agentic workflows, all deployed and monitored on servers I configure myself.
                         </p>
                         <a href="{{ route('services.show', $aiService) }}" class="mt-6 inline-flex items-center gap-1 text-sm font-semibold text-indigo-500 hover:underline dark:text-indigo-400">
                             See the AI automation service &rarr;
@@ -346,6 +346,7 @@
                     <div class="grid grid-cols-2 gap-4">
                         @php
                             $aiCards = [
+                                ['icon' => 'circle-stack', 'title' => 'RAG Systems', 'desc' => 'Ingestion, chunking, embeddings and vector search for grounded, cited answers from your own data.'],
                                 ['icon' => 'chat-bubble', 'title' => 'AI Chatbots', 'desc' => '24/7 support trained on your products, FAQs and policies.'],
                                 ['icon' => 'cog', 'title' => 'Workflow Automation', 'desc' => 'Automate orders, emails and repetitive store tasks.'],
                                 ['icon' => 'link', 'title' => 'API Integrations', 'desc' => 'Connect your app to OpenAI, Claude, Gemini & Groq.'],

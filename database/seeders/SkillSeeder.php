@@ -33,6 +33,14 @@ class SkillSeeder extends Seeder
             ['name' => 'Alpine.js', 'category' => 'Frontend', 'proficiency' => 85],
             ['name' => 'Nginx / Apache', 'category' => 'DevOps', 'proficiency' => 82],
 
+            ['name' => 'RAG Systems (Embeddings, Vector Search)', 'category' => 'AI & Automation', 'proficiency' => 85],
+            ['name' => 'LangChain', 'category' => 'AI & Automation', 'proficiency' => 80],
+            ['name' => 'PostgreSQL', 'category' => 'Backend', 'proficiency' => 80],
+            ['name' => 'MongoDB', 'category' => 'Backend', 'proficiency' => 75],
+            ['name' => 'Redis', 'category' => 'Backend', 'proficiency' => 75],
+            ['name' => 'NumPy & Pandas', 'category' => 'AI & Automation', 'proficiency' => 75],
+            ['name' => 'Docker', 'category' => 'DevOps', 'proficiency' => 78],
+
             ['name' => 'Website Security Hardening', 'category' => 'Security & Performance', 'proficiency' => 88],
             ['name' => 'Performance & Speed Optimization', 'category' => 'Security & Performance', 'proficiency' => 90],
             ['name' => 'Caching & Core Web Vitals', 'category' => 'Security & Performance', 'proficiency' => 85],
