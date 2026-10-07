@@ -49,8 +49,8 @@
         ['Result', 'The tool runs on the same page. No tab-hopping, no setup.'],
     ];
 @endphp
-<x-layouts.app :title="'Cuelara — AI Toolkit & Prompt Book | Aliyan Faisal'" :description="\Illuminate\Support\Str::limit($product['description'], 157)" :graph="$graph">
-    <div class="relative overflow-hidden bg-[#faf9ff] text-zinc-600" style="background-image: linear-gradient(rgba(124,58,237,.05) 1px, transparent 1px), linear-gradient(90deg, rgba(124,58,237,.05) 1px, transparent 1px); background-size: 40px 40px">
+<x-layouts.app :full-bleed="true" :title="'Cuelara — AI Toolkit & Prompt Book | Aliyan Faisal'" :description="\Illuminate\Support\Str::limit($product['description'], 157)" :graph="$graph">
+    <div class="relative overflow-hidden pt-20 bg-[#faf9ff] text-zinc-600" style="background-image: linear-gradient(rgba(124,58,237,.05) 1px, transparent 1px), linear-gradient(90deg, rgba(124,58,237,.05) 1px, transparent 1px); background-size: 40px 40px">
         {{-- floating shapes --}}
         <div class="pointer-events-none absolute inset-0 hidden sm:block" aria-hidden="true">
             <span class="animate-float absolute left-[6%] top-[14%] grid size-16 rotate-[-12deg] place-items-center rounded-3xl bg-violet-200/70 text-violet-500 shadow-lg shadow-violet-300/30"><x-icon name="sparkles" class="size-7" /></span>

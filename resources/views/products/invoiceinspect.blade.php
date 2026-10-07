@@ -42,8 +42,8 @@
         ['Private by default', 'Guest uploads are processed in memory and never saved. No ads, no third-party analytics.'],
     ];
 @endphp
-<x-layouts.app :title="'InvoiceInspect — Free Invoice Checker & Validator | Aliyan Faisal'" :description="\Illuminate\Support\Str::limit($product['description'], 157)" :graph="$graph">
-    <div class="relative overflow-hidden bg-slate-950 text-slate-300" style="font-family: 'Plus Jakarta Sans', 'Instrument Sans', ui-sans-serif, system-ui, sans-serif">
+<x-layouts.app :full-bleed="true" :title="'InvoiceInspect — Free Invoice Checker & Validator | Aliyan Faisal'" :description="\Illuminate\Support\Str::limit($product['description'], 157)" :graph="$graph">
+    <div class="relative overflow-hidden pt-20 bg-slate-950 text-slate-300" style="font-family: 'Plus Jakarta Sans', 'Instrument Sans', ui-sans-serif, system-ui, sans-serif">
         {{-- background --}}
         <div class="pointer-events-none absolute inset-0" aria-hidden="true">
             <div class="absolute -top-40 left-1/2 h-[560px] w-[900px] -translate-x-1/2 rounded-full bg-indigo-600/25 blur-[140px]"></div>
