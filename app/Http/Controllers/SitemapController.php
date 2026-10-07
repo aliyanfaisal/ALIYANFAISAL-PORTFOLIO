@@ -22,9 +22,14 @@ class SitemapController extends Controller
             ->add($this->url(route('home'), $latestPostUpdate))
             ->add($this->url(route('about'), $this->latest(Setting::query()->max('updated_at'))))
             ->add($this->url(route('projects.index'), $this->latest(Project::query()->max('updated_at'))))
+            ->add($this->url(route('products.index')))
             ->add($this->url(route('services.index'), $this->latest(Service::query()->max('updated_at'))))
             ->add($this->url(route('blog.index'), $latestPostUpdate))
             ->add($this->url(route('contact.create')));
+
+        foreach (array_keys(config('products')) as $slug) {
+            $sitemap->add($this->url(route('products.show', $slug)));
+        }
 
         Service::orderBy('sort_order')->get()->each(fn (Service $service) => $sitemap->add(
             $this->url(route('services.show', $service), $service->updated_at)

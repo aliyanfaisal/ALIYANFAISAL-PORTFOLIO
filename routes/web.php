@@ -10,6 +10,7 @@ use App\Http\Controllers\LinkedInAuthController;
 use App\Http\Controllers\NewsletterController;
 use App\Http\Controllers\PostReactionController;
 use App\Http\Controllers\PrivacyPolicyController;
+use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\ServiceController;
 use App\Http\Controllers\SitemapController;
@@ -30,6 +31,8 @@ Route::post('/blog/{slug}/comments/{comment}/reactions', [CommentReactionControl
 Route::get('/about', [AboutController::class, 'index'])->name('about');
 Route::get('/projects', [ProjectController::class, 'index'])->name('projects.index');
 Route::get('/projects/download', [ProjectController::class, 'downloadLinks'])->name('projects.download');
+Route::get('/products', [ProductController::class, 'index'])->name('products.index');
+Route::get('/products/{slug}', [ProductController::class, 'show'])->name('products.show');
 Route::get('/services', [ServiceController::class, 'index'])->name('services.index');
 Route::get('/services/{service}', [ServiceController::class, 'show'])->name('services.show');
 Route::get('/contact', [ContactController::class, 'create'])->name('contact.create');

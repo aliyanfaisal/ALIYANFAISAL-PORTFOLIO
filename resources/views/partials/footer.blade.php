@@ -22,6 +22,8 @@
                             class="hover:text-indigo-500 dark:hover:text-indigo-400">About</a></li>
                     <li><a href="{{ route('projects.index') }}"
                             class="hover:text-indigo-500 dark:hover:text-indigo-400">Projects</a></li>
+                    <li><a href="{{ route('products.index') }}"
+                            class="hover:text-indigo-500 dark:hover:text-indigo-400">Products</a></li>
                     <li><a href="{{ route('services.index') }}"
                             class="hover:text-indigo-500 dark:hover:text-indigo-400">Services</a></li>
                     <li><a href="{{ route('contact.create') }}"
