@@ -31,7 +31,7 @@ class ProductPagesTest extends TestCase
 
     public function test_homepage_and_sitemap_include_products(): void
     {
-        $this->get('/')->assertOk()->assertSee('My Products')->assertSee('More coming soon');
+        $this->get('/')->assertOk()->assertSee('Products I Built &amp; Own', false)->assertSee('More coming soon');
 
         $xml = $this->get('/sitemap.xml')->assertOk()->getContent();
         $this->assertStringContainsString(route('products.show', 'cuelara'), $xml);
