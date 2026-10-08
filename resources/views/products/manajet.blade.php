@@ -155,26 +155,6 @@
             </div>
         </section>
 
-        {{-- Screenshots --}}
-        @if ($shots->count() > 1)
-            <section class="reveal relative mx-auto max-w-6xl px-6 py-16">
-                <div class="text-center">
-                    <span class="text-xs font-bold uppercase tracking-widest text-orange-600">Inside ManaJet</span>
-                    <h2 class="mt-3 text-3xl font-extrabold tracking-tight text-slate-900">The manager’s view</h2>
-                </div>
-                <div class="mt-10 grid gap-8 md:grid-cols-2">
-                    @foreach ($shots->skip(1) as [$src, $label, $caption])
-                        <figure>
-                            <div class="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-lg shadow-slate-900/5">
-                                <img src="{{ asset($src) }}" alt="ManaJet {{ strtolower($label) }} screen" loading="lazy" class="block h-auto w-full">
-                            </div>
-                            <figcaption class="mt-3 text-sm"><strong class="text-slate-800">{{ $label }}.</strong> <span class="text-slate-500">{{ $caption }}</span></figcaption>
-                        </figure>
-                    @endforeach
-                </div>
-            </section>
-        @endif
-
         {{-- Roles --}}
         <section class="reveal relative mx-auto max-w-6xl px-6 py-16">
             <div class="text-center">
