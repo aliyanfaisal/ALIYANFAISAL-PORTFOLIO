@@ -61,8 +61,8 @@
                 All products
             </a>
 
-            <div class="mt-8 grid items-center gap-14 lg:grid-cols-2">
-                <div>
+            <div class="mt-8 grid items-center gap-14 lg:grid-cols-12">
+                <div class="lg:col-span-5">
                     <div class="flex items-center gap-3">
                         <span class="grid size-11 place-items-center rounded-xl bg-slate-900 text-white shadow-lg shadow-slate-900/20">
                             <svg xmlns="http://www.w3.org/2000/svg" class="size-6 text-orange-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 18V6l8 8 8-8v12"/></svg>
@@ -88,7 +88,7 @@
                 </div>
 
                 @if ($shots->isNotEmpty())
-                    <div class="relative">
+                    <div class="relative lg:col-span-7 lg:-mr-24 xl:-mr-32">
                         <div class="absolute -inset-3 rotate-1 rounded-[2rem] bg-gradient-to-br from-orange-200 to-amber-100"></div>
                         <div class="relative overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-2xl shadow-slate-900/10">
                             <img src="{{ asset($shots[0][0]) }}" alt="ManaJet dashboard with project, ticket, income and team totals" class="w-full" fetchpriority="high">
@@ -96,7 +96,7 @@
                     </div>
                 @else
                 {{-- kanban mock --}}
-                <div class="relative">
+                <div class="relative lg:col-span-7">
                     <div class="absolute -inset-3 rotate-1 rounded-[2rem] bg-gradient-to-br from-orange-200 to-amber-100"></div>
                     <div class="relative rounded-3xl border border-slate-200 bg-white p-5 shadow-2xl shadow-slate-900/10">
                         <div class="flex items-center justify-between">
@@ -147,7 +147,7 @@
                     @foreach ($shots->skip(1) as [$src, $label, $caption])
                         <figure>
                             <div class="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-lg shadow-slate-900/5">
-                                <img src="{{ asset($src) }}" alt="ManaJet {{ strtolower($label) }} screen" loading="lazy" class="w-full">
+                                <img src="{{ asset($src) }}" alt="ManaJet {{ strtolower($label) }} screen" loading="lazy" class="aspect-[2/1] w-full object-cover object-left-top">
                             </div>
                             <figcaption class="mt-3 text-sm"><strong class="text-slate-800">{{ $label }}.</strong> <span class="text-slate-500">{{ $caption }}</span></figcaption>
                         </figure>
