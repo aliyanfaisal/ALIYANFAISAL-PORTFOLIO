@@ -88,10 +88,29 @@
                 </div>
 
                 @if ($shots->isNotEmpty())
+                    @php
+                        // Overlapping collage: [shot index, wrapper position classes, hover motion]
+                        $collage = [
+                            [3, 'left-0 top-0 z-10 w-[50%] -rotate-3 hover:-rotate-1', 'Categories'],
+                            [0, 'right-0 top-[9%] z-20 w-[84%]', 'Dashboard'],
+                            [1, 'left-[-2%] top-[40%] z-30 w-[64%] -rotate-1', 'Projects'],
+                            [2, 'right-[-1%] bottom-0 z-40 w-[56%] rotate-2 hover:rotate-0', 'Add project'],
+                        ];
+                    @endphp
                     <div class="relative lg:col-span-7">
-                        <div class="absolute -inset-3 rotate-1 rounded-[2rem] bg-gradient-to-br from-orange-200 to-amber-100"></div>
-                        <div class="relative overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-2xl shadow-slate-900/10">
-                            <img src="{{ asset($shots[0][0]) }}" alt="ManaJet dashboard with project, ticket, income and team totals" class="aspect-[4/3] w-full object-fill" fetchpriority="high">
+                        <div class="absolute -inset-4 rounded-[2.5rem] bg-gradient-to-br from-orange-200/70 via-amber-100/60 to-sky-100/60 blur-2xl" aria-hidden="true"></div>
+                        <div class="relative aspect-[5/4] w-full">
+                            @foreach ($collage as [$i, $pos, $name])
+                                @if (isset($shots[$i]))
+                                    <div class="absolute {{ $pos }} overflow-hidden rounded-xl border border-slate-200/80 bg-white shadow-2xl shadow-slate-900/20 ring-1 ring-slate-900/5 transition duration-300 hover:z-50 hover:-translate-y-1 hover:scale-[1.03]">
+                                        <div class="flex items-center gap-1 border-b border-slate-100 bg-slate-50 px-2.5 py-1.5">
+                                            <span class="size-1.5 rounded-full bg-rose-300"></span><span class="size-1.5 rounded-full bg-amber-300"></span><span class="size-1.5 rounded-full bg-emerald-300"></span>
+                                            <span class="ml-2 text-[9px] font-semibold uppercase tracking-wide text-slate-400">{{ $name }}</span>
+                                        </div>
+                                        <img src="{{ asset($shots[$i][0]) }}" alt="ManaJet {{ strtolower($shots[$i][1]) }} screen" class="block h-auto w-full" @if ($i === 0) fetchpriority="high" @endif>
+                                    </div>
+                                @endif
+                            @endforeach
                         </div>
                     </div>
                 @else
@@ -147,7 +166,7 @@
                     @foreach ($shots->skip(1) as [$src, $label, $caption])
                         <figure>
                             <div class="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-lg shadow-slate-900/5">
-                                <img src="{{ asset($src) }}" alt="ManaJet {{ strtolower($label) }} screen" loading="lazy" class="aspect-[4/3] w-full object-fill">
+                                <img src="{{ asset($src) }}" alt="ManaJet {{ strtolower($label) }} screen" loading="lazy" class="block h-auto w-full">
                             </div>
                             <figcaption class="mt-3 text-sm"><strong class="text-slate-800">{{ $label }}.</strong> <span class="text-slate-500">{{ $caption }}</span></figcaption>
                         </figure>
