@@ -31,4 +31,19 @@ return [
         'status' => 'Live',
         'stack' => ['Next.js 16', 'React 19', 'TypeScript', 'Prisma 7', 'PostgreSQL', 'Paddle', 'MCP'],
     ],
+    'manajet' => [
+        'name' => 'ManaJet',
+        'slug' => 'manajet',
+        'url' => null,
+        'repo_url' => 'https://github.com/aliyanfaisal/ManaJet-Showcase',
+        'domain' => null,
+        'category' => 'Project Management · For IT Teams',
+        'tagline' => 'Mobilize, Organize, and Excel.',
+        'summary' => 'Project management for small and mid-sized software companies. Projects, teams, tasks, client tickets and chat in one place, with an optional AI task planner.',
+        'description' => 'ManaJet is a project management system for software companies, built by Aliyan Faisal: projects, teams, tasks, a client portal, tickets, chat and an optional AI assistant that drafts task plans. Request a demo.',
+        // Dashboard screenshot; the card and page fall back to a mock board until the file exists.
+        'image' => 'images/products/manajet-dashboard.webp',
+        'status' => 'Available for clients',
+        'stack' => ['Laravel', 'MySQL', 'OpenAI', 'Twilio WhatsApp', 'Client portal'],
+    ],
 ];

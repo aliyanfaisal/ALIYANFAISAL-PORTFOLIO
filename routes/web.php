@@ -4,6 +4,7 @@ use App\Http\Controllers\AboutController;
 use App\Http\Controllers\BlogController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\CommentReactionController;
+use App\Http\Controllers\DemoRequestController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\LinkedInAuthController;
@@ -33,6 +34,7 @@ Route::get('/projects', [ProjectController::class, 'index'])->name('projects.ind
 Route::get('/projects/download', [ProjectController::class, 'downloadLinks'])->name('projects.download');
 Route::get('/products', [ProductController::class, 'index'])->name('products.index');
 Route::get('/products/{slug}', [ProductController::class, 'show'])->name('products.show');
+Route::post('/products/manajet/demo', [DemoRequestController::class, 'store'])->middleware('throttle:5,1')->name('products.demo');
 Route::get('/services', [ServiceController::class, 'index'])->name('services.index');
 Route::get('/services/{service}', [ServiceController::class, 'show'])->name('services.show');
 Route::get('/contact', [ContactController::class, 'create'])->name('contact.create');
