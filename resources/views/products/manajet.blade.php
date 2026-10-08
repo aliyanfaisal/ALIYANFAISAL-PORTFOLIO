@@ -88,10 +88,10 @@
                 </div>
 
                 @if ($shots->isNotEmpty())
-                    <div class="relative lg:col-span-7 lg:-mr-24 xl:-mr-32">
+                    <div class="relative lg:col-span-7">
                         <div class="absolute -inset-3 rotate-1 rounded-[2rem] bg-gradient-to-br from-orange-200 to-amber-100"></div>
                         <div class="relative overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-2xl shadow-slate-900/10">
-                            <img src="{{ asset($shots[0][0]) }}" alt="ManaJet dashboard with project, ticket, income and team totals" class="w-full" fetchpriority="high">
+                            <img src="{{ asset($shots[0][0]) }}" alt="ManaJet dashboard with project, ticket, income and team totals" class="aspect-[4/3] w-full object-fill" fetchpriority="high">
                         </div>
                     </div>
                 @else
@@ -147,7 +147,7 @@
                     @foreach ($shots->skip(1) as [$src, $label, $caption])
                         <figure>
                             <div class="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-lg shadow-slate-900/5">
-                                <img src="{{ asset($src) }}" alt="ManaJet {{ strtolower($label) }} screen" loading="lazy" class="aspect-[2/1] w-full object-cover object-left-top">
+                                <img src="{{ asset($src) }}" alt="ManaJet {{ strtolower($label) }} screen" loading="lazy" class="aspect-[4/3] w-full object-fill">
                             </div>
                             <figcaption class="mt-3 text-sm"><strong class="text-slate-800">{{ $label }}.</strong> <span class="text-slate-500">{{ $caption }}</span></figcaption>
                         </figure>
