@@ -23,8 +23,7 @@
         </div>
 
         <p class="mt-10 text-sm text-zinc-500 dark:text-zinc-400">
-            More of my code is on <a href="https://github.com/aliyanfaisal" target="_blank" rel="noopener" class="font-medium text-indigo-500 hover:underline dark:text-indigo-400">GitHub</a>
-            and the <a href="{{ route('projects.index') }}" class="font-medium text-indigo-500 hover:underline dark:text-indigo-400">Projects page</a>.
+            More of my code is on <a href="https://github.com/aliyanfaisal" target="_blank" rel="noopener" class="font-medium text-indigo-500 hover:underline dark:text-indigo-400">GitHub</a>.
         </p>
     </section>
 </x-layouts.app>

@@ -21,9 +21,9 @@
         ], $url),
     ];
 @endphp
-<x-layouts.app :title="$project['name'].' — '.$project['tagline'].' | Aliyan Faisal'" :description="\Illuminate\Support\Str::limit($project['description'], 157)" :graph="$graph">
+<x-layouts.app :title="$project['name'].' — '.$project['tagline'].' | Aliyan Faisal'" :description="\Illuminate\Support\Str::limit($project['description'], 157)" :graph="$graph" :full-bleed="true">
     {{-- Hero --}}
-    <section class="glow-gradient relative overflow-hidden border-b border-zinc-200 dark:border-white/10">
+    <section class="glow-gradient relative overflow-hidden border-b border-zinc-200 pt-20 dark:border-white/10">
         <div class="bg-grid absolute inset-0 -z-10"></div>
         <div class="mx-auto max-w-4xl px-6 pb-14 pt-12">
             <nav aria-label="Breadcrumb" class="text-sm text-zinc-500 dark:text-zinc-400">

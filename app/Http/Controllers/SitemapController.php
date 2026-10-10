@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Models\BlogPost;
 use App\Models\Category;
-use App\Models\Project;
 use App\Models\Setting;
 use Carbon\Carbon;
 use Carbon\CarbonInterface;
@@ -20,7 +19,6 @@ class SitemapController extends Controller
         $sitemap = Sitemap::create()
             ->add($this->url(route('home'), $latestPostUpdate))
             ->add($this->url(route('about'), $this->latest(Setting::query()->max('updated_at'))))
-            ->add($this->url(route('projects.index'), $this->latest(Project::query()->max('updated_at'))))
             ->add($this->url(route('products.index')))
             ->add($this->url(route('open-source.index')))
             ->add($this->url(route('blog.index'), $latestPostUpdate))

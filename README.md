@@ -31,7 +31,7 @@ See the full list with packages and FAQs on the [Services page](https://aliyanfa
 
 Adroitcube · Miami Dream Beach Vacations · Castle Milk Rental · Lingo Lad · Ibex Media Network · Good Will Movement · Khalis Pay UK · Book 24 · Gr2me · Delos Vacations · Pharmaquipt · What/When · Ceramics in Europe · The Karakoram
 
-Case studies for these live on the [Projects page](https://aliyanfaisal.com/projects), alongside my public repos pulled in live from [GitHub](https://github.com/aliyanfaisal).
+My public repos are on [GitHub](https://github.com/aliyanfaisal).
 
 ## Let's build something
 

@@ -52,7 +52,7 @@
                 </p>
 
                 <div class="mt-8 flex flex-wrap gap-4">
-                    <a href="{{ route('projects.index') }}" class="rounded-full bg-zinc-900 px-6 py-3 text-sm font-semibold text-white transition hover:bg-indigo-600 dark:bg-white dark:text-zinc-900 dark:hover:bg-indigo-400">
+                    <a href="{{ route('products.index') }}" class="rounded-full bg-zinc-900 px-6 py-3 text-sm font-semibold text-white transition hover:bg-indigo-600 dark:bg-white dark:text-zinc-900 dark:hover:bg-indigo-400">
                         View My Work
                     </a>
                     <a href="{{ route('contact.create') }}" class="rounded-full border border-zinc-300 px-6 py-3 text-sm font-semibold text-zinc-700 transition hover:border-indigo-400 hover:text-indigo-500 dark:border-white/15 dark:text-zinc-200">
@@ -373,7 +373,7 @@
                             <p class="mt-1 text-sm text-zinc-500 dark:text-zinc-400">{{ $githubProfile['public_repos'] }} public repos &middot; pulled live from GitHub</p>
                         @endif
                     </div>
-                    <a href="{{ route('projects.index') }}" class="text-sm font-medium text-indigo-500 hover:underline dark:text-indigo-400">All projects &rarr;</a>
+                    <a href="https://github.com/aliyanfaisal" target="_blank" rel="noopener" class="text-sm font-medium text-indigo-500 hover:underline dark:text-indigo-400">All on GitHub &rarr;</a>
                 </div>
 
                 <div class="mt-8 grid grid-cols-1 gap-6 md:grid-cols-3">

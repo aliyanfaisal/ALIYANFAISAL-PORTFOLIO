@@ -13,7 +13,6 @@ use App\Http\Controllers\OpenSourceController;
 use App\Http\Controllers\PostReactionController;
 use App\Http\Controllers\PrivacyPolicyController;
 use App\Http\Controllers\ProductController;
-use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\SitemapController;
 use Illuminate\Support\Facades\Route;
 
@@ -30,8 +29,9 @@ Route::put('/blog/{slug}/comments/{comment}', [CommentController::class, 'update
 Route::delete('/blog/{slug}/comments/{comment}', [CommentController::class, 'destroy'])->name('blog.comments.destroy');
 Route::post('/blog/{slug}/comments/{comment}/reactions', [CommentReactionController::class, 'store'])->name('blog.comments.reactions.store');
 Route::get('/about', [AboutController::class, 'index'])->name('about');
-Route::get('/projects', [ProjectController::class, 'index'])->name('projects.index');
-Route::get('/projects/download', [ProjectController::class, 'downloadLinks'])->name('projects.download');
+// The Projects page was removed; keep old links working.
+Route::redirect('/projects', '/', 301);
+Route::redirect('/projects/download', '/', 301);
 Route::get('/products', [ProductController::class, 'index'])->name('products.index');
 Route::get('/products/{slug}', [ProductController::class, 'show'])->name('products.show');
 Route::get('/open-source', [OpenSourceController::class, 'index'])->name('open-source.index');

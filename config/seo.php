@@ -50,7 +50,6 @@ return [
 
     'descriptions' => [
         'about' => 'Meet Aliyan Faisal, a software engineer and AI developer from Islamabad with 5+ years building LLM apps, automations, web platforms and products.',
-        'projects' => 'Selected projects and open-source repos by Aliyan Faisal: AI and LLM integrations, automation tools, e-commerce builds and full-stack web apps.',
         'blog' => 'Articles on LLM integration, RAG, AI automation, full-stack development and server configuration from Aliyan Faisal.',
     ],
 ];

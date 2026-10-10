@@ -20,8 +20,6 @@
                 <ul class="mt-3 space-y-2 text-sm text-zinc-500 dark:text-zinc-400">
                     <li><a href="{{ route('about') }}"
                             class="hover:text-indigo-500 dark:hover:text-indigo-400">About</a></li>
-                    <li><a href="{{ route('projects.index') }}"
-                            class="hover:text-indigo-500 dark:hover:text-indigo-400">Projects</a></li>
                     <li><a href="{{ route('products.index') }}"
                             class="hover:text-indigo-500 dark:hover:text-indigo-400">Products</a></li>
                     <li><a href="{{ route('open-source.index') }}"

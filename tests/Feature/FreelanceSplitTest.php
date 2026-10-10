@@ -3,6 +3,7 @@
 namespace Tests\Feature;
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\Http;
 use Tests\TestCase;
 
 class FreelanceSplitTest extends TestCase
@@ -19,6 +20,8 @@ class FreelanceSplitTest extends TestCase
 
     public function test_main_site_has_no_hiring_or_marketplace_calls_to_action(): void
     {
+        Http::fake(['*' => Http::response('', 500)]);
+
         foreach (['/', '/about', '/contact'] as $url) {
             $html = $this->get($url)->assertOk()->getContent();
 

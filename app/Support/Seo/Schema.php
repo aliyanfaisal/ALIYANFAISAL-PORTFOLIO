@@ -3,7 +3,6 @@
 namespace App\Support\Seo;
 
 use App\Models\BlogPost;
-use App\Models\Project;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
 
@@ -166,18 +165,6 @@ class Schema
         ];
     }
 
-
-    /**
-     * @param  Collection<int, Project>  $projects
-     * @return array<string, mixed>
-     */
-    public static function projectList(Collection $projects): array
-    {
-        return self::itemList($projects->map(fn (Project $project): array => [
-            'url' => $project->external_url ?: route('projects.index').'#'.$project->slug,
-            'name' => $project->title,
-        ])->all());
-    }
 
     /**
      * @param  Collection<int, BlogPost>  $posts
