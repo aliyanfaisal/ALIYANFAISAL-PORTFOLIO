@@ -12,7 +12,7 @@ class AdminPanelAccessTest extends TestCase
 
     public function test_guests_are_redirected_to_login(): void
     {
-        $this->get('/admin/blog-posts')->assertRedirect('/admin/login');
+        $this->get('/admin/settings')->assertRedirect('/admin/login');
     }
 
     public function test_non_admin_users_cannot_access_the_panel(): void
@@ -29,14 +29,6 @@ class AdminPanelAccessTest extends TestCase
         $this->actingAs($admin);
 
         $this->get('/admin')->assertOk();
-        $this->get('/admin/blog-posts')->assertOk();
-        $this->get('/admin/blog-posts/create')->assertOk();
-        $this->get('/admin/categories')->assertOk();
-        $this->get('/admin/categories/create')->assertOk();
-        $this->get('/admin/tags')->assertOk();
-        $this->get('/admin/tags/create')->assertOk();
         $this->get('/admin/settings')->assertOk();
-        $this->get('/admin/newsletter-subscribers')->assertOk();
-        $this->get('/admin/automation-logs')->assertOk();
     }
 }

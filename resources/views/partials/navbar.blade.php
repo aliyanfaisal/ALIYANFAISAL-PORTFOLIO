@@ -5,7 +5,6 @@
         ['label' => 'Projects', 'route' => 'projects.index'],
         ['label' => 'Products', 'route' => 'products.index'],
         ['label' => 'Services', 'route' => 'services.index'],
-        ['label' => 'Blog', 'route' => 'blog.index'],
         ['label' => 'Contact', 'route' => 'contact.create'],
     ];
     $settings = \App\Models\Setting::current();

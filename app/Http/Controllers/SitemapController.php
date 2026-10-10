@@ -2,8 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\BlogPost;
-use App\Models\Category;
 use App\Models\Project;
 use App\Models\Service;
 use App\Models\Setting;
@@ -16,15 +14,12 @@ class SitemapController extends Controller
 {
     public function index(): Sitemap
     {
-        $latestPostUpdate = $this->latest(BlogPost::published()->max('updated_at'));
-
         $sitemap = Sitemap::create()
-            ->add($this->url(route('home'), $latestPostUpdate))
+            ->add($this->url(route('home'), $this->latest(Service::query()->max('updated_at'))))
             ->add($this->url(route('about'), $this->latest(Setting::query()->max('updated_at'))))
             ->add($this->url(route('projects.index'), $this->latest(Project::query()->max('updated_at'))))
             ->add($this->url(route('products.index')))
             ->add($this->url(route('services.index'), $this->latest(Service::query()->max('updated_at'))))
-            ->add($this->url(route('blog.index'), $latestPostUpdate))
             ->add($this->url(route('contact.create')));
 
         foreach (array_keys(config('products')) as $slug) {
@@ -34,31 +29,6 @@ class SitemapController extends Controller
         Service::orderBy('sort_order')->get()->each(fn (Service $service) => $sitemap->add(
             $this->url(route('services.show', $service), $service->updated_at)
         ));
-
-        Category::query()
-            ->whereHas('posts', fn ($query) => $query->published())
-            ->withMax(['posts as latest_post_update' => fn ($query) => $query->published()], 'updated_at')
-            ->orderBy('name')
-            ->get()
-            ->each(fn (Category $category) => $sitemap->add(
-                $this->url(
-                    route('blog.category', $category),
-                    $this->latest($category->latest_post_update, $category->updated_at),
-                )
-            ));
-
-        BlogPost::published()
-            ->orderByDesc('published_at')
-            ->get(['slug', 'title', 'image_path', 'updated_at'])
-            ->each(function (BlogPost $post) use ($sitemap): void {
-                $url = $this->url(route('blog.show', $post), $post->updated_at);
-
-                if ($post->image_path) {
-                    $url->addImage($post->imageUrl(), $post->title);
-                }
-
-                $sitemap->add($url);
-            });
 
         return $sitemap;
     }

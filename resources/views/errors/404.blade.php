@@ -23,9 +23,6 @@
                 <a href="{{ route('home') }}" class="rounded-full bg-zinc-900 px-6 py-3 text-sm font-semibold text-white transition hover:bg-indigo-600 dark:bg-white dark:text-zinc-900 dark:hover:bg-indigo-400">
                     Back to Home
                 </a>
-                <a href="{{ route('blog.index') }}" class="rounded-full border border-zinc-300 px-6 py-3 text-sm font-semibold text-zinc-700 transition hover:border-indigo-400 hover:text-indigo-500 dark:border-white/15 dark:text-zinc-200">
-                    Read the Blog
-                </a>
             </div>
 
             <div class="glass-card mx-auto mt-12 flex max-w-md flex-wrap items-center justify-center gap-x-6 gap-y-2 px-6 py-4 text-sm">

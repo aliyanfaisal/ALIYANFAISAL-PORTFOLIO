@@ -407,24 +407,6 @@
         </section>
     @endif
 
-    {{-- Latest Blog Posts --}}
-    @if ($latestPosts->isNotEmpty())
-        <section class="reveal border-t border-zinc-200 py-20 dark:border-white/10">
-            <div class="mx-auto max-w-6xl px-6">
-                <div class="flex items-end justify-between">
-                    <h2 class="text-2xl font-bold text-zinc-900 dark:text-white">From the Blog</h2>
-                    <a href="{{ route('blog.index') }}" class="text-sm font-medium text-indigo-500 hover:underline dark:text-indigo-400">View all &rarr;</a>
-                </div>
-
-                <div class="mt-8 grid grid-cols-1 gap-6 md:grid-cols-3">
-                    @foreach ($latestPosts as $post)
-                        <x-blog-card :post="$post" />
-                    @endforeach
-                </div>
-            </div>
-        </section>
-    @endif
-
     {{-- Testimonials --}}
     @if ($testimonials->isNotEmpty())
         <section class="reveal border-t border-zinc-200 bg-zinc-50 py-20 dark:border-white/10 dark:bg-white/[0.02]">

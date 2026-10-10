@@ -12,13 +12,13 @@
             <p>
                 This Privacy Policy describes how {{ $settings->site_name }} ("we", "us", or "this site")
                 collects, uses, and discloses information when you visit {{ $settings->site_name }} (the "Site"),
-                including our blog and contact pages.
+                including our services and contact pages.
             </p>
 
             <h2>Information We Collect</h2>
             <h3>Information You Provide</h3>
             <p>
-                When you use our contact form, subscribe to our newsletter, or post a comment, we collect the
+                When you use our contact form or request a demo, we collect the
                 information you submit, such as your name, email address, and message content.
             </p>
 
@@ -78,15 +78,13 @@
             <h2>How We Use Your Information</h2>
             <ul>
                 <li>To respond to inquiries submitted through the contact form</li>
-                <li>To send newsletter updates to subscribers who opt in</li>
-                <li>To display and moderate blog comments</li>
                 <li>To analyze Site traffic and improve content and functionality</li>
                 <li>To serve relevant advertising through Google AdSense</li>
             </ul>
 
             <h2>Data Retention</h2>
             <p>
-                We retain contact form submissions, newsletter subscriptions, and comments for as long as
+                We retain contact form submissions and demo requests for as long as
                 necessary to fulfil the purposes described in this policy, unless a longer retention period is
                 required by law.
             </p>

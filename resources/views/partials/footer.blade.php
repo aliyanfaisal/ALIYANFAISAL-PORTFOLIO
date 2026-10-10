@@ -62,34 +62,6 @@
                 </ul>
             </div>
 
-            <div class="col-span-2 sm:col-span-1">
-                <h3 class="text-sm font-semibold text-zinc-900 dark:text-white">Newsletter</h3>
-                <p class="mt-3 text-sm text-zinc-500 dark:text-zinc-400">Get new articles in your inbox. No spam.</p>
-                <form action="{{ route('newsletter.store') }}" method="POST" class="mt-3">
-                    @csrf
-                    <div class="flex gap-2">
-                        <label for="footer-newsletter-email" class="sr-only">Email address</label>
-                        <input
-                            type="email"
-                            id="footer-newsletter-email"
-                            name="email"
-                            value="{{ old('email') }}"
-                            placeholder="you@example.com"
-                            required
-                            class="w-full min-w-0 rounded-full border border-zinc-300 bg-white px-4 py-2 text-sm text-zinc-700 placeholder:text-zinc-400 focus:border-indigo-400 focus:outline-none dark:border-white/15 dark:bg-zinc-900 dark:text-zinc-200"
-                        >
-                        <button
-                            type="submit"
-                            class="shrink-0 rounded-full bg-zinc-900 px-4 py-2 text-sm font-medium text-white transition hover:bg-indigo-600 dark:bg-white dark:text-zinc-900 dark:hover:bg-indigo-400"
-                        >
-                            Subscribe
-                        </button>
-                    </div>
-                    @error('email')
-                        <p class="mt-2 text-xs text-rose-500">{{ $message }}</p>
-                    @enderror
-                </form>
-            </div>
         </div>
 
         <div

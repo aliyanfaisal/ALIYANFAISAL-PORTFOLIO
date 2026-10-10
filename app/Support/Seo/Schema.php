@@ -2,7 +2,6 @@
 
 namespace App\Support\Seo;
 
-use App\Models\BlogPost;
 use App\Models\Project;
 use App\Models\Service;
 use Illuminate\Support\Collection;
@@ -150,24 +149,6 @@ class Schema
     }
 
     /**
-     * @return array<string, mixed>
-     */
-    public static function blog(): array
-    {
-        return [
-            '@type' => 'Blog',
-            '@id' => Seo::blogId(),
-            'url' => route('blog.index'),
-            'name' => config('seo.site_name').' — Blog',
-            'description' => config('seo.descriptions.blog'),
-            'inLanguage' => 'en',
-            'isPartOf' => ['@id' => Seo::websiteId()],
-            'author' => self::personRef(),
-            'publisher' => self::personRef(),
-        ];
-    }
-
-    /**
      * @param  Collection<int, Service>  $services
      * @return array<int, array<string, mixed>>
      */
@@ -207,61 +188,5 @@ class Schema
             'url' => $project->external_url ?: route('projects.index').'#'.$project->slug,
             'name' => $project->title,
         ])->all());
-    }
-
-    /**
-     * @param  Collection<int, BlogPost>  $posts
-     * @return array<string, mixed>
-     */
-    public static function postList(Collection $posts): array
-    {
-        return self::itemList($posts->map(fn (BlogPost $post): array => [
-            'url' => route('blog.show', $post),
-            'name' => $post->title,
-        ])->all());
-    }
-
-    /**
-     * @return array<int, array<string, mixed>>
-     */
-    public static function blogPosting(BlogPost $post, string $description, array $image): array
-    {
-        $url = route('blog.show', $post);
-        $category = $post->categories->first();
-
-        $crumbs = [
-            ['name' => 'Home', 'url' => route('home')],
-            ['name' => 'Blog', 'url' => route('blog.index')],
-        ];
-        if ($category) {
-            $crumbs[] = ['name' => $category->name, 'url' => route('blog.category', $category)];
-        }
-        $crumbs[] = ['name' => $post->title, 'url' => $url];
-
-        $posting = array_filter([
-            '@type' => 'BlogPosting',
-            '@id' => $url.'#article',
-            'url' => $url,
-            'mainEntityOfPage' => ['@type' => 'WebPage', '@id' => $url],
-            'headline' => Str::limit($post->title, 110, ''),
-            'description' => $description,
-            'image' => [
-                '@type' => 'ImageObject',
-                'url' => $image['url'],
-                'width' => $image['width'],
-                'height' => $image['height'],
-            ],
-            'datePublished' => $post->published_at->toIso8601String(),
-            'dateModified' => ($post->updated_at ?? $post->published_at)->toIso8601String(),
-            'author' => self::personRef(),
-            'publisher' => self::personRef(),
-            'isPartOf' => ['@id' => Seo::blogId()],
-            'articleSection' => $category?->name,
-            'keywords' => $post->tags->pluck('name')->all() ?: null,
-            'wordCount' => str_word_count(strip_tags($post->body_html)),
-            'inLanguage' => 'en',
-        ]);
-
-        return [$posting, self::personLite(), self::breadcrumbs($crumbs, $url)];
     }
 }

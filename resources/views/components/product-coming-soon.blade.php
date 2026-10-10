@@ -4,6 +4,6 @@
     </span>
     <div>
         <h3 class="text-lg font-semibold text-zinc-900 dark:text-white">More coming soon</h3>
-        <p class="mt-1 max-w-xl text-sm text-zinc-500 dark:text-zinc-400">More products are in the works. Follow along on the blog for launches.</p>
+        <p class="mt-1 max-w-xl text-sm text-zinc-500 dark:text-zinc-400">More products are in the works.</p>
     </div>
 </div>

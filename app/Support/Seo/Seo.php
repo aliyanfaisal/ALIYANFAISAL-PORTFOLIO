@@ -17,11 +17,6 @@ class Seo
         return url('/').'/#website';
     }
 
-    public static function blogId(): string
-    {
-        return route('blog.index').'#blog';
-    }
-
     /**
      * The current URL with only whitelisted query parameters (utm_*, gclid, q ... are dropped,
      * page=1 collapses to the bare URL) so paginated pages self-canonicalize.

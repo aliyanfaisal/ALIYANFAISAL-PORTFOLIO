@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\BlogPost;
 use App\Models\Project;
 use App\Models\Service;
 use App\Models\Skill;
@@ -15,7 +14,6 @@ class HomeController extends Controller
     {
         return view('home', [
             'featuredProjects' => Project::where('featured', true)->inRandomOrder()->take(3)->get(),
-            'latestPosts' => BlogPost::published()->with('categories')->orderByDesc('published_at')->take(3)->get(),
             'featuredServices' => Service::where('featured', true)->orderBy('sort_order')->take(3)->get(),
             'aiService' => Service::where('category', 'AI Development')->first(),
             'skills' => Skill::orderBy('sort_order')->take(12)->get(),

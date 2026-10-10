@@ -25,7 +25,6 @@
 <meta name="twitter:description" content="{{ $seoDescription }}">
 <meta name="twitter:image" content="{{ $seoImage['url'] }}">
 
-<link rel="alternate" type="application/rss+xml" title="{{ config('seo.site_name') }} — Blog" href="{{ route('blog.feed') }}">
 
 @if (config('seo.google_site_verification'))
     <meta name="google-site-verification" content="{{ config('seo.google_site_verification') }}">

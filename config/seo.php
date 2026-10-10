@@ -51,6 +51,5 @@ return [
         'about' => 'Meet Aliyan Faisal, a full-stack developer and AI/LLM systems engineer from Islamabad with 5+ years building LLM apps, automations and web platforms.',
         'projects' => 'Explore client projects and open-source repos by Aliyan Faisal: AI and LLM integrations, automation tools, e-commerce builds and full-stack web apps.',
         'services' => 'Hire Aliyan Faisal for LLM and AI integration, RAG chatbots, workflow automation, full-stack development and server setup. 5.0 rated, 200+ reviews.',
-        'blog' => 'Practical articles on LLM integration, RAG, AI automation, full-stack development and server configuration from Aliyan Faisal.',
     ],
 ];

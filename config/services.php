@@ -40,27 +40,6 @@ return [
         'token' => env('GITHUB_TOKEN'),
     ],
 
-    'blog_api' => [
-        'token' => env('BLOG_API_TOKEN'),
-    ],
-
-    'cuelara' => [
-        'url' => env('CUELARA_API_URL'),
-        'token' => env('CUELARA_API_TOKEN'),
-    ],
-
-    'google_indexing' => [
-        'credentials' => env('GOOGLE_INDEXING_CREDENTIALS'),
-    ],
-
-    'linkedin' => [
-        'client_id' => env('LINKEDIN_CLIENT_ID'),
-        'client_secret' => env('LINKEDIN_CLIENT_SECRET'),
-        'redirect_uri' => env('LINKEDIN_REDIRECT_URI'),
-        'connect_key' => env('LINKEDIN_CONNECT_KEY'),
-        'api_token' => env('LINKEDIN_API_TOKEN'),
-    ],
-
     'turnstile' => [
         'site_key' => env('TURNSTILE_SITE_KEY'),
         'secret_key' => env('TURNSTILE_SECRET_KEY'),
