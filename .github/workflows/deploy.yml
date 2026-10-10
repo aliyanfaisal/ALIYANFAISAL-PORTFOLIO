@@ -78,6 +78,9 @@ jobs:
           passphrase: ${{ secrets.CPANEL_SSH_KEY_PASSPHRASE }}
           script: |
             cd ${{ env.REMOTE_PATH }}
+            # rsync excludes these runtime folders, so a fresh server folder won't have them.
+            mkdir -p storage/framework/views storage/framework/cache/data storage/framework/sessions storage/logs storage/app/public bootstrap/cache
+            chmod -R ug+rwX storage bootstrap/cache
             php artisan storage:link || true
             php artisan migrate --force
             php artisan config:cache
