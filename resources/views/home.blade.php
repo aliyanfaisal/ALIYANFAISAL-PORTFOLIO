@@ -27,19 +27,15 @@
         <div class="mx-auto grid max-w-6xl gap-12 px-6 pb-16 pt-6 md:grid-cols-2 md:items-center md:pb-24 md:pt-10">
             <div>
                 <p class="inline-flex items-center gap-2 rounded-full border border-indigo-500/30 bg-indigo-500/10 px-3 py-1 text-xs font-medium text-indigo-500 dark:text-indigo-300">
-                    <span class="relative flex size-1.5">
-                        <span class="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75"></span>
-                        <span class="relative inline-flex size-1.5 rounded-full bg-emerald-400"></span>
-                    </span>
-                    Available for AI &amp; web development projects
+                    Islamabad, Pakistan
                 </p>
 
                 <h1 class="mt-6 text-4xl font-bold tracking-tight text-zinc-900 sm:text-5xl dark:text-white">
-                    <span class="block text-base font-semibold tracking-normal text-indigo-500 sm:text-lg dark:text-indigo-300">Full-Stack Developer &amp; AI / LLM Systems Engineer</span>
+                    <span class="block text-base font-semibold tracking-normal text-indigo-500 sm:text-lg dark:text-indigo-300">Software Engineer &amp; AI Developer</span>
                     Building
                     <span
                         x-data="{
-                            words: ['AI-Powered', 'LLM-Integrated', 'RAG-Driven', 'Agentic', 'Automation-First', 'Commerce-Automated', 'Full-Stack', 'Production-Ready', 'Self-Hosted', 'DevOps-Hardened'],
+                            words: ['AI-Powered', 'LLM-Integrated', 'RAG-Driven', 'Agentic', 'Full-Stack', 'Production-Ready'],
                             i: 0,
                             visible: true,
                         }"
@@ -52,15 +48,15 @@
                 </h1>
 
                 <p class="mt-6 max-w-xl text-lg text-zinc-600 dark:text-zinc-400">
-                    I'm Aliyan Faisal, a full-stack developer and AI/LLM systems engineer. I build LLM integrations, RAG pipelines, chatbots and workflow automations with OpenAI, Claude and Gemini — plus the full-stack apps (Laravel, Node.js, React, WordPress) and server setups they run on. 5+ years shipping production systems for clients worldwide.
+                    I'm Aliyan Faisal, a software engineer and AI developer. I build LLM integrations, RAG pipelines, chatbots and workflow automations with OpenAI, Claude and Gemini — plus the full-stack apps (Laravel, Node.js, React) and servers they run on. 5+ years shipping production systems.
                 </p>
 
                 <div class="mt-8 flex flex-wrap gap-4">
-                    <a href="{{ route('contact.create') }}" class="rounded-full bg-zinc-900 px-6 py-3 text-sm font-semibold text-white transition hover:bg-indigo-600 dark:bg-white dark:text-zinc-900 dark:hover:bg-indigo-400">
-                        Start a Project
-                    </a>
-                    <a href="{{ route('projects.index') }}" class="rounded-full border border-zinc-300 px-6 py-3 text-sm font-semibold text-zinc-700 transition hover:border-indigo-400 hover:text-indigo-500 dark:border-white/15 dark:text-zinc-200">
+                    <a href="{{ route('projects.index') }}" class="rounded-full bg-zinc-900 px-6 py-3 text-sm font-semibold text-white transition hover:bg-indigo-600 dark:bg-white dark:text-zinc-900 dark:hover:bg-indigo-400">
                         View My Work
+                    </a>
+                    <a href="{{ route('contact.create') }}" class="rounded-full border border-zinc-300 px-6 py-3 text-sm font-semibold text-zinc-700 transition hover:border-indigo-400 hover:text-indigo-500 dark:border-white/15 dark:text-zinc-200">
+                        Get in Touch
                     </a>
                 </div>
 
@@ -70,12 +66,12 @@
                         <dd class="text-xs text-zinc-500 dark:text-zinc-400">Years Experience</dd>
                     </div>
                     <div>
-                        <dt class="text-2xl font-bold text-zinc-900 dark:text-white">300+</dt>
-                        <dd class="text-xs text-zinc-500 dark:text-zinc-400">Orders Delivered</dd>
+                        <dt class="text-2xl font-bold text-zinc-900 dark:text-white">{{ count(config('products')) }}</dt>
+                        <dd class="text-xs text-zinc-500 dark:text-zinc-400">Products Owned &amp; many more built as a freelancer</dd>
                     </div>
                     <div>
-                        <dt class="flex items-center gap-1 text-2xl font-bold text-zinc-900 dark:text-white">5 <x-icon name="star" class="size-5 text-amber-400" /></dt>
-                        <dd class="text-xs text-zinc-500 dark:text-zinc-400">Fiverr Rating (205)</dd>
+                        <dt class="text-2xl font-bold text-zinc-900 dark:text-white">3.80 CGPA</dt>
+                        <dd class="text-xs text-zinc-500 dark:text-zinc-400">BSc IT, Karakoram International University</dd>
                     </div>
                 </dl>
             </div>
@@ -107,28 +103,17 @@
                     <p class="text-[11px] text-zinc-500 dark:text-zinc-400">OpenAI · Claude · Gemini</p>
                 </div>
 
-                <div class="glass-card animate-float absolute -right-14 top-1/4 z-20 hidden w-36 lg:block" style="animation-delay: 1.2s">
-                    <div class="grid size-8 place-items-center rounded-lg bg-gradient-to-br from-amber-400/20 via-amber-400/10 to-transparent text-amber-500"><x-icon name="star" class="size-4" /></div>
-                    <p class="mt-1.5 text-xs font-semibold text-zinc-800 dark:text-zinc-100">5.0 Rating</p>
-                    <p class="text-[11px] text-zinc-500 dark:text-zinc-400">200+ Fiverr reviews</p>
-                </div>
-
-                <div class="glass-card animate-float absolute -left-12 top-[38%] z-20 hidden w-36 lg:block" style="animation-delay: 1.8s">
+                
+                <div class="glass-card animate-float absolute -right-14 top-1/4 z-20 hidden w-40 lg:block" style="animation-delay: 1.2s">
                     <div class="grid size-8 place-items-center rounded-lg bg-gradient-to-br from-violet-500/15 via-fuchsia-500/15 to-transparent text-violet-500 dark:text-violet-300"><x-icon name="rocket" class="size-4" /></div>
-                    <p class="mt-1.5 text-xs font-semibold text-zinc-800 dark:text-zinc-100">Fast Delivery</p>
-                    <p class="text-[11px] text-zinc-500 dark:text-zinc-400">Avg. 1–3 day turnaround</p>
+                    <p class="mt-1.5 text-xs font-semibold text-zinc-800 dark:text-zinc-100">Products I Own</p>
+                    <p class="text-[11px] text-zinc-500 dark:text-zinc-400">InvoiceInspect · Cuelara · ManaJet</p>
                 </div>
 
                 <div class="glass-card animate-float absolute -left-2 bottom-10 z-20 w-44 lg:-left-16" style="animation-delay: 2.4s">
                     <div class="grid size-8 place-items-center rounded-lg bg-gradient-to-br from-cyan-500/15 via-indigo-500/15 to-transparent text-cyan-500 dark:text-cyan-300"><x-icon name="bolt" class="size-4" /></div>
-                    <p class="mt-1.5 text-xs font-semibold text-zinc-800 dark:text-zinc-100">300+ Orders Delivered</p>
-                    <p class="text-[11px] text-zinc-500 dark:text-zinc-400">Full-Stack · AI · Automation</p>
-                </div>
-
-                <div class="glass-card animate-float absolute -right-6 bottom-0 z-20 hidden w-36 sm:block lg:-right-14" style="animation-delay: 3.2s">
-                    <div class="grid size-8 place-items-center rounded-lg bg-gradient-to-br from-emerald-500/15 via-teal-500/15 to-transparent text-emerald-500 dark:text-emerald-300"><x-icon name="badge-check" class="size-4" /></div>
-                    <p class="mt-1.5 text-xs font-semibold text-zinc-800 dark:text-zinc-100">Level 2 Seller</p>
-                    <p class="text-[11px] text-zinc-500 dark:text-zinc-400">Fiverr verified</p>
+                    <p class="mt-1.5 text-xs font-semibold text-zinc-800 dark:text-zinc-100">Full-Stack Engineering</p>
+                    <p class="text-[11px] text-zinc-500 dark:text-zinc-400">Laravel · Node · React · DevOps</p>
                 </div>
             </div>
         </div>
@@ -171,28 +156,6 @@
             </div>
         </div>
     </section>
-
-    {{-- Featured Services --}}
-    @if ($featuredServices->isNotEmpty())
-        <section class="reveal border-b border-zinc-200 py-20 dark:border-white/10">
-            <div class="mx-auto max-w-6xl px-6">
-                <div class="flex items-end justify-between">
-                    <div>
-                        <p class="text-sm font-semibold uppercase tracking-widest text-indigo-500 dark:text-indigo-400">Hire Me On Fiverr</p>
-                        <h2 class="mt-2 text-2xl font-bold text-zinc-900 dark:text-white">Popular Services</h2>
-                    </div>
-                    <a href="{{ route('services.index') }}" class="text-sm font-medium text-indigo-500 hover:underline dark:text-indigo-400">View all &rarr;</a>
-                </div>
-
-                <div class="mt-8 grid grid-cols-1 gap-6 md:grid-cols-3">
-                    @php $topRatingCount = $featuredServices->max('rating_count'); @endphp
-                    @foreach ($featuredServices as $service)
-                        <x-service-card :service="$service" :bestSeller="$service->rating_count === $topRatingCount && $topRatingCount > 0" />
-                    @endforeach
-                </div>
-            </div>
-        </section>
-    @endif
 
     {{-- Skills --}}
     @php
@@ -291,23 +254,9 @@
             <p class="text-center text-sm font-semibold uppercase tracking-widest text-indigo-500 dark:text-indigo-400">Where to Find Me</p>
             <h2 class="mt-2 text-center text-2xl font-bold text-zinc-900 dark:text-white">Let's Connect</h2>
 
-            <div class="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+            <div class="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
                 @php
                     $platforms = [
-                        [
-                            'name' => 'Fiverr',
-                            'subtitle' => '5.0 · 200+ reviews',
-                            'url' => 'https://www.fiverr.com/aliyanfaisal',
-                            'badge' => 'bg-[#1dbf73]',
-                            'icon' => '<text x="12" y="16.5" text-anchor="middle" font-size="11" font-weight="700" fill="white" font-family="Arial, sans-serif">fi</text>',
-                        ],
-                        [
-                            'name' => 'Upwork',
-                            'subtitle' => 'Top Rated Freelancer',
-                            'url' => 'https://www.upwork.com/freelancers/~01f763ee3322eda908',
-                            'badge' => 'bg-[#14a800]',
-                            'icon' => '<text x="12" y="16.5" text-anchor="middle" font-size="10.5" font-weight="700" fill="white" font-family="Arial, sans-serif">Up</text>',
-                        ],
                         [
                             'name' => 'LinkedIn',
                             'subtitle' => 'Connect professionally',
@@ -316,9 +265,16 @@
                             'icon' => '<path d="M6.94 8.5H4.56V19h2.38V8.5zM5.75 4.75a1.38 1.38 0 100 2.76 1.38 1.38 0 000-2.76zM19.44 19h-2.37v-5.4c0-1.29-.46-2.16-1.6-2.16-.88 0-1.4.59-1.63 1.16-.08.2-.1.49-.1.77V19H11.4s.03-9.6 0-10.5h2.37v1.49a2.35 2.35 0 012.13-1.18c1.56 0 2.73 1.02 2.73 3.2V19z" fill="white"/>',
                         ],
                         [
+                            'name' => 'GitHub',
+                            'subtitle' => 'Code & open source',
+                            'url' => 'https://github.com/aliyanfaisal',
+                            'badge' => 'bg-zinc-800',
+                            'icon' => '<path d="M12 .5a11.5 11.5 0 00-3.64 22.41c.58.11.79-.25.79-.56v-2c-3.2.7-3.88-1.37-3.88-1.37-.52-1.33-1.28-1.69-1.28-1.69-1.04-.71.08-.7.08-.7 1.15.08 1.76 1.19 1.76 1.19 1.03 1.76 2.69 1.25 3.35.96.1-.75.4-1.25.73-1.54-2.55-.29-5.24-1.28-5.24-5.69 0-1.26.45-2.28 1.18-3.09-.12-.29-.51-1.46.11-3.05 0 0 .97-.31 3.17 1.18a11 11 0 015.78 0c2.2-1.49 3.17-1.18 3.17-1.18.63 1.59.23 2.76.11 3.05.74.81 1.18 1.83 1.18 3.09 0 4.42-2.69 5.39-5.26 5.68.41.36.78 1.06.78 2.14v3.17c0 .31.21.68.8.56A11.5 11.5 0 0012 .5z" fill="white"/>',
+                        ],
+                        [
                             'name' => 'Email',
-                            'subtitle' => 'aliyanfaisal15@gmail.com',
-                            'url' => 'mailto:aliyanfaisal15@gmail.com',
+                            'subtitle' => 'contact@aliyanfaisal.com',
+                            'url' => 'mailto:contact@aliyanfaisal.com',
                             'badge' => 'bg-indigo-500',
                             'icon' => '<path d="M4 4h16v16H4z" stroke="white" stroke-width="2" fill="none" stroke-linejoin="round"/><path d="M22 6l-10 7L2 6" stroke="white" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>',
                         ],
@@ -345,7 +301,6 @@
     </section>
 
     {{-- AI-Powered Development --}}
-    @if ($aiService)
         <section class="reveal glow-gradient relative overflow-hidden border-t border-zinc-200 py-20 dark:border-white/10">
             <div class="bg-grid absolute inset-0 -z-10 opacity-60"></div>
             <div class="mx-auto max-w-6xl px-6">
@@ -354,24 +309,24 @@
                         <p class="inline-flex items-center gap-1.5 rounded-full border border-indigo-500/30 bg-indigo-500/10 px-3 py-1 text-xs font-medium text-indigo-500 dark:text-indigo-300">
                             <x-icon name="cpu-chip" class="size-3.5" /> AI &amp; Automation
                         </p>
-                        <h2 class="mt-4 text-3xl font-bold text-zinc-900 dark:text-white">I build AI into the web apps I ship.</h2>
+                        <h2 class="mt-4 text-3xl font-bold text-zinc-900 dark:text-white">AI is the thread through my work.</h2>
                         <p class="mt-4 text-zinc-600 dark:text-zinc-400">
-                            I integrate LLM APIs — OpenAI, Claude, Gemini and Groq — into real products: RAG systems and chatbots over your own data (ingestion, embeddings, vector search, cited answers), support and order-handling automation, content and SEO pipelines, and agentic workflows, all deployed and monitored on servers I configure myself.
+                            I integrate LLM APIs — OpenAI, Claude, Gemini and Groq — into real products: RAG systems and chatbots over private data (ingestion, embeddings, vector search, cited answers), support and order-handling automation, content pipelines, and agentic workflows, deployed and monitored on servers I configure myself.
                         </p>
-                        <a href="{{ route('services.show', $aiService) }}" class="mt-6 inline-flex items-center gap-1 text-sm font-semibold text-indigo-500 hover:underline dark:text-indigo-400">
-                            See the AI automation service &rarr;
+                        <a href="{{ route('blog.index') }}" class="mt-6 inline-flex items-center gap-1 text-sm font-semibold text-indigo-500 hover:underline dark:text-indigo-400">
+                            Read my AI articles &rarr;
                         </a>
                     </div>
 
                     <div class="grid grid-cols-2 gap-4">
                         @php
                             $aiCards = [
-                                ['icon' => 'circle-stack', 'title' => 'RAG Systems', 'desc' => 'Ingestion, chunking, embeddings and vector search for grounded, cited answers from your own data.'],
-                                ['icon' => 'chat-bubble', 'title' => 'AI Chatbots', 'desc' => '24/7 support trained on your products, FAQs and policies.'],
-                                ['icon' => 'cog', 'title' => 'Workflow Automation', 'desc' => 'Automate orders, emails and repetitive store tasks.'],
-                                ['icon' => 'link', 'title' => 'API Integrations', 'desc' => 'Connect your app to OpenAI, Claude, Gemini & Groq.'],
-                                ['icon' => 'chart-bar', 'title' => 'AI SEO & Content', 'desc' => 'Generate product copy, meta tags & keyword content.'],
-                                ['icon' => 'light-bulb', 'title' => 'Custom AI Products', 'desc' => 'Design and build bespoke AI-powered tools and products from the ground up.', 'span' => true],
+                                ['icon' => 'circle-stack', 'title' => 'RAG Systems', 'desc' => 'Ingestion, chunking, embeddings and vector search for grounded, cited answers.'],
+                                ['icon' => 'chat-bubble', 'title' => 'AI Chatbots', 'desc' => 'Support assistants grounded in product docs, FAQs and policies.'],
+                                ['icon' => 'cog', 'title' => 'Workflow Automation', 'desc' => 'Automating orders, emails and repetitive store tasks.'],
+                                ['icon' => 'link', 'title' => 'API Integrations', 'desc' => 'Connecting apps to OpenAI, Claude, Gemini & Groq.'],
+                                ['icon' => 'chart-bar', 'title' => 'AI SEO & Content', 'desc' => 'Generating product copy, meta tags & keyword content.'],
+                                ['icon' => 'light-bulb', 'title' => 'Custom AI Products', 'desc' => 'Designing and building AI-powered tools and products from the ground up.', 'span' => true],
                             ];
                         @endphp
                         @foreach ($aiCards as $card)
@@ -387,20 +342,24 @@
                 </div>
             </div>
         </section>
-    @endif
 
-    {{-- Featured Projects --}}
-    @if ($featuredProjects->isNotEmpty())
+    {{-- Open source / GitHub --}}
+    @if (! empty($featuredRepos))
         <section class="reveal border-t border-zinc-200 bg-zinc-50 py-20 dark:border-white/10 dark:bg-white/[0.02]">
             <div class="mx-auto max-w-6xl px-6">
                 <div class="flex items-end justify-between">
-                    <h2 class="text-2xl font-bold text-zinc-900 dark:text-white">Featured Projects</h2>
-                    <a href="{{ route('projects.index') }}" class="text-sm font-medium text-indigo-500 hover:underline dark:text-indigo-400">View all &rarr;</a>
+                    <div>
+                        <h2 class="text-2xl font-bold text-zinc-900 dark:text-white">Open Source &amp; GitHub</h2>
+                        @if ($githubProfile)
+                            <p class="mt-1 text-sm text-zinc-500 dark:text-zinc-400">{{ $githubProfile['public_repos'] }} public repos &middot; pulled live from GitHub</p>
+                        @endif
+                    </div>
+                    <a href="{{ route('projects.index') }}" class="text-sm font-medium text-indigo-500 hover:underline dark:text-indigo-400">All projects &rarr;</a>
                 </div>
 
                 <div class="mt-8 grid grid-cols-1 gap-6 md:grid-cols-3">
-                    @foreach ($featuredProjects as $project)
-                        <x-project-card :project="$project" />
+                    @foreach ($featuredRepos as $repo)
+                        <x-repo-card :repo="$repo" />
                     @endforeach
                 </div>
             </div>
@@ -425,77 +384,18 @@
         </section>
     @endif
 
-    {{-- Testimonials --}}
-    @if ($testimonials->isNotEmpty())
-        <section class="reveal border-t border-zinc-200 bg-zinc-50 py-20 dark:border-white/10 dark:bg-white/[0.02]">
-            <div class="mx-auto max-w-6xl px-6">
-                <p class="text-center text-sm font-semibold uppercase tracking-widest text-indigo-500 dark:text-indigo-400">200+ Five-Star Reviews</p>
-                <h2 class="mt-2 text-center text-2xl font-bold text-zinc-900 dark:text-white">What Clients Say</h2>
-
-                <div x-data="{ expanded: false }" class="mt-10">
-                    <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-                        @foreach ($testimonials as $testimonial)
-                            <blockquote
-                                @if ($loop->index >= 6) x-show="expanded" x-transition x-cloak @endif
-                                class="group relative rounded-2xl border border-zinc-200 bg-white p-6 transition hover:-translate-y-1 hover:border-indigo-400/40 hover:shadow-lg hover:shadow-indigo-500/5 dark:border-white/10 dark:bg-zinc-900"
-                            >
-                                <svg class="absolute right-6 top-6 size-8 text-indigo-500/10" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M9.983 3v7.391c0 5.704-3.731 9.57-8.983 10.609l-.995-2.151c2.432-.917 3.995-3.638 3.995-5.849h-4v-10h9.983zm14.017 0v7.391c0 5.704-3.748 9.571-9 10.609l-.996-2.151c2.433-.917 3.996-3.638 3.996-5.849h-3.983v-10h9.983z"/></svg>
-                                <div class="flex items-center gap-2">
-                                    <div class="flex gap-0.5 text-amber-400">
-                                        @for ($i = 0; $i < $testimonial->rating; $i++)
-                                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="size-4"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.958a1 1 0 00.95.69h4.162c.969 0 1.371 1.24.588 1.81l-3.37 2.448a1 1 0 00-.363 1.118l1.287 3.957c.3.922-.755 1.688-1.538 1.118l-3.37-2.448a1 1 0 00-1.176 0l-3.37 2.448c-.783.57-1.838-.196-1.539-1.118l1.287-3.957a1 1 0 00-.363-1.118l-3.37-2.448c-.782-.57-.38-1.81.588-1.81h4.163a1 1 0 00.95-.69l1.285-3.958z"/></svg>
-                                        @endfor
-                                    </div>
-                                    @if ($testimonial->source)
-                                        <span class="rounded-full bg-zinc-100 px-2 py-0.5 text-[10px] font-medium text-zinc-500 dark:bg-white/5 dark:text-zinc-400">{{ $testimonial->source }}</span>
-                                    @endif
-                                </div>
-                                <p class="mt-4 text-sm text-zinc-600 dark:text-zinc-300">&ldquo;{{ $testimonial->content }}&rdquo;</p>
-                                <div class="mt-5 flex items-center gap-3">
-                                    <div class="grid size-9 shrink-0 place-items-center rounded-full bg-gradient-to-br from-indigo-500 to-cyan-400 text-xs font-semibold text-white">
-                                        {{ strtoupper(substr($testimonial->client_name, 0, 1)) }}
-                                    </div>
-                                    <div>
-                                        <cite class="block text-sm font-semibold not-italic text-zinc-900 dark:text-white">{{ $testimonial->client_name }}</cite>
-                                        @if ($testimonial->country)
-                                            <span class="text-xs text-zinc-400">{{ $testimonial->country }}</span>
-                                        @endif
-                                    </div>
-                                </div>
-                            </blockquote>
-                        @endforeach
-                    </div>
-
-                    @if ($testimonials->count() > 6)
-                        <div class="mt-10 text-center">
-                            <button
-                                @click="expanded = !expanded"
-                                type="button"
-                                class="inline-flex items-center gap-2 rounded-full border border-zinc-300 px-6 py-3 text-sm font-semibold text-zinc-700 transition hover:border-indigo-400 hover:text-indigo-500 dark:border-white/15 dark:text-zinc-200"
-                            >
-                                <span x-text="expanded ? 'Show Less' : 'View More Reviews'"></span>
-                                <svg xmlns="http://www.w3.org/2000/svg" class="size-4 transition" :class="expanded && 'rotate-180'" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
-                            </button>
-                        </div>
-                    @endif
-                </div>
-            </div>
-        </section>
-    @endif
-
     {{-- CTA --}}
     <section class="reveal py-20">
         <div class="glow-gradient relative mx-auto max-w-4xl overflow-hidden rounded-3xl border border-indigo-500/20 px-6 py-16 text-center">
             <div class="bg-grid absolute inset-0 -z-10 opacity-50"></div>
-            <h2 class="text-3xl font-bold text-zinc-900 dark:text-white">Have a project in mind?</h2>
-            <p class="mt-4 text-zinc-600 dark:text-zinc-400">Let's talk about what you're building and how I can help you ship it — an LLM integration, an automation, or a full-stack product from the ground up.</p>
+            <h2 class="text-3xl font-bold text-zinc-900 dark:text-white">Get in touch</h2>
+            <p class="mt-4 text-zinc-600 dark:text-zinc-400">Questions about my work, ideas to collaborate on, or just want to say hi — I'd love to hear from you.</p>
             <div class="mt-8 flex flex-wrap items-center justify-center gap-4">
                 <a href="{{ route('contact.create') }}" class="rounded-full bg-zinc-900 px-8 py-3 text-sm font-semibold text-white transition hover:bg-indigo-600 dark:bg-white dark:text-zinc-900 dark:hover:bg-indigo-400">
-                    Get in Touch
+                    Contact Me
                 </a>
-                <a href="https://wa.me/923155687559" target="_blank" rel="noopener" class="inline-flex items-center gap-2 rounded-full border border-zinc-300 px-6 py-3 text-sm font-semibold text-zinc-700 transition hover:border-indigo-400 hover:text-indigo-500 dark:border-white/15 dark:text-zinc-200">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="size-4" viewBox="0 0 24 24" fill="currentColor"><path d="M20.52 3.48A11.94 11.94 0 0012.06 0C5.5 0 .18 5.32.18 11.88c0 2.1.55 4.14 1.6 5.94L0 24l6.34-1.66a11.86 11.86 0 005.72 1.46h.01c6.56 0 11.88-5.32 11.88-11.88 0-3.17-1.24-6.15-3.43-8.44Z"/></svg>
-                    WhatsApp Me
+                <a href="{{ config('seo.freelance_url') }}" rel="noopener" class="inline-flex items-center gap-2 rounded-full border border-zinc-300 px-6 py-3 text-sm font-semibold text-zinc-700 transition hover:border-indigo-400 hover:text-indigo-500 dark:border-white/15 dark:text-zinc-200">
+                    Freelance &amp; client projects &rarr;
                 </a>
             </div>
         </div>

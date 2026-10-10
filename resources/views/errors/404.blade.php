@@ -30,7 +30,6 @@
 
             <div class="glass-card mx-auto mt-12 flex max-w-md flex-wrap items-center justify-center gap-x-6 gap-y-2 px-6 py-4 text-sm">
                 <a href="{{ route('projects.index') }}" class="font-medium text-zinc-600 transition hover:text-indigo-500 dark:text-zinc-300 dark:hover:text-indigo-400">Projects</a>
-                <a href="{{ route('services.index') }}" class="font-medium text-zinc-600 transition hover:text-indigo-500 dark:text-zinc-300 dark:hover:text-indigo-400">Services</a>
                 <a href="{{ route('about') }}" class="font-medium text-zinc-600 transition hover:text-indigo-500 dark:text-zinc-300 dark:hover:text-indigo-400">About</a>
                 <a href="{{ route('contact.create') }}" class="font-medium text-zinc-600 transition hover:text-indigo-500 dark:text-zinc-300 dark:hover:text-indigo-400">Contact</a>
             </div>

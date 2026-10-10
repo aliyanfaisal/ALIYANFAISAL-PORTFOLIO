@@ -141,7 +141,7 @@ class SeoTest extends TestCase
         Http::fake(['*' => Http::response('', 500)]);
         $descriptions = [];
 
-        foreach (['/' => 'ProfilePage', '/about' => 'ProfilePage', '/projects' => 'CollectionPage', '/services' => 'CollectionPage'] as $path => $type) {
+        foreach (['/' => 'ProfilePage', '/about' => 'ProfilePage', '/projects' => 'CollectionPage'] as $path => $type) {
             $html = $this->get($path)->assertOk()->getContent();
 
             $this->assertStringContainsString('<link rel="canonical" href="'.url($path).'">', $html, $path);
@@ -153,8 +153,8 @@ class SeoTest extends TestCase
             $descriptions[$path] = html_entity_decode($match[1]);
         }
 
-        $this->assertCount(4, array_unique($descriptions));
-        foreach (['/about', '/projects', '/services'] as $path) {
+        $this->assertCount(3, array_unique($descriptions));
+        foreach (['/about', '/projects'] as $path) {
             $this->assertGreaterThanOrEqual(140, mb_strlen($descriptions[$path]), $path);
             $this->assertLessThanOrEqual(160, mb_strlen($descriptions[$path]), $path);
         }
@@ -206,7 +206,7 @@ class SeoTest extends TestCase
 
         $xml = $this->get('/sitemap.xml')->getContent();
 
-        foreach (['home', 'about', 'projects.index', 'services.index', 'blog.index'] as $route) {
+        foreach (['home', 'about', 'projects.index', 'blog.index'] as $route) {
             $this->assertStringContainsString('<loc>'.route($route).'</loc>', $xml);
         }
         $this->assertStringContainsString('<image:loc>'.asset('storage/blog/hero.webp').'</image:loc>', $xml);

@@ -10,8 +10,8 @@
                     {{ strtoupper($settings->site_name) }}<span class="text-gradient">.</span>
                 </a>
                 <p class="mt-3 max-w-xs text-sm text-zinc-500 dark:text-zinc-400">
-                    Full-stack developer and AI/LLM systems engineer building LLM integrations, automations and
-                    production web applications for clients worldwide.
+                    Software engineer and AI developer building LLM-powered products, automations and
+                    production web applications.
                 </p>
             </div>
 
@@ -24,10 +24,12 @@
                             class="hover:text-indigo-500 dark:hover:text-indigo-400">Projects</a></li>
                     <li><a href="{{ route('products.index') }}"
                             class="hover:text-indigo-500 dark:hover:text-indigo-400">Products</a></li>
-                    <li><a href="{{ route('services.index') }}"
-                            class="hover:text-indigo-500 dark:hover:text-indigo-400">Services</a></li>
+                    <li><a href="{{ route('blog.index') }}"
+                            class="hover:text-indigo-500 dark:hover:text-indigo-400">Blog</a></li>
                     <li><a href="{{ route('contact.create') }}"
                             class="hover:text-indigo-500 dark:hover:text-indigo-400">Contact</a></li>
+                    <li><a href="{{ config('seo.freelance_url') }}" rel="noopener"
+                            class="hover:text-indigo-500 dark:hover:text-indigo-400">Freelance work</a></li>
                 </ul>
             </div>
 
@@ -38,16 +40,6 @@
                         <li><a href="{{ $settings->github_url }}" target="_blank" rel="noopener"
                                 class="inline-flex items-center gap-2 hover:text-indigo-500 dark:hover:text-indigo-400"><x-brand-icon
                                     name="github" class="size-4" /> GitHub</a></li>
-                    @endif
-                    @if ($settings->fiverr_url)
-                        <li><a href="{{ $settings->fiverr_url }}" target="_blank" rel="noopener"
-                                class="inline-flex items-center gap-2 hover:text-indigo-500 dark:hover:text-indigo-400"><x-brand-icon
-                                    name="fiverr" class="size-4" /> Fiverr</a></li>
-                    @endif
-                    @if ($settings->upwork_url)
-                        <li><a href="{{ $settings->upwork_url }}" target="_blank" rel="noopener"
-                                class="inline-flex items-center gap-2 hover:text-indigo-500 dark:hover:text-indigo-400"><x-brand-icon
-                                    name="upwork" class="size-4" /> Upwork</a></li>
                     @endif
                     @if ($settings->linkedin_url)
                         <li><a href="{{ $settings->linkedin_url }}" target="_blank" rel="noopener"

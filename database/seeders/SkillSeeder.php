@@ -41,6 +41,11 @@ class SkillSeeder extends Seeder
             ['name' => 'NumPy & Pandas', 'category' => 'AI & Automation', 'proficiency' => 75],
             ['name' => 'Docker', 'category' => 'DevOps', 'proficiency' => 78],
 
+            ['name' => 'Python / Flask', 'category' => 'Backend', 'proficiency' => 85],
+            ['name' => 'TypeScript', 'category' => 'Frontend', 'proficiency' => 80],
+            ['name' => 'Vector Databases', 'category' => 'AI & Automation', 'proficiency' => 80],
+            ['name' => 'Data Analysis & Dashboards (Python, Pandas)', 'category' => 'AI & Automation', 'proficiency' => 82],
+
             ['name' => 'Website Security Hardening', 'category' => 'Security & Performance', 'proficiency' => 88],
             ['name' => 'Performance & Speed Optimization', 'category' => 'Security & Performance', 'proficiency' => 90],
             ['name' => 'Caching & Core Web Vitals', 'category' => 'Security & Performance', 'proficiency' => 85],

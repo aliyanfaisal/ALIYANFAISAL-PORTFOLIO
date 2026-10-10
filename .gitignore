@@ -31,3 +31,6 @@ AGENTS.md
 CLAUDE.md
 
 /public/css/filament
+
+# Separate freelance site (own Laravel app, own repo)
+/FREELANCE_PORTFOLIO

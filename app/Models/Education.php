@@ -8,5 +8,5 @@ class Education extends Model
 {
     protected $table = 'education';
 
-    protected $fillable = ['degree', 'school', 'country', 'from_year', 'to_year', 'sort_order'];
+    protected $fillable = ['degree', 'school', 'country', 'from_year', 'to_year', 'cgpa', 'sort_order'];
 }

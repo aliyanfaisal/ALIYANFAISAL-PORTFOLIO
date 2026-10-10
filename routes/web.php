@@ -13,7 +13,6 @@ use App\Http\Controllers\PostReactionController;
 use App\Http\Controllers\PrivacyPolicyController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProjectController;
-use App\Http\Controllers\ServiceController;
 use App\Http\Controllers\SitemapController;
 use Illuminate\Support\Facades\Route;
 
@@ -35,8 +34,9 @@ Route::get('/projects/download', [ProjectController::class, 'downloadLinks'])->n
 Route::get('/products', [ProductController::class, 'index'])->name('products.index');
 Route::get('/products/{slug}', [ProductController::class, 'show'])->name('products.show');
 Route::post('/products/manajet/demo', [DemoRequestController::class, 'store'])->middleware('throttle:5,1')->name('products.demo');
-Route::get('/services', [ServiceController::class, 'index'])->name('services.index');
-Route::get('/services/{service}', [ServiceController::class, 'show'])->name('services.show');
+// Freelance services moved to their own site; keep old URLs (and their backlinks) alive.
+Route::redirect('/services', config('seo.freelance_url'), 301);
+Route::get('/services/{service}', fn (string $service) => redirect()->away(rtrim(config('seo.freelance_url'), '/').'/services/'.$service, 301));
 Route::get('/contact', [ContactController::class, 'create'])->name('contact.create');
 Route::post('/contact', [ContactController::class, 'store'])->name('contact.store');
 Route::get('/privacy-policy', [PrivacyPolicyController::class, 'index'])->name('privacy-policy');

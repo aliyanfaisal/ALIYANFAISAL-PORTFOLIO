@@ -2,31 +2,21 @@
     <section class="mx-auto max-w-5xl px-6 py-16">
         <div class="text-center">
             <p class="text-sm font-semibold uppercase tracking-widest text-indigo-500 dark:text-indigo-400">Contact</p>
-            <h1 class="mt-3 text-4xl font-bold text-zinc-900 dark:text-white">Let's Talk</h1>
+            <h1 class="mt-3 text-4xl font-bold text-zinc-900 dark:text-white">Get in Touch</h1>
             <p class="mx-auto mt-4 max-w-xl text-lg text-zinc-600 dark:text-zinc-400">
-                Have a project in mind or just want to say hi? Fill out the form or reach me directly below.
+                Questions, feedback or ideas to collaborate on? Fill out the form or reach me directly below.
             </p>
         </div>
 
         <div class="mt-12 grid grid-cols-1 gap-10 md:grid-cols-5">
             <div class="space-y-4 md:col-span-2">
-                <a href="mailto:aliyanfaisal15@gmail.com" class="flex items-center gap-3 rounded-2xl border border-zinc-200 bg-white p-4 transition hover:border-indigo-400/50 dark:border-white/10 dark:bg-zinc-900">
+                <a href="mailto:contact@aliyanfaisal.com" class="flex items-center gap-3 rounded-2xl border border-zinc-200 bg-white p-4 transition hover:border-indigo-400/50 dark:border-white/10 dark:bg-zinc-900">
                     <span class="grid size-10 shrink-0 place-items-center rounded-full bg-indigo-500/10 text-indigo-500 dark:text-indigo-400">
                         <svg xmlns="http://www.w3.org/2000/svg" class="size-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16v16H4z"/><path d="M22 6l-10 7L2 6"/></svg>
                     </span>
                     <div>
                         <p class="text-sm font-medium text-zinc-800 dark:text-zinc-100">Email</p>
-                        <p class="text-sm text-zinc-500 dark:text-zinc-400">aliyanfaisal15@gmail.com</p>
-                    </div>
-                </a>
-
-                <a href="https://wa.me/923155687559" target="_blank" rel="noopener" class="flex items-center gap-3 rounded-2xl border border-zinc-200 bg-white p-4 transition hover:border-indigo-400/50 dark:border-white/10 dark:bg-zinc-900">
-                    <span class="grid size-10 shrink-0 place-items-center rounded-full bg-emerald-500/10 text-emerald-500">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="size-5" viewBox="0 0 24 24" fill="currentColor"><path d="M20.52 3.48A11.94 11.94 0 0012.06 0C5.5 0 .18 5.32.18 11.88c0 2.1.55 4.14 1.6 5.94L0 24l6.34-1.66a11.86 11.86 0 005.72 1.46h.01c6.56 0 11.88-5.32 11.88-11.88 0-3.17-1.24-6.15-3.43-8.44Z"/></svg>
-                    </span>
-                    <div>
-                        <p class="text-sm font-medium text-zinc-800 dark:text-zinc-100">WhatsApp</p>
-                        <p class="text-sm text-zinc-500 dark:text-zinc-400">+92 315 5687559</p>
+                        <p class="text-sm text-zinc-500 dark:text-zinc-400">contact@aliyanfaisal.com</p>
                     </div>
                 </a>
 
@@ -36,13 +26,21 @@
                     </span>
                     <div>
                         <p class="text-sm font-medium text-zinc-800 dark:text-zinc-100">Location</p>
-                        <p class="text-sm text-zinc-500 dark:text-zinc-400">Remote — Worldwide</p>
+                        <p class="text-sm text-zinc-500 dark:text-zinc-400">Islamabad, Pakistan</p>
                     </div>
                 </div>
 
+                <a href="{{ config('seo.freelance_url') }}" rel="noopener" class="flex items-center gap-3 rounded-2xl border border-dashed border-indigo-400/50 bg-indigo-500/5 p-4 transition hover:border-indigo-400 dark:bg-indigo-500/10">
+                    <span class="grid size-10 shrink-0 place-items-center rounded-full bg-indigo-500/10 text-indigo-500 dark:text-indigo-400">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="size-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M7 7h10v10"/></svg>
+                    </span>
+                    <div>
+                        <p class="text-sm font-medium text-zinc-800 dark:text-zinc-100">Freelance &amp; client projects</p>
+                        <p class="text-sm text-zinc-500 dark:text-zinc-400">See {{ parse_url(config('seo.freelance_url'), PHP_URL_HOST) }}</p>
+                    </div>
+                </a>
+
                 <div class="grid grid-cols-2 gap-3 pt-2">
-                    <a href="https://www.fiverr.com/aliyanfaisal" target="_blank" rel="noopener" class="inline-flex items-center justify-center gap-2 rounded-full border border-zinc-300 px-4 py-2 text-center text-sm font-medium text-zinc-700 hover:border-indigo-400 hover:text-indigo-500 dark:border-white/15 dark:text-zinc-200"><x-brand-icon name="fiverr" class="size-4" /> Fiverr</a>
-                    <a href="https://www.upwork.com/freelancers/~01f763ee3322eda908" target="_blank" rel="noopener" class="inline-flex items-center justify-center gap-2 rounded-full border border-zinc-300 px-4 py-2 text-center text-sm font-medium text-zinc-700 hover:border-indigo-400 hover:text-indigo-500 dark:border-white/15 dark:text-zinc-200"><x-brand-icon name="upwork" class="size-4" /> Upwork</a>
                     <a href="https://www.linkedin.com/in/aliyan-faisal-5162261b7/" target="_blank" rel="noopener" class="inline-flex items-center justify-center gap-2 rounded-full border border-zinc-300 px-4 py-2 text-center text-sm font-medium text-zinc-700 hover:border-indigo-400 hover:text-indigo-500 dark:border-white/15 dark:text-zinc-200"><x-brand-icon name="linkedin" class="size-4" /> LinkedIn</a>
                     <a href="https://github.com/aliyanfaisal" target="_blank" rel="noopener" class="inline-flex items-center justify-center gap-2 rounded-full border border-zinc-300 px-4 py-2 text-center text-sm font-medium text-zinc-700 hover:border-indigo-400 hover:text-indigo-500 dark:border-white/15 dark:text-zinc-200"><x-brand-icon name="github" class="size-4" /> GitHub</a>
                 </div>

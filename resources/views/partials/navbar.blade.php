@@ -4,7 +4,6 @@
         ['label' => 'About', 'route' => 'about'],
         ['label' => 'Projects', 'route' => 'projects.index'],
         ['label' => 'Products', 'route' => 'products.index'],
-        ['label' => 'Services', 'route' => 'services.index'],
         ['label' => 'Blog', 'route' => 'blog.index'],
         ['label' => 'Contact', 'route' => 'contact.create'],
     ];
@@ -60,7 +59,7 @@
             </button>
 
             <a href="{{ route('contact.create') }}" class="ml-1 hidden shrink-0 rounded-full bg-zinc-900 px-4 py-2 text-sm font-medium text-white transition hover:bg-indigo-600 md:inline-block dark:bg-white dark:text-zinc-900 dark:hover:bg-indigo-400">
-                Hire Me
+                Contact
             </a>
         </nav>
     </div>
@@ -110,7 +109,7 @@
 
             <div class="relative mt-8 space-y-6">
                 <a href="{{ route('contact.create') }}" @click="mobileOpen = false" class="block rounded-full bg-zinc-900 px-6 py-4 text-center text-base font-semibold text-white transition hover:bg-indigo-600 dark:bg-white dark:text-zinc-900 dark:hover:bg-indigo-400">
-                    Hire Me
+                    Contact
                 </a>
 
                 <div class="flex items-center justify-center gap-3">
@@ -119,12 +118,6 @@
                     @endif
                     @if ($settings->linkedin_url)
                         <a href="{{ $settings->linkedin_url }}" target="_blank" rel="noopener" aria-label="LinkedIn" class="grid size-11 place-items-center rounded-full border border-zinc-200 text-zinc-500 transition hover:border-indigo-400 hover:text-indigo-500 dark:border-white/10 dark:text-zinc-400"><x-brand-icon name="linkedin" class="size-4" /></a>
-                    @endif
-                    @if ($settings->fiverr_url)
-                        <a href="{{ $settings->fiverr_url }}" target="_blank" rel="noopener" aria-label="Fiverr" class="grid size-11 place-items-center rounded-full border border-zinc-200 text-zinc-500 transition hover:border-indigo-400 hover:text-indigo-500 dark:border-white/10 dark:text-zinc-400"><x-brand-icon name="fiverr" class="size-4" /></a>
-                    @endif
-                    @if ($settings->upwork_url)
-                        <a href="{{ $settings->upwork_url }}" target="_blank" rel="noopener" aria-label="Upwork" class="grid size-11 place-items-center rounded-full border border-zinc-200 text-zinc-500 transition hover:border-indigo-400 hover:text-indigo-500 dark:border-white/10 dark:text-zinc-400"><x-brand-icon name="upwork" class="size-4" /></a>
                     @endif
                 </div>
 

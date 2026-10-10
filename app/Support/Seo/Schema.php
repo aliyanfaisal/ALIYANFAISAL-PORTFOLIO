@@ -4,7 +4,6 @@ namespace App\Support\Seo;
 
 use App\Models\BlogPost;
 use App\Models\Project;
-use App\Models\Service;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
 
@@ -167,35 +166,6 @@ class Schema
         ];
     }
 
-    /**
-     * @param  Collection<int, Service>  $services
-     * @return array<int, array<string, mixed>>
-     */
-    public static function services(Collection $services): array
-    {
-        return $services->map(fn (Service $service): array => array_filter([
-            '@type' => 'Service',
-            '@id' => route('services.show', $service).'#service',
-            'name' => Str::title($service->title),
-            'url' => route('services.show', $service),
-            'serviceType' => $service->category,
-            'description' => Str::limit(trim(preg_replace('/\s+/', ' ', (string) $service->description)), 300),
-            'image' => $service->image_url,
-            'provider' => self::personRef(),
-            'areaServed' => 'Worldwide',
-            'aggregateRating' => $service->rating && $service->rating_count ? [
-                '@type' => 'AggregateRating',
-                'ratingValue' => (float) $service->rating,
-                'reviewCount' => (int) $service->rating_count,
-            ] : null,
-            'offers' => $service->price_from ? [
-                '@type' => 'Offer',
-                'price' => (float) $service->price_from,
-                'priceCurrency' => 'USD',
-                'url' => $service->fiverr_url ?: route('services.show', $service),
-            ] : null,
-        ]))->all();
-    }
 
     /**
      * @param  Collection<int, Project>  $projects

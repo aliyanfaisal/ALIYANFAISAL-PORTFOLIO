@@ -38,7 +38,7 @@ Case studies for these live on the [Projects page](https://aliyanfaisal.com/proj
 - 🌐 Portfolio: [aliyanfaisal.com](https://aliyanfaisal.com)
 - 💼 Fiverr: [fiverr.com/aliyanfaisal](https://www.fiverr.com/aliyanfaisal)
 - 🐙 GitHub: [github.com/aliyanfaisal](https://github.com/aliyanfaisal)
-- ✉️ Email: [aliyanfaisal15@gmail.com](mailto:aliyanfaisal15@gmail.com)
+- ✉️ Email: [contact@aliyanfaisal.com](mailto:contact@aliyanfaisal.com)
 - 💬 WhatsApp: [+92 315 5687559](https://wa.me/923155687559)
 
 ---
