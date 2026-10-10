@@ -1,13 +1,13 @@
 name: Deploy to cPanel
 
+# Freelance site -> freelance.aliyanfaisal.com. Auto-deploy stays OFF (manual runs only) until the site
+# has been stripped of main-site pages and the server has its own .env and database.
+# To enable: add  push: { branches: [main] }  under `on:`.
 on:
-  push:
-    branches:
-      - main
   workflow_dispatch:
 
 env:
-  REMOTE_PATH: /home/wowzario/aliyanfaisal.com
+  REMOTE_PATH: /home/wowzario/freelance.aliyanfaisal.com
   REMOTE_HOST: ${{ vars.CPANEL_SSH_HOST }}
   REMOTE_PORT: ${{ vars.CPANEL_SSH_PORT }}
   REMOTE_USER: ${{ vars.CPANEL_SSH_USERNAME }}
