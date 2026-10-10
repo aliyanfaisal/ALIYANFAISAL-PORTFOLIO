@@ -1,0 +1,16 @@
+@import 'tailwindcss';
+
+@source '../../storage/framework/views/*.php';
+
+/* Plain, CV-like: system fonts, one accent colour (the navy used on the CV), nothing decorative. */
+@theme {
+    --font-sans: ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    --font-serif: ui-serif, Georgia, Cambria, 'Times New Roman', serif;
+    --color-accent: #003366;
+}
+
+@layer base {
+    html { @apply bg-white text-neutral-900 antialiased; }
+    body { @apply font-sans text-[16px] leading-relaxed; }
+    a { @apply text-accent underline decoration-neutral-300 underline-offset-2 hover:decoration-accent; }
+}

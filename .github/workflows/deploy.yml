@@ -1,0 +1,98 @@
+name: Deploy research site
+
+# research.aliyanfaisal.com is deployed from this branch. Before the FIRST run, prepare the server
+# (document root, .env): see deploy/README.md.
+on:
+  push:
+    branches:
+      - research-portfolio
+  workflow_dispatch:
+
+# Never run two deploys at once.
+concurrency:
+  group: deploy-research
+  cancel-in-progress: false
+
+env:
+  REMOTE_PATH: /home/wowzario/research.aliyanfaisal.com
+  REMOTE_HOST: ${{ vars.CPANEL_SSH_HOST }}
+  REMOTE_PORT: ${{ vars.CPANEL_SSH_PORT }}
+  REMOTE_USER: ${{ vars.CPANEL_SSH_USERNAME }}
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.4'
+          coverage: none
+
+      - name: Install PHP dependencies
+        run: composer install --no-dev --optimize-autoloader --no-interaction --prefer-dist
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: 'npm'
+
+      - name: Install Node dependencies
+        run: npm ci
+
+      - name: Build frontend assets
+        run: npm run build
+
+      - name: Deploy files via rsync over SSH
+        uses: burnett01/rsync-deployments@7.0.2
+        with:
+          # /.htaccess is anchored to the root on purpose: public/.htaccess (Laravel's URL rewriting) must deploy.
+          switches: >-
+            -avzr --delete
+            --exclude=.git*
+            --exclude=.github/
+            --exclude=node_modules/
+            --exclude=tests/
+            --exclude=.env
+            --exclude=.env.example
+            --exclude=storage/app/
+            --exclude=storage/framework/cache/
+            --exclude=storage/framework/sessions/
+            --exclude=storage/framework/views/
+            --exclude=storage/logs/
+            --exclude=public/storage
+            --exclude=/.htaccess
+          path: ./
+          remote_path: ${{ env.REMOTE_PATH }}
+          remote_host: ${{ env.REMOTE_HOST }}
+          remote_port: ${{ env.REMOTE_PORT }}
+          remote_user: ${{ env.REMOTE_USER }}
+          remote_key: ${{ secrets.CPANEL_SSH_KEY }}
+          remote_key_pass: ${{ secrets.CPANEL_SSH_KEY_PASSPHRASE }}
+
+      - name: Run post-deploy commands on server
+        uses: appleboy/ssh-action@v1.2.0
+        with:
+          host: ${{ env.REMOTE_HOST }}
+          port: ${{ env.REMOTE_PORT }}
+          username: ${{ env.REMOTE_USER }}
+          key: ${{ secrets.CPANEL_SSH_KEY }}
+          passphrase: ${{ secrets.CPANEL_SSH_KEY_PASSPHRASE }}
+          script: |
+            cd ${{ env.REMOTE_PATH }}
+            if [ ! -f .env ]; then
+              echo "ERROR: ${{ env.REMOTE_PATH }}/.env is missing. Create it from deploy/server.env.example (see deploy/README.md)."
+              exit 1
+            fi
+            # rsync excludes these runtime folders, so a fresh server folder does not have them.
+            mkdir -p storage/framework/views storage/framework/cache/data storage/framework/sessions storage/logs storage/app/public bootstrap/cache
+            chmod -R ug+rwX storage bootstrap/cache
+            # This site has no database, so there is no migrate step.
+            php artisan config:cache
+            php artisan route:cache
+            php artisan view:cache
