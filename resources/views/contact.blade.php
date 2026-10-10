@@ -30,16 +30,6 @@
                     </div>
                 </div>
 
-                <a href="{{ config('seo.freelance_url') }}" rel="noopener" class="flex items-center gap-3 rounded-2xl border border-dashed border-indigo-400/50 bg-indigo-500/5 p-4 transition hover:border-indigo-400 dark:bg-indigo-500/10">
-                    <span class="grid size-10 shrink-0 place-items-center rounded-full bg-indigo-500/10 text-indigo-500 dark:text-indigo-400">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="size-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M7 7h10v10"/></svg>
-                    </span>
-                    <div>
-                        <p class="text-sm font-medium text-zinc-800 dark:text-zinc-100">Freelance &amp; client projects</p>
-                        <p class="text-sm text-zinc-500 dark:text-zinc-400">See {{ parse_url(config('seo.freelance_url'), PHP_URL_HOST) }}</p>
-                    </div>
-                </a>
-
                 <div class="grid grid-cols-2 gap-3 pt-2">
                     <a href="https://www.linkedin.com/in/aliyan-faisal-5162261b7/" target="_blank" rel="noopener" class="inline-flex items-center justify-center gap-2 rounded-full border border-zinc-300 px-4 py-2 text-center text-sm font-medium text-zinc-700 hover:border-indigo-400 hover:text-indigo-500 dark:border-white/15 dark:text-zinc-200"><x-brand-icon name="linkedin" class="size-4" /> LinkedIn</a>
                     <a href="https://github.com/aliyanfaisal" target="_blank" rel="noopener" class="inline-flex items-center justify-center gap-2 rounded-full border border-zinc-300 px-4 py-2 text-center text-sm font-medium text-zinc-700 hover:border-indigo-400 hover:text-indigo-500 dark:border-white/15 dark:text-zinc-200"><x-brand-icon name="github" class="size-4" /> GitHub</a>

@@ -37,9 +37,9 @@ Route::get('/products/{slug}', [ProductController::class, 'show'])->name('produc
 Route::get('/open-source', [OpenSourceController::class, 'index'])->name('open-source.index');
 Route::get('/open-source/{slug}', [OpenSourceController::class, 'show'])->name('open-source.show');
 Route::post('/products/manajet/demo', [DemoRequestController::class, 'store'])->middleware('throttle:5,1')->name('products.demo');
-// Freelance services moved to their own site; keep old URLs (and their backlinks) alive.
-Route::redirect('/services', config('seo.freelance_url'), 301);
-Route::get('/services/{service}', fn (string $service) => redirect()->away(rtrim(config('seo.freelance_url'), '/').'/services/'.$service, 301));
+// Freelance services live on their own site. Nothing on this site links to it; old /services URLs
+// (and their backlinks) just redirect there permanently.
+Route::get('/services/{path?}', fn (?string $path = null) => redirect()->away(rtrim(config('seo.freelance_url'), '/').'/services'.($path ? '/'.$path : ''), 301))->where('path', '.*');
 Route::get('/contact', [ContactController::class, 'create'])->name('contact.create');
 Route::post('/contact', [ContactController::class, 'store'])->name('contact.store');
 Route::get('/privacy-policy', [PrivacyPolicyController::class, 'index'])->name('privacy-policy');

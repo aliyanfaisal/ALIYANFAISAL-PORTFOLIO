@@ -413,9 +413,6 @@
                 <a href="{{ route('contact.create') }}" class="rounded-full bg-zinc-900 px-8 py-3 text-sm font-semibold text-white transition hover:bg-indigo-600 dark:bg-white dark:text-zinc-900 dark:hover:bg-indigo-400">
                     Contact Me
                 </a>
-                <a href="{{ config('seo.freelance_url') }}" rel="noopener" class="inline-flex items-center gap-2 rounded-full border border-zinc-300 px-6 py-3 text-sm font-semibold text-zinc-700 transition hover:border-indigo-400 hover:text-indigo-500 dark:border-white/15 dark:text-zinc-200">
-                    Freelance &amp; client projects &rarr;
-                </a>
             </div>
         </div>
     </section>

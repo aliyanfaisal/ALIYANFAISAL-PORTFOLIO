@@ -201,11 +201,6 @@
             </div>
         @endif
 
-        <aside class="mt-10 flex flex-wrap items-center justify-between gap-4 rounded-2xl border border-indigo-500/30 bg-indigo-500/10 p-6">
-            <p class="max-w-xl text-sm font-medium text-zinc-800 dark:text-zinc-100">I also take on freelance LLM integration, automation and full-stack projects.</p>
-            <a href="{{ config('seo.freelance_url') }}" rel="noopener" class="rounded-full bg-zinc-900 px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-indigo-600 dark:bg-white dark:text-zinc-900 dark:hover:bg-indigo-400">Freelance projects &rarr;</a>
-        </aside>
-
         <section aria-label="About the author" class="mt-10 flex flex-col gap-5 rounded-2xl border border-zinc-200 bg-white p-6 dark:border-white/10 dark:bg-zinc-900 sm:flex-row sm:items-center">
             <img src="{{ asset(config('seo.person.image')) }}" alt="{{ config('seo.person.name') }}" width="80" height="80" loading="lazy" decoding="async" class="size-20 shrink-0 rounded-full bg-indigo-500/10 object-cover object-top">
             <div>

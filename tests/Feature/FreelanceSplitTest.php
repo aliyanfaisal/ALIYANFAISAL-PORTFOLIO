@@ -9,11 +9,11 @@ class FreelanceSplitTest extends TestCase
 {
     use RefreshDatabase;
 
-    public function test_services_urls_permanently_redirect_to_the_freelance_site(): void
+    public function test_old_services_urls_permanently_redirect_to_the_freelance_site(): void
     {
         $base = rtrim(config('seo.freelance_url'), '/');
 
-        $this->get('/services')->assertRedirect($base)->assertStatus(301);
+        $this->get('/services')->assertRedirect($base.'/services')->assertStatus(301);
         $this->get('/services/llm-integration')->assertRedirect($base.'/services/llm-integration')->assertStatus(301);
     }
 
@@ -25,7 +25,8 @@ class FreelanceSplitTest extends TestCase
             foreach (['hire me', 'fiverr.com', 'upwork.com', 'wa.me/', 'start a project'] as $needle) {
                 $this->assertStringNotContainsString($needle, strtolower($html), "{$url} still contains {$needle}");
             }
-            $this->assertStringContainsString(config('seo.freelance_url'), $html);
+            $this->assertStringNotContainsString(config('seo.freelance_url'), $html, "{$url} links to the freelance site");
+            $this->assertStringNotContainsString('freelance.aliyanfaisal.com', $html);
         }
     }
 }

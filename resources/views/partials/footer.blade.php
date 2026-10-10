@@ -30,8 +30,6 @@
                             class="hover:text-indigo-500 dark:hover:text-indigo-400">Blog</a></li>
                     <li><a href="{{ route('contact.create') }}"
                             class="hover:text-indigo-500 dark:hover:text-indigo-400">Contact</a></li>
-                    <li><a href="{{ config('seo.freelance_url') }}" rel="noopener"
-                            class="hover:text-indigo-500 dark:hover:text-indigo-400">Freelance work</a></li>
                 </ul>
             </div>
 
