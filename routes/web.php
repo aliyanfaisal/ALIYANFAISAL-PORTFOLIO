@@ -9,6 +9,7 @@ use App\Http\Controllers\ContactController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\LinkedInAuthController;
 use App\Http\Controllers\NewsletterController;
+use App\Http\Controllers\OpenSourceController;
 use App\Http\Controllers\PostReactionController;
 use App\Http\Controllers\PrivacyPolicyController;
 use App\Http\Controllers\ProductController;
@@ -33,6 +34,8 @@ Route::get('/projects', [ProjectController::class, 'index'])->name('projects.ind
 Route::get('/projects/download', [ProjectController::class, 'downloadLinks'])->name('projects.download');
 Route::get('/products', [ProductController::class, 'index'])->name('products.index');
 Route::get('/products/{slug}', [ProductController::class, 'show'])->name('products.show');
+Route::get('/open-source', [OpenSourceController::class, 'index'])->name('open-source.index');
+Route::get('/open-source/{slug}', [OpenSourceController::class, 'show'])->name('open-source.show');
 Route::post('/products/manajet/demo', [DemoRequestController::class, 'store'])->middleware('throttle:5,1')->name('products.demo');
 // Freelance services moved to their own site; keep old URLs (and their backlinks) alive.
 Route::redirect('/services', config('seo.freelance_url'), 301);

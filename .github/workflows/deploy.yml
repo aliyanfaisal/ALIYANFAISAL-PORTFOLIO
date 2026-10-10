@@ -1,10 +1,16 @@
 name: Deploy to cPanel
 
+# Production is deployed from this branch (main is kept as the untouched freelance-era snapshot).
 on:
   push:
     branches:
-      - main
+      - portfolio-repositioning
   workflow_dispatch:
+    inputs:
+      run_seeders:
+        description: 'Also re-run the content seeders (Setting, Skill, Experience, Education). Overwrites those tables, so use it for content updates only.'
+        type: boolean
+        default: false
 
 env:
   REMOTE_PATH: /home/wowzario/aliyanfaisal.com
@@ -80,6 +86,12 @@ jobs:
             cd ${{ env.REMOTE_PATH }}
             php artisan storage:link || true
             php artisan migrate --force
+            if [ "${{ inputs.run_seeders }}" = "true" ]; then
+              php artisan db:seed --class=SettingSeeder --force
+              php artisan db:seed --class=SkillSeeder --force
+              php artisan db:seed --class=ExperienceSeeder --force
+              php artisan db:seed --class=EducationSeeder --force
+            fi
             php artisan config:cache
             php artisan route:cache
             php artisan view:cache

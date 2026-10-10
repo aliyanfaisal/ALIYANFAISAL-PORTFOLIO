@@ -24,6 +24,8 @@
                             class="hover:text-indigo-500 dark:hover:text-indigo-400">Projects</a></li>
                     <li><a href="{{ route('products.index') }}"
                             class="hover:text-indigo-500 dark:hover:text-indigo-400">Products</a></li>
+                    <li><a href="{{ route('open-source.index') }}"
+                            class="hover:text-indigo-500 dark:hover:text-indigo-400">Open Source</a></li>
                     <li><a href="{{ route('blog.index') }}"
                             class="hover:text-indigo-500 dark:hover:text-indigo-400">Blog</a></li>
                     <li><a href="{{ route('contact.create') }}"

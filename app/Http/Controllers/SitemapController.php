@@ -22,11 +22,16 @@ class SitemapController extends Controller
             ->add($this->url(route('about'), $this->latest(Setting::query()->max('updated_at'))))
             ->add($this->url(route('projects.index'), $this->latest(Project::query()->max('updated_at'))))
             ->add($this->url(route('products.index')))
+            ->add($this->url(route('open-source.index')))
             ->add($this->url(route('blog.index'), $latestPostUpdate))
             ->add($this->url(route('contact.create')));
 
         foreach (array_keys(config('products')) as $slug) {
             $sitemap->add($this->url(route('products.show', $slug)));
+        }
+
+        foreach (array_keys(config('opensource')) as $slug) {
+            $sitemap->add($this->url(route('open-source.show', $slug)));
         }
 
         Category::query()

@@ -157,6 +157,25 @@
         </div>
     </section>
 
+    {{-- Open source --}}
+    <section class="reveal border-t border-zinc-200 py-20 dark:border-white/10">
+        <div class="mx-auto max-w-6xl px-6">
+            <div class="flex items-end justify-between">
+                <div>
+                    <span class="text-xs font-medium uppercase tracking-wide text-indigo-500 dark:text-indigo-400">Free to use, free to read</span>
+                    <h2 class="mt-1 text-2xl font-bold text-zinc-900 dark:text-white">Open Source I Build</h2>
+                </div>
+                <a href="{{ route('open-source.index') }}" class="text-sm font-medium text-indigo-500 hover:underline dark:text-indigo-400">View all &rarr;</a>
+            </div>
+
+            <div class="mt-8 grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
+                @foreach (config('opensource') as $project)
+                    <x-open-source-card :project="$project" />
+                @endforeach
+            </div>
+        </div>
+    </section>
+
     {{-- Skills --}}
     @php
         $skillIcons = [

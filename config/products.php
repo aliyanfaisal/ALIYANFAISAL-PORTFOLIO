@@ -40,7 +40,7 @@ return [
         'category' => 'Project Management · For IT Teams',
         'tagline' => 'Mobilize, Organize, and Excel.',
         'summary' => 'Project management for small and mid-sized software companies. Projects, teams, tasks, client tickets and chat in one place, with an optional AI task planner.',
-        'description' => 'ManaJet is a project management system for software companies, built by Aliyan Faisal: projects, teams, tasks, a client portal, tickets, chat and an optional AI assistant that drafts task plans. It began as my final year project (2023–2024).',
+        'description' => 'ManaJet is a project management system for software companies, built by Aliyan Faisal: projects, teams, tasks, a client portal, tickets, chat and an optional AI assistant that drafts task plans. It began as my final year project (2022–2023).',
         // Dashboard screenshot; the card and page fall back to a mock board until the file exists.
         'image' => 'images/products/manajet-dashboard.webp',
         'status' => 'Final year project',

@@ -4,6 +4,7 @@
         ['label' => 'About', 'route' => 'about'],
         ['label' => 'Projects', 'route' => 'projects.index'],
         ['label' => 'Products', 'route' => 'products.index'],
+        ['label' => 'Open Source', 'route' => 'open-source.index'],
         ['label' => 'Blog', 'route' => 'blog.index'],
         ['label' => 'Contact', 'route' => 'contact.create'],
     ];
