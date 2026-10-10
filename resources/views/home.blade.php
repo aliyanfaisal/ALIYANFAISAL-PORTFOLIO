@@ -176,6 +176,29 @@
         </div>
     </section>
 
+    {{-- Recent GitHub repos --}}
+    @if (! empty($featuredRepos))
+        <section class="reveal pb-20">
+            <div class="mx-auto max-w-6xl px-6">
+                <div class="flex items-end justify-between">
+                    <div>
+                        <h2 class="text-2xl font-bold text-zinc-900 dark:text-white">My Recent GitHub Repos</h2>
+                        @if ($githubProfile)
+                            <p class="mt-1 text-sm text-zinc-500 dark:text-zinc-400">{{ $githubProfile['public_repos'] }} public repos &middot; pulled live from GitHub</p>
+                        @endif
+                    </div>
+                    <a href="https://github.com/aliyanfaisal" target="_blank" rel="noopener" class="text-sm font-medium text-indigo-500 hover:underline dark:text-indigo-400">All on GitHub &rarr;</a>
+                </div>
+
+                <div class="mt-8 grid grid-cols-1 gap-6 md:grid-cols-3">
+                    @foreach ($featuredRepos as $repo)
+                        <x-repo-card :repo="$repo" />
+                    @endforeach
+                </div>
+            </div>
+        </section>
+    @endif
+
     {{-- Skills --}}
     @php
         $skillIcons = [
@@ -361,29 +384,6 @@
                 </div>
             </div>
         </section>
-
-    {{-- Open source / GitHub --}}
-    @if (! empty($featuredRepos))
-        <section class="reveal border-t border-zinc-200 bg-zinc-50 py-20 dark:border-white/10 dark:bg-white/[0.02]">
-            <div class="mx-auto max-w-6xl px-6">
-                <div class="flex items-end justify-between">
-                    <div>
-                        <h2 class="text-2xl font-bold text-zinc-900 dark:text-white">Open Source &amp; GitHub</h2>
-                        @if ($githubProfile)
-                            <p class="mt-1 text-sm text-zinc-500 dark:text-zinc-400">{{ $githubProfile['public_repos'] }} public repos &middot; pulled live from GitHub</p>
-                        @endif
-                    </div>
-                    <a href="https://github.com/aliyanfaisal" target="_blank" rel="noopener" class="text-sm font-medium text-indigo-500 hover:underline dark:text-indigo-400">All on GitHub &rarr;</a>
-                </div>
-
-                <div class="mt-8 grid grid-cols-1 gap-6 md:grid-cols-3">
-                    @foreach ($featuredRepos as $repo)
-                        <x-repo-card :repo="$repo" />
-                    @endforeach
-                </div>
-            </div>
-        </section>
-    @endif
 
     {{-- Latest Blog Posts --}}
     @if ($latestPosts->isNotEmpty())
