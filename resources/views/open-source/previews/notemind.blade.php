@@ -118,8 +118,9 @@
 
                 <div>
                     <h5 class="mb-2 font-semibold text-red-600 dark:text-red-400">🔴 Overdue (2)</h5>
-                    <div class="overflow-x-auto"><table class="w-full min-w-[420px] text-sm">
-                        <thead><tr class="border-b border-zinc-200 text-left text-zinc-500 dark:border-white/10"><th class="w-10 py-2 pr-3 text-right">#</th><th class="py-2 pr-3">Note</th><th class="py-2">Was due</th></tr></thead>
+                    <div class="overflow-x-auto"><table class="w-full min-w-[420px] table-fixed text-sm">
+                        <colgroup><col class="w-10"><col><col class="w-40 sm:w-48"></colgroup>
+                        <thead><tr class="border-b border-zinc-200 text-left text-zinc-500 dark:border-white/10"><th class="py-2 pr-3 text-right">#</th><th class="py-2 pr-3">Note</th><th class="py-2">Was due</th></tr></thead>
                         <tbody class="divide-y divide-zinc-100 dark:divide-white/5">
                             <tr><td class="py-2 pr-3 text-right text-zinc-500">1</td><td class="py-2 pr-3">I have a meeting in next 2 hours</td><td class="py-2 text-red-600 dark:text-red-400">overdue 1d</td></tr>
                             <tr><td class="py-2 pr-3 text-right text-zinc-500">2</td><td class="py-2 pr-3">remind me tomorrow at 12am</td><td class="py-2 text-red-600 dark:text-red-400">overdue today</td></tr>
@@ -134,9 +135,9 @@
                 ] as [$group, $color, $rows])
                     <div>
                         <h5 class="mb-2 font-semibold {{ $color }}">{{ $group }}</h5>
-                        <div class="overflow-x-auto"><table class="w-full min-w-[420px] text-sm"><tbody>
+                        <div class="overflow-x-auto"><table class="w-full min-w-[420px] table-fixed text-sm"><colgroup><col class="w-10"><col><col class="w-40 sm:w-48"></colgroup><tbody>
                             @foreach ($rows as [$n, $text, $when])
-                                <tr><td class="w-10 py-2 pr-3 text-right text-zinc-500">{{ $n }}</td><td class="py-2 pr-3">{{ $text }}</td><td class="py-2">{{ $when }}</td></tr>
+                                <tr><td class="py-2 pr-3 text-right text-zinc-500">{{ $n }}</td><td class="py-2 pr-3">{{ $text }}</td><td class="py-2">{{ $when }}</td></tr>
                             @endforeach
                         </tbody></table></div>
                     </div>
