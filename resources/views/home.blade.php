@@ -252,6 +252,49 @@
         </section>
     @endif
 
+    {{-- AI-Powered Development --}}
+        <section class="reveal glow-gradient relative overflow-hidden border-t border-zinc-200 py-20 dark:border-white/10">
+            <div class="bg-grid absolute inset-0 -z-10 opacity-60"></div>
+            <div class="mx-auto max-w-6xl px-6">
+                <div class="grid gap-10 md:grid-cols-2 md:items-center">
+                    <div>
+                        <p class="inline-flex items-center gap-1.5 rounded-full border border-indigo-500/30 bg-indigo-500/10 px-3 py-1 text-xs font-medium text-indigo-500 dark:text-indigo-300">
+                            <x-icon name="cpu-chip" class="size-3.5" /> AI &amp; Automation
+                        </p>
+                        <h2 class="mt-4 text-3xl font-bold text-zinc-900 dark:text-white">AI is the thread through my work.</h2>
+                        <p class="mt-4 text-zinc-600 dark:text-zinc-400">
+                            I integrate LLM APIs — OpenAI, Claude, Gemini and Groq — into real products: RAG systems and chatbots over private data (ingestion, embeddings, vector search, cited answers), support and order-handling automation, content pipelines, and agentic workflows, deployed and monitored on servers I configure myself.
+                        </p>
+                        <a href="{{ route('blog.index') }}" class="mt-6 inline-flex items-center gap-1 text-sm font-semibold text-indigo-500 hover:underline dark:text-indigo-400">
+                            Read my AI articles &rarr;
+                        </a>
+                    </div>
+
+                    <div class="grid grid-cols-2 gap-4">
+                        @php
+                            $aiCards = [
+                                ['icon' => 'circle-stack', 'title' => 'RAG Systems', 'desc' => 'Ingestion, chunking, embeddings and vector search for grounded, cited answers.'],
+                                ['icon' => 'chat-bubble', 'title' => 'AI Chatbots', 'desc' => 'Support assistants grounded in product docs, FAQs and policies.'],
+                                ['icon' => 'cog', 'title' => 'Workflow Automation', 'desc' => 'Automating orders, emails and repetitive store tasks.'],
+                                ['icon' => 'link', 'title' => 'API Integrations', 'desc' => 'Connecting apps to OpenAI, Claude, Gemini & Groq.'],
+                                ['icon' => 'chart-bar', 'title' => 'AI SEO & Content', 'desc' => 'Generating product copy, meta tags & keyword content.'],
+                                ['icon' => 'light-bulb', 'title' => 'Custom AI Products', 'desc' => 'Designing and building AI-powered tools and products from the ground up.'],
+                            ];
+                        @endphp
+                        @foreach ($aiCards as $card)
+                            <div class="group rounded-2xl border border-zinc-200 bg-white p-5 transition hover:-translate-y-1 hover:border-indigo-400/40 hover:shadow-lg hover:shadow-indigo-500/10 dark:border-white/10 dark:bg-zinc-900 {{ $card['span'] ?? false ? 'col-span-2' : '' }}">
+                                <div class="grid size-10 place-items-center rounded-xl bg-gradient-to-br from-indigo-500/15 via-violet-500/15 to-cyan-400/15 text-indigo-500 transition group-hover:scale-110 dark:text-indigo-300">
+                                    <x-icon :name="$card['icon']" class="size-5" />
+                                </div>
+                                <p class="mt-3 text-sm font-semibold text-zinc-900 dark:text-white">{{ $card['title'] }}</p>
+                                <p class="mt-1 text-xs text-zinc-500 dark:text-zinc-400">{{ $card['desc'] }}</p>
+                            </div>
+                        @endforeach
+                    </div>
+                </div>
+            </div>
+        </section>
+
     {{-- Skills & Expertise (full breakdown) --}}
     @if ($allSkills->isNotEmpty())
         <section class="reveal border-t border-zinc-200 bg-zinc-50 py-20 dark:border-white/10 dark:bg-white/[0.02]">
@@ -341,49 +384,6 @@
             </div>
         </div>
     </section>
-
-    {{-- AI-Powered Development --}}
-        <section class="reveal glow-gradient relative overflow-hidden border-t border-zinc-200 py-20 dark:border-white/10">
-            <div class="bg-grid absolute inset-0 -z-10 opacity-60"></div>
-            <div class="mx-auto max-w-6xl px-6">
-                <div class="grid gap-10 md:grid-cols-2 md:items-center">
-                    <div>
-                        <p class="inline-flex items-center gap-1.5 rounded-full border border-indigo-500/30 bg-indigo-500/10 px-3 py-1 text-xs font-medium text-indigo-500 dark:text-indigo-300">
-                            <x-icon name="cpu-chip" class="size-3.5" /> AI &amp; Automation
-                        </p>
-                        <h2 class="mt-4 text-3xl font-bold text-zinc-900 dark:text-white">AI is the thread through my work.</h2>
-                        <p class="mt-4 text-zinc-600 dark:text-zinc-400">
-                            I integrate LLM APIs — OpenAI, Claude, Gemini and Groq — into real products: RAG systems and chatbots over private data (ingestion, embeddings, vector search, cited answers), support and order-handling automation, content pipelines, and agentic workflows, deployed and monitored on servers I configure myself.
-                        </p>
-                        <a href="{{ route('blog.index') }}" class="mt-6 inline-flex items-center gap-1 text-sm font-semibold text-indigo-500 hover:underline dark:text-indigo-400">
-                            Read my AI articles &rarr;
-                        </a>
-                    </div>
-
-                    <div class="grid grid-cols-2 gap-4">
-                        @php
-                            $aiCards = [
-                                ['icon' => 'circle-stack', 'title' => 'RAG Systems', 'desc' => 'Ingestion, chunking, embeddings and vector search for grounded, cited answers.'],
-                                ['icon' => 'chat-bubble', 'title' => 'AI Chatbots', 'desc' => 'Support assistants grounded in product docs, FAQs and policies.'],
-                                ['icon' => 'cog', 'title' => 'Workflow Automation', 'desc' => 'Automating orders, emails and repetitive store tasks.'],
-                                ['icon' => 'link', 'title' => 'API Integrations', 'desc' => 'Connecting apps to OpenAI, Claude, Gemini & Groq.'],
-                                ['icon' => 'chart-bar', 'title' => 'AI SEO & Content', 'desc' => 'Generating product copy, meta tags & keyword content.'],
-                                ['icon' => 'light-bulb', 'title' => 'Custom AI Products', 'desc' => 'Designing and building AI-powered tools and products from the ground up.', 'span' => true],
-                            ];
-                        @endphp
-                        @foreach ($aiCards as $card)
-                            <div class="group rounded-2xl border border-zinc-200 bg-white p-5 transition hover:-translate-y-1 hover:border-indigo-400/40 hover:shadow-lg hover:shadow-indigo-500/10 dark:border-white/10 dark:bg-zinc-900 {{ $card['span'] ?? false ? 'col-span-2' : '' }}">
-                                <div class="grid size-10 place-items-center rounded-xl bg-gradient-to-br from-indigo-500/15 via-violet-500/15 to-cyan-400/15 text-indigo-500 transition group-hover:scale-110 dark:text-indigo-300">
-                                    <x-icon :name="$card['icon']" class="size-5" />
-                                </div>
-                                <p class="mt-3 text-sm font-semibold text-zinc-900 dark:text-white">{{ $card['title'] }}</p>
-                                <p class="mt-1 text-xs text-zinc-500 dark:text-zinc-400">{{ $card['desc'] }}</p>
-                            </div>
-                        @endforeach
-                    </div>
-                </div>
-            </div>
-        </section>
 
     {{-- Latest Blog Posts --}}
     @if ($latestPosts->isNotEmpty())
