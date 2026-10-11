@@ -35,5 +35,16 @@
         </ul>
     </x-section>
 
+    <x-section title="References">
+        <div class="space-y-4">
+            @foreach (config('research.references') as $ref)
+                <div>
+                    <p class="flex flex-wrap justify-between gap-x-4"><span class="font-semibold">{{ $ref['name'] }}</span><a href="mailto:{{ $ref['email'] }}">{{ $ref['email'] }}</a></p>
+                    <p>{{ $ref['title'] }}</p>
+                </div>
+            @endforeach
+        </div>
+    </x-section>
+
     <x-section title="Languages"><p>{{ config('research.languages') }}</p></x-section>
 </x-layouts.app>

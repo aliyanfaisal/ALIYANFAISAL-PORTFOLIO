@@ -13,12 +13,9 @@
             <p class="mt-4">{{ $paragraph }}</p>
         @endforeach
 
-        <p class="mt-4 text-sm">
-            @if ($hasCv)<a href="{{ route('cv.file') }}">Download CV (PDF)</a> · @endif
-            <a href="mailto:{{ $person['email'] }}">{{ $person['email'] }}</a> ·
-            <a href="{{ $person['github'] }}" rel="noopener">GitHub</a> ·
-            <a href="{{ $person['linkedin'] }}" rel="noopener">LinkedIn</a>
-        </p>
+        @if ($hasCv)
+            <p class="mt-4 text-sm"><a href="{{ route('cv.file') }}">Download CV (PDF)</a></p>
+        @endif
     </section>
 
     <x-section title="Research interests">
@@ -35,7 +32,7 @@
             @foreach ($projects as $slug => $project)
                 <li>
                     <a href="{{ route('projects.show', $slug) }}" class="font-semibold">{{ $project['name'] }}</a><br>
-                    <span>{{ $project['tagline'] }}</span>
+                    <span>{{ $project['blurb'] }}</span>
                 </li>
             @endforeach
             <li class="text-neutral-500">{{ config('research.coming_soon.projects') }}</li>

@@ -69,6 +69,7 @@ return [
         'cuelara' => [
             'name' => 'Cuelara',
             'tagline' => 'Tools for people whose prompts are not working.',
+            'blurb' => 'A prompt debugger, optimizer and token-reduction toolkit with an embedding-matched prompt book, also available through an API and an MCP server.',
             'period' => '2025 – present',
             'role' => 'Creator and lead engineer',
             'status' => 'Live',
@@ -95,6 +96,7 @@ return [
         'invoiceinspect' => [
             'name' => 'InvoiceInspect',
             'tagline' => 'Find invoice errors before you pay.',
+            'blurb' => 'Cross-checks two independent readings of an invoice (PDF text and a vision model) and recalculates every number in code, flagging what it cannot verify.',
             'period' => '2025 – present',
             'role' => 'Creator and lead engineer',
             'status' => 'Live',
@@ -129,6 +131,7 @@ return [
         'manajet' => [
             'name' => 'ManaJet',
             'tagline' => 'AI-assisted project and task management for small software teams.',
+            'blurb' => 'My final year project: project, team, task and client management for small software companies, with AI-assisted task planning.',
             'period' => '2022 – 2023',
             'role' => 'Lead developer · final year project',
             'status' => 'Final year project',
@@ -156,6 +159,7 @@ return [
         'gov-dashboard' => [
             'name' => 'Provincial data dashboard',
             'tagline' => 'Data collection and analytics for a government planning department.',
+            'blurb' => 'Dashboard and data-management system for the Planning & Development Department of Gilgit-Baltistan, built to collect and analyse provincial data.',
             'period' => '2024 – 2025',
             'role' => 'Backend developer and data analyst',
             'status' => 'Delivered',
@@ -231,6 +235,12 @@ return [
         ['project' => 'cuelara', 'title' => 'Cuelara: report', 'summary' => 'In preparation.', 'file' => null, 'available' => false],
         ['project' => 'manajet', 'title' => 'ManaJet: final year project report', 'summary' => 'In preparation.', 'file' => null, 'available' => false],
         ['project' => 'gov-dashboard', 'title' => 'Provincial data dashboard: report', 'summary' => 'In preparation.', 'file' => null, 'available' => false],
+    ],
+
+    'references' => [
+        ['name' => 'Dr. Aftab Ahmed Khan', 'email' => 'aftab.ahmed@kiu.edu.pk', 'title' => 'Associate Professor, Department of Computer Sciences, Karakoram International University, Gilgit-Baltistan, Pakistan (Ph.D., TU Munich)'],
+        ['name' => 'Dr. Sajid Hussain', 'email' => 'sajid.hussain@kiu.edu.pk', 'title' => 'Professor, Department of Computer Sciences, Karakoram International University, Gilgit-Baltistan, Pakistan'],
+        ['name' => 'Dr. Sabit Rahim', 'email' => 'sabit.rahim@kiu.edu.pk', 'title' => 'Professor, Department of Computer Sciences, Karakoram International University, Gilgit-Baltistan, Pakistan'],
     ],
 
     'education' => [
