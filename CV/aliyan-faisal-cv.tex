@@ -38,9 +38,7 @@
     \small Islamabad, Pakistan \ $\cdot$ \ +92-315-5687559 \ $\cdot$ \href{mailto:research@aliyanfaisal.com}{research@aliyanfaisal.com}  \\
      \href{https://research.aliyanfaisal.com}{research.aliyanfaisal.com} \ $\cdot$ \
     \href{https://github.com/aliyanfaisal}{GitHub} \ $\cdot$ \ 
-    \href{https://www.linkedin.com/in/aliyan-faisal-5162261b7/}{LinkedIn} \ $\cdot$ \
-    \href{https://www.upwork.com/freelancers/~01f763ee3322eda908}{Upwork} \ $\cdot$ \
-    \href{https://fiverr.com/aliyanfaisal/}{Fiverr} \\
+    \href{https://www.linkedin.com/in/aliyan-faisal-5162261b7/}{LinkedIn} \\
     \href{https://cuelara.com}{cuelara.com} \ $\cdot$ \ \href{https://invoiceinspect.app}{invoiceinspect.app}  
 \end{center}
 
@@ -50,16 +48,18 @@
 % RESEARCH PROFILE
 %----------------------------------------------------------------------------------------
 \section{RESEARCH PROFILE}
-Software and AI Systems Developer with a background in Information Technology (CGPA 3.80/4.00) specializing in applied AI systems, LLM orchestration, and Retrieval-Augmented Generation (RAG) architectures. Experienced in building scalable data pipelines, prompt engineering toolkits, and intelligent decision-support platforms. Strong foundation in computer science fundamentals, backend system design, and API-driven automation. Seeking admission into a research-oriented Master's program in Artificial Intelligence or Machine Learning to transition from applied AI systems engineering to foundational Machine Learning research.
+Software and AI Systems Developer with a background in Information Technology (CGPA 3.80/4.00) specializing in applied AI systems, LLM orchestration, and Retrieval-Augmented Generation (RAG) architectures. Experienced in building scalable data pipelines, prompt engineering toolkits, and intelligent decision-support platforms. Strong foundation in computer science fundamentals, backend system design, and API-driven automation. Seeking admission into a research-oriented Master's program in Artificial Intelligence or Machine Learning to move from building LLM-based systems to researching their reliability, evaluation and efficiency.
 
 %----------------------------------------------------------------------------------------
 % RESEARCH INTERESTS
 %----------------------------------------------------------------------------------------
 \section{RESEARCH INTERESTS}
 \begin{itemize}
-    \item \textbf{Applied LLMs \& Prompt Engineering:} Context-window optimization, token reduction, and structured output evaluation.
-    \item \textbf{Retrieval-Augmented Generation (RAG):} Document parsing, vector embeddings, and multimodal inconsistency detection.
-    \item \textbf{Data-Centric Automation \& Systems:} Scalable backend infrastructure for machine learning services and decision platforms.
+    \item \textbf{LLM Reliability \& Evaluation:} How can the correctness of LLM-based extraction and verification be measured, and how should confidence and ``could not verify'' be reported?
+    \item \textbf{Retrieval-Augmented Generation:} How do parsing, chunking and retrieval choices affect the faithfulness of grounded answers?
+    \item \textbf{Prompt Optimization \& Token Efficiency:} How much of a prompt can be removed or restructured before output quality drops?
+    \item \textbf{Multimodal Document Understanding:} When independent text and vision readings of a document disagree, how should they be combined?
+    \item \textbf{Data-Centric AI:} How do data pipelines and validation affect the quality of models built on them?
 \end{itemize}
 
 %----------------------------------------------------------------------------------------
@@ -69,6 +69,7 @@ Software and AI Systems Developer with a background in Information Technology (C
 \textbf{Karakoram International University} \hfill Gilgit, Pakistan \\
 \textit{Bachelor of Science in Information Technology} \hfill \textbf{CGPA: 3.80 / 4.00} (2019 -- 2023)
 \begin{itemize}
+    \item \textbf{Scholarship:} HEC Ehsaas Scholarship (fully funded for the entire degree).
     \item \textbf{Core Coursework:} Data Structures \& Algorithms, Linear Algebra, Probability \& Statistics, Database Systems, Operating Systems, Computer Networks, Distributed Systems, Software Engineering.
     \item \textbf{Academic Focus:} Applied computing, system architecture, database design, and algorithmic problem-solving.
 \end{itemize}
@@ -78,7 +79,7 @@ Software and AI Systems Developer with a background in Information Technology (C
 %----------------------------------------------------------------------------------------
 \section{TECHNICAL SKILLS}
 \begin{itemize}
-    \item \textbf{AI Engineering \& RAG:} LLM APIs (OpenAI, Gemini, Anthropic), Retrieval-Augmented Generation (RAG), Vector Embeddings, Prompt Optimization, Context Window Management, Token Reduction.
+    \item \textbf{AI Engineering \& RAG:} LLM APIs (OpenAI, Gemini, Anthropic, Groq, DeepSeek), Local LLMs, Tool and Function Calling, Retrieval-Augmented Generation (RAG), Vector Embeddings, Prompt Optimization, Context Window Management, Token Reduction.
     \item \textbf{Languages \& Backend:} Python, PHP (Laravel), Node.js, Flask, TypeScript, JavaScript, RESTful APIs, SQL.
     \item \textbf{Data \& Infrastructure:} Pandas, NumPy, PostgreSQL, MySQL, MongoDB, Vector Databases, Docker, Git, Linux Administration.
 \end{itemize}
@@ -94,26 +95,42 @@ Software and AI Systems Developer with a background in Information Technology (C
     \item Architected a web-based toolkit featuring a \textbf{Prompt Optimizer}, \textbf{Token Reducer}, \textbf{Context Extractor}, and \textbf{Prompt Debugger} to streamline LLM inference pipelines.
     \item Engineered token-reduction algorithms and structural formatting rules to minimize context-window overhead and API latency while improving response consistency.
     \item Implemented context extraction pipelines to isolate system instructions from input noise prior to API submission.
+    \item Shipped the toolkit through a web app, browser extension, public API and MCP server, with rate limiting based on the plan each user has purchased.
 \end{itemize}
 
 \vspace{6pt}
 
-\noindent \textbf{InvoiceInspect -- Multimodal RAG \& Inconsistency Detection System} \hfill \href{https://invoiceinspect.app}{invoiceinspect.app} \\
+\noindent \textbf{InvoiceInspect -- Multimodal Invoice Verification \& Error Detection System} \hfill \href{https://invoiceinspect.app}{invoiceinspect.app} \\
 \textit{Creator \& Lead Systems Engineer} \hfill \textbf{2025 -- Present}
 \begin{itemize}
-    \item Designed a Retrieval-Augmented Generation (RAG) platform to detect mathematical, structural, and semantic inconsistencies across complex invoice documents.
-    \item Integrated visual OCR processing with vector store chunking to cross-examine invoice line items against context rules and grand totals.
-    \item Built automated prompt-validation logic to score document anomaly confidence levels and highlight supporting evidence.
+    \item Built a system that finds arithmetic and consistency errors in PDF invoices (line totals, subtotals, tax, grand total, duplicate charges, missing fields) and reports each with evidence: expected value, printed value and page.
+    \item Designed dual-path extraction, combining native text and OCR (Tesseract) with a vision model, cross-checked field by field; disagreements are marked ``could not verify'' instead of guessed.
+    \item Kept verification deterministic: a rules engine decides, and the LLM only explains findings, with a provider-agnostic AI layer and fallback between providers.
+    \item Built an evaluation harness (dataset generator and scorer); currently \textbf{$\sim$82\%} end-to-end accuracy on a 70-invoice test set (40 from my own generator, 30 generated by Claude); the evaluation is being expanded. Next: RAG-based contract matching (in design).
 \end{itemize}
 
 \vspace{6pt}
 
-\noindent \textbf{ManaJet -- AI-Assisted Project Management Platform} \hfill \textbf{Final Year Project} \\
+\noindent \textbf{ManaJet -- AI-Assisted Project \& Task Management for Small Software Teams} \hfill \textbf{Final Year Project} \\
 \textit{Lead System Developer} \hfill \textbf{2022 -- 2023}
 \begin{itemize}
-    \item Engineered an AI-driven workflow planning system using OpenAI APIs to generate task breakdown structures, timeline estimates, and resource dependencies from user requirements.
-    \item Implemented structured JSON schema validation and prompt constraint rules to ensure deterministic API outputs for backend data persistence.
-    \item Built RESTful API endpoints and relational database schemas (MySQL) to manage dynamic project states and complex task dependency graphs.
+    \item Built an AI task planner using OpenAI APIs that generates task breakdowns, timeline estimates and dependencies from user requirements.
+    \item Constrained model output with JSON-schema validation and prompt rules, and validated it before it is stored.
+    \item Built the REST API and relational MySQL schema for project state and task dependencies.
+    \item Final year project supervised by Dr. Sajid Hussain, Professor, Department of Computer Sciences, Karakoram International University.
+\end{itemize}
+
+%----------------------------------------------------------------------------------------
+% OPEN SOURCE
+%----------------------------------------------------------------------------------------
+\section{OPEN SOURCE}
+
+\noindent \textbf{Notemind -- Claude Code Plugin for Notes and Reminders} \hfill \href{https://github.com/aliyanfaisal/notemind}{github.com/aliyanfaisal/notemind} \\
+\textit{Author} \hfill \textbf{MIT License}
+\begin{itemize}
+    \item Built a free plugin that lets developers add notes in plain words from a Claude Code chat; Claude resolves the date, and notes are saved in a local SQLite database.
+    \item Added a session-start hook (about 85 ms) that reports overdue and upcoming notes, and designed it with least privilege: only the user can add or close notes, never the model.
+    \item Implemented in standard-library Python with no network calls, versioned migrations and a release script.
 \end{itemize}
 
 %----------------------------------------------------------------------------------------
@@ -121,16 +138,16 @@ Software and AI Systems Developer with a background in Information Technology (C
 %----------------------------------------------------------------------------------------
 \section{EXPERIENCE}
 
-\noindent \textbf{UrbanSofts} \hfill Remote \\
+\noindent \textbf{UrbanSofts -- Remote Software Development Team} \hfill Remote \\
 \textit{Founder \& CEO} \hfill \textbf{2022 -- Present}
 \begin{itemize}
-    \item Founded UrbanSofts and served as its CEO, leading a small remote team focused on software development; set product direction and oversaw engineering and delivery.
+    \item Founded and lead a remote team of 4--10 developers that delivers client software projects together: I take on projects and bring in the right team members for each, such as app developers, and we build them collaboratively. The team has served 50+ clients.
 \end{itemize}
 
 \vspace{6pt}
 
 \noindent \textbf{Planning \& Development Department, Government of Gilgit-Baltistan} \hfill Gilgit, Pakistan \\
-\textit{Backend Developer \& Data Analyst} \hfill \textbf{2024 -- 2025}
+\textit{Backend Developer \& Data Analyst} \hfill \textbf{2024 -- 2025 (4--5 months)}
 \begin{itemize}
     \item Built centralized data analytics dashboards processing public-sector records (XLS, CSV, MySQL) using Python (Pandas) and Laravel backend.
     \item Digitized administrative paper workflows into structured reporting frameworks to aid decision-support systems for regional planning.
@@ -138,15 +155,7 @@ Software and AI Systems Developer with a background in Information Technology (C
 
 \vspace{6pt}
 
-\noindent \textbf{Miami Castle Beach} \hfill Remote (Part-time) \\
-\textit{IT \& Web Expert} \hfill \textbf{2023 -- 2024}
-\begin{itemize}
-    \item Developed and managed WordPress and Flask websites for a Miami Beach castle-rental organization, including server configuration and security.
-\end{itemize}
-
-\vspace{6pt}
-
-\noindent \textbf{Greymatter Ventures Pvt} \hfill Gilgit, Pakistan \\
+\noindent \textbf{Greymatter Ventures Pvt} \hfill Gilgit, Pakistan (Full-time) \\
 \textit{Full Stack Web Developer (Team Lead)} \hfill \textbf{2020 -- 2022}
 \begin{itemize}
     \item Designed modular backend architectures, relational schemas, and server-side logic to optimize application throughput and API reliability.
@@ -155,8 +164,8 @@ Software and AI Systems Developer with a background in Information Technology (C
 
 \vspace{6pt}
 
-\noindent \textbf{Freelance (Fiverr \& Upwork)} \hfill Remote \\
-\textit{Applied AI \& Backend Engineer} \hfill \textbf{2020 -- Present}
+\noindent \textbf{Freelance (\href{https://www.upwork.com/freelancers/~01f763ee3322eda908}{Upwork} \& \href{https://fiverr.com/aliyanfaisal/}{Fiverr})} \hfill Remote \\
+\textit{Applied AI \& Backend Engineer} \hfill \textbf{2020 -- Present (5+ years)}
 \begin{itemize}
     \item Engineered production-grade applications integrating LLM APIs (OpenAI, Claude, Gemini) for automated document summarization, data extraction, and dynamic e-commerce processing.
 \end{itemize}
@@ -166,5 +175,20 @@ Software and AI Systems Developer with a background in Information Technology (C
 %----------------------------------------------------------------------------------------
 \section{LANGUAGES}
 \textbf{Urdu:} Native \ $\cdot$ \ \textbf{English:} C1 (Advanced)
+
+%----------------------------------------------------------------------------------------
+% REFERENCES
+%----------------------------------------------------------------------------------------
+\section{REFERENCES}
+\noindent \textbf{Dr. Aftab Ahmed Khan} \hfill \href{mailto:aftab.ahmed@kiu.edu.pk}{aftab.ahmed@kiu.edu.pk} \\
+Associate Professor, Department of Computer Sciences, Karakoram International University, Gilgit-Baltistan, Pakistan (Ph.D., TU Munich)
+
+\vspace{4pt}
+\noindent \textbf{Dr. Sajid Hussain} \hfill \href{mailto:sajid.hussain@kiu.edu.pk}{sajid.hussain@kiu.edu.pk} \\
+Professor, Department of Computer Sciences, Karakoram International University, Gilgit-Baltistan, Pakistan
+
+\vspace{4pt}
+\noindent \textbf{Dr. Sabit Rahim} \hfill \href{mailto:sabit.rahim@kiu.edu.pk}{sabit.rahim@kiu.edu.pk} \\
+Professor, Department of Computer Sciences, Karakoram International University, Gilgit-Baltistan, Pakistan
 
 \end{document}
