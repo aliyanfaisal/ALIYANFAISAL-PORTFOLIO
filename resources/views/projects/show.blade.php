@@ -3,7 +3,7 @@
 
     <h1 class="mt-3 font-serif text-3xl font-bold">{{ $project['name'] }}</h1>
     <p class="mt-1 text-lg">{{ $project['tagline'] }}</p>
-    <p class="mt-1 text-sm text-neutral-600">{{ $project['role'] }} · {{ $project['period'] }} · {{ $project['status'] }}</p>
+    <p class="mt-1 text-sm text-neutral-600">{{ $project['role'] }} · {{ $project['status'] }}</p>
 
     <p class="mt-3 text-sm">
         @if ($project['url'])<a href="{{ $project['url'] }}" rel="noopener">{{ parse_url($project['url'], PHP_URL_HOST) }}</a>@endif

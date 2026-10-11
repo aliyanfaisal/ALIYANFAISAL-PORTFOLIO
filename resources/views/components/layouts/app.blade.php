@@ -26,7 +26,7 @@
     <meta property="og:description" content="{{ $pageDescription }}">
     <meta property="og:url" content="{{ url()->current() }}">
     <meta name="twitter:card" content="summary">
-    <script type="application/ld+json">{!! json_encode(['@context' => 'https://schema.org', '@type' => 'Person', 'name' => $person['name'], 'url' => url('/'), 'jobTitle' => 'Software engineer', 'email' => $person['email'], 'sameAs' => [$person['github'], $person['linkedin']], 'alumniOf' => config('research.education.school')], JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE) !!}</script>
+    <script type="application/ld+json">{!! json_encode(['@context' => 'https://schema.org', '@type' => 'Person', 'name' => $person['name'], 'url' => url('/'), 'jobTitle' => 'AI Engineer & Aspiring Researcher', 'email' => $person['email'], 'sameAs' => [$person['github'], $person['linkedin']], 'alumniOf' => config('research.education.school')], JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE) !!}</script>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 <body class="min-h-screen">

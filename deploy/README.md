@@ -11,8 +11,13 @@ It reuses the repository secrets/variables (`CPANEL_SSH_KEY`, `CPANEL_SSH_KEY_PA
 2. **No redirects** on this subdomain (Domains -> Redirects). A redirect to itself causes a loop.
 3. **PHP version:** cPanel -> MultiPHP Manager -> set the subdomain to PHP 8.3 or newer.
 4. **SSL:** make sure AutoSSL has issued a certificate for the subdomain.
-5. **`.env`:** create `.env` in `/home/wowzario/research.aliyanfaisal.com/` from `deploy/server.env.example`, then in the
-   project folder run `php artisan key:generate`. The workflow stops with a clear message if `.env` is missing.
+5. **`.env`:** `vendor/` does not exist on the server until the first deploy, so do NOT run `php artisan key:generate` there.
+   Generate the key on your own machine instead:
+   ```bash
+   cd RESEARCH_PORTFOLIO && php artisan key:generate --show
+   ```
+   Copy `deploy/server.env.example` to `/home/wowzario/research.aliyanfaisal.com/.env` and paste the printed
+   `base64:...` value after `APP_KEY=`. The workflow stops with a clear message if `.env` is missing.
 
 ## After the first deploy
 - Visit https://research.aliyanfaisal.com and check `/sitemap.xml`.

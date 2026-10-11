@@ -4,7 +4,7 @@
     $openSource = config('research.open_source');
     $edu = config('research.education');
 @endphp
-<x-layouts.app description="Software engineer with a BSc in IT applying to MSc programs in AI. Research interests: prompt engineering, retrieval-augmented generation, LLM reliability and data-centric systems.">
+<x-layouts.app description="AI engineer and aspiring researcher with a BSc in IT, applying to research-oriented MSc programs in AI and ML. Research interests: prompt engineering, retrieval-augmented generation, LLM reliability and data-centric systems.">
     <section class="mt-8">
         <h1 class="font-serif text-3xl font-bold leading-tight">{{ $person['name'] }}</h1>
         <p class="mt-1 text-neutral-600">{{ $person['title'] }} · {{ $person['location'] }}</p>
@@ -34,8 +34,7 @@
         <ul class="space-y-3">
             @foreach ($projects as $slug => $project)
                 <li>
-                    <a href="{{ route('projects.show', $slug) }}" class="font-semibold">{{ $project['name'] }}</a>
-                    <span class="text-neutral-600">({{ $project['period'] }})</span><br>
+                    <a href="{{ route('projects.show', $slug) }}" class="font-semibold">{{ $project['name'] }}</a><br>
                     <span>{{ $project['tagline'] }}</span>
                 </li>
             @endforeach

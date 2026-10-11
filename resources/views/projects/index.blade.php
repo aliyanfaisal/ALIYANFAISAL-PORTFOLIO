@@ -7,7 +7,7 @@
         @foreach ($projects as $slug => $project)
             <article class="border-b border-neutral-200 pb-8">
                 <h2 class="font-serif text-xl font-bold"><a href="{{ route('projects.show', $slug) }}" class="text-neutral-900">{{ $project['name'] }}</a></h2>
-                <p class="text-sm text-neutral-600">{{ $project['role'] }} · {{ $project['period'] }} · {{ $project['status'] }}</p>
+                <p class="text-sm text-neutral-600">{{ $project['role'] }} · {{ $project['status'] }}</p>
                 <p class="mt-2">{{ $project['summary'] }}</p>
                 <p class="mt-2 text-sm text-neutral-600">{{ implode(' · ', $project['stack']) }}</p>
                 <p class="mt-2 text-sm"><a href="{{ route('projects.show', $slug) }}">Read more</a></p>

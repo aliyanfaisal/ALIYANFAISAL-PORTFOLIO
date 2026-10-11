@@ -7,14 +7,14 @@
 return [
     'person' => [
         'name' => 'Aliyan Faisal',
-        'title' => 'Software engineer · MSc applicant in AI',
+        'title' => 'AI Engineer & Aspiring Researcher',
         'location' => 'Islamabad, Pakistan',
         'email' => 'research@aliyanfaisal.com',
         'github' => 'https://github.com/aliyanfaisal',
         'linkedin' => 'https://www.linkedin.com/in/aliyan-faisal-5162261b7/',
         'cv_file' => 'cv/aliyan-faisal-cv.pdf', // inside public/. The download link only appears when the file exists.
         'summary' => [
-            'I am a software engineer with a BSc in Information Technology (CGPA 3.80 / 4.00) and several years of experience building applied AI systems: prompt tooling, retrieval-augmented generation, document understanding and the backend infrastructure around them.',
+            'I am an AI engineer with a BSc in Information Technology (CGPA 3.80 / 4.00) and several years of experience building applied AI systems: prompt tooling, retrieval-augmented generation, document understanding and the backend infrastructure around them.',
             'I am applying to research-oriented Master\'s programs in Artificial Intelligence and Machine Learning. My goal is to move from building LLM-based systems to studying why they work, where they fail, and how to make them more reliable and efficient.',
         ],
     ],
