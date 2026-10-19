@@ -18,5 +18,5 @@ php artisan serve               # in another
 
 ## Deployment
 
-No deployment workflow is configured yet. Add `.github/workflows/` once the server folder,
-database and `.env` for research.aliyanfaisal.com exist.
+Pushing to the `research-portfolio` branch deploys to research.aliyanfaisal.com through GitHub Actions
+(`.github/workflows/deploy.yml`). Server setup and notes are in `deploy/README.md`.

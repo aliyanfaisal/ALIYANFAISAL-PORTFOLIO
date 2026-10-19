@@ -67,22 +67,16 @@
 
     <x-section title="Why it matters to my research"><p>{{ $project['research'] }}</p></x-section>
 
-    <x-section title="Reports">
-        @if ($slug === 'invoiceinspect')
+    @if ($slug === 'invoiceinspect')
+        <x-section title="Reports">
             <p>The evaluation results above come from my evaluation harness. The research report and every harness test report are listed on the <a href="{{ route('reports') }}">Reports</a> page.</p>
-        @endif
-        @isset($project['report_links'])
-            <ul class="mt-2 list-disc space-y-1 pl-5">
-                @foreach ($project['report_links'] as [$linkTitle, $linkUrl])
-                    <li><a href="{{ $linkUrl }}" rel="noopener">{{ $linkTitle }}</a></li>
-                @endforeach
-            </ul>
-        @endisset
-        @foreach ($project['reports'] as $line)
-            <p>{{ $line }}</p>
-        @endforeach
-        @if ($slug !== 'invoiceinspect' && empty($project['reports']))
-            <p class="text-neutral-500">Coming soon.</p>
-        @endif
-    </x-section>
+            @isset($project['report_links'])
+                <ul class="mt-2 list-disc space-y-1 pl-5">
+                    @foreach ($project['report_links'] as [$linkTitle, $linkUrl])
+                        <li><a href="{{ $linkUrl }}" rel="noopener">{{ $linkTitle }}</a></li>
+                    @endforeach
+                </ul>
+            @endisset
+        </x-section>
+    @endif
 </x-layouts.app>

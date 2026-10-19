@@ -21,7 +21,7 @@ class PagesTest extends TestCase
     {
         $this->get('/projects/nope')->assertNotFound();
         $this->get('/open-source/nope')->assertNotFound();
-        $this->get('/cv.pdf')->assertNotFound(); // no PDF is shipped yet
+        $this->get('/cv.pdf')->assertOk(); // the CV PDF is shipped in public/cv
     }
 
     public function test_home_has_the_profile_education_and_coming_soon(): void

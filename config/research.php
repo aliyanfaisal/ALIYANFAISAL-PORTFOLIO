@@ -142,6 +142,7 @@ return [
                     ['Unseen multi-page invoices (Corpus C, 40 invoices)', '72.2% field accuracy', '13 of 20 planted errors found, 50 false alarms'],
                     ['Fresh set, rules extractor (Corpus D, 30 invoices)', '62.0% field accuracy', '15 of 26 planted errors found, 30 false alarms'],
                     ['Fresh set, vision extractor (Corpus D, 30 invoices)', '99.4% field accuracy', '26 of 26 planted errors found, 0 false alarms; the vision instruction was refined after seeing Corpus D mistakes, so this is not a fresh measure'],
+                    ['Rules extractor after general improvements (Corpus D, tuned on this set)', '98.9% field accuracy', '26 of 26 planted errors found, 8 false alarms; improvements were made on these invoices, so this is not a fresh measure'],
                 ],
             ],
             'planned' => 'Next: a contract-matching module that uses retrieval-augmented generation to compare an invoice with the terms of its contract. It is in design and is not part of the current product.',
@@ -177,7 +178,7 @@ return [
             ],
             'stack' => ['Next.js 16', 'React 19', 'TypeScript', 'Prisma 7', 'PostgreSQL', 'Text embeddings', 'MCP'],
             'research' => 'Cuelara is where I became interested in prompt optimization and token reduction as research questions: what makes a prompt effective, how it can be measured, and how much context is actually needed.',
-            'reports' => ['A written report on Cuelara is in preparation.'],
+            'reports' => [],
         ],
 
         'manajet' => [
@@ -205,7 +206,7 @@ return [
             ],
             'stack' => ['Laravel', 'MySQL', 'OpenAI API', 'Twilio WhatsApp', 'Client portal'],
             'research' => 'ManaJet was my first use of an LLM inside a real product, and the first time I had to make model output structured and predictable enough to store.',
-            'reports' => ['The final year project report will be attached here.'],
+            'reports' => [],
         ],
 
         'gov-dashboard' => [
@@ -229,7 +230,7 @@ return [
             ],
             'stack' => ['Python', 'Pandas', 'Laravel', 'MySQL', 'XLS / CSV'],
             'research' => 'This work showed me how much the quality of a dataset limits what any model built on it can do, and is the source of my interest in data-centric approaches.',
-            'reports' => ['A project report is in preparation. Some details may be limited because the data belongs to a government department.'],
+            'reports' => [],
         ],
     ],
 
@@ -280,7 +281,7 @@ return [
         [
             'project' => 'invoiceinspect',
             'title' => 'InvoiceInspect: research report and evaluation harness reports',
-            'summary' => 'The research question behind InvoiceInspect, and five test reports from my evaluation harness. Each report reuses the invoices and commands of the one before, so results can be compared. The reports are hosted on invoiceinspect.app.',
+            'summary' => 'The research question behind InvoiceInspect, and six test reports from my evaluation harness. Each report reuses the invoices and commands of the one before, so results can be compared. The reports are hosted on invoiceinspect.app.',
             'file' => null,
             'available' => true,
             'index_url' => 'https://invoiceinspect.app/eval-harness-reports',
@@ -292,6 +293,7 @@ return [
                 ['Report 3: Multi-page invoice testing and issues found', '40 new, unseen multi-page invoices (Corpus C): 72.2% field accuracy, 13 of 20 planted errors found, 50 false alarms.', 'https://invoiceinspect.app/harness-reports/04-Multi-Page-Invoice-Testing-and-Issues-Found.pdf'],
                 ['Report 4: Multi-page invoice fixes', 'Report 3 problems fixed and rescored: 99.98%, 20 of 20, 0 false alarms. The fixes were made on these invoices, so this does not show performance on other invoices. Older sets were rescored to check for regressions.', 'https://invoiceinspect.app/harness-reports/05-Multi-Page-Invoice-Fixes.pdf'],
                 ['Report 5: Fresh invoice test, rules and vision model', '30 new invoices (Corpus D). Rules extractor: 62.0%, 15 of 26, 30 false alarms. Vision extractor: 99.4%, 26 of 26, 0 false alarms; its instruction was refined after seeing Corpus D mistakes.', 'https://invoiceinspect.app/harness-reports/06-Fresh-Invoice-Test-Rules-and-Vision.pdf'],
+                ['Report 6: Rules extractor general improvements', 'General changes to how the rules extractor reads text, made to close the gaps Report 5 found, scored on the same 30 invoices (Corpus D). Rules extractor: 98.9% (was 62.0%), 26 of 26 planted errors found (was 15), 8 false alarms (was 30). The changes were made on these invoices, so this shows the gaps are closed, not how other invoices would read. Older sets were rescored to check for regressions.', 'https://invoiceinspect.app/harness-reports/07-Rules-Extractor-General-Improvements.pdf'],
             ],
             'extra_links' => [
                 ['All test invoices (every corpus)', 'https://invoiceinspect.app/eval-harness-reports/invoices'],
