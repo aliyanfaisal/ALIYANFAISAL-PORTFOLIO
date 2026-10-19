@@ -43,7 +43,7 @@ class PagesTest extends TestCase
     {
         $this->get('/projects/invoiceinspect')
             ->assertSee('84.5% field accuracy')
-            ->assertSee('Corpus D')
+            ->assertSee('Corpus E')
             ->assertSee('contract-matching module')
             ->assertDontSee('99.5%')
             ->assertDontSee('93%');

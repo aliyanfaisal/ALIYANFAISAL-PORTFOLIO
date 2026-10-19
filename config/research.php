@@ -143,6 +143,10 @@ return [
                     ['Fresh set, rules extractor (Corpus D, 30 invoices)', '62.0% field accuracy', '15 of 26 planted errors found, 30 false alarms'],
                     ['Fresh set, vision extractor (Corpus D, 30 invoices)', '99.4% field accuracy', '26 of 26 planted errors found, 0 false alarms; the vision instruction was refined after seeing Corpus D mistakes, so this is not a fresh measure'],
                     ['Rules extractor after general improvements (Corpus D, tuned on this set)', '98.9% field accuracy', '26 of 26 planted errors found, 8 false alarms; improvements were made on these invoices, so this is not a fresh measure'],
+                    ['Fresh set, rules extractor (Corpus E, 30 new layouts)', '70.3% field accuracy', '14 of 27 planted errors found, 53 false alarms; nothing was changed beforehand'],
+                    ['Fresh set, vision extractor (Corpus E, 30 new layouts)', '97.9% field accuracy', '27 of 27 planted errors found, 8 false alarms'],
+                    ['Rules extractor after improvements (Corpus E, all 50 invoices)', '99.9% field accuracy', '37 of 37 planted errors found, 2 false alarms; fixes were made on 40 of the 50, so this is not a fresh measure'],
+                    ['Rules extractor after improvements (Corpus E, 10 held-out invoices)', '100% field accuracy', 'Not tuned on, but a small sample (was 64.9% before the improvements)'],
                 ],
             ],
             'planned' => 'Next: a contract-matching module that uses retrieval-augmented generation to compare an invoice with the terms of its contract. It is in design and is not part of the current product.',
@@ -281,7 +285,7 @@ return [
         [
             'project' => 'invoiceinspect',
             'title' => 'InvoiceInspect: research report and evaluation harness reports',
-            'summary' => 'The research question behind InvoiceInspect, and six test reports from my evaluation harness. Each report reuses the invoices and commands of the one before, so results can be compared. The reports are hosted on invoiceinspect.app.',
+            'summary' => 'The research question behind InvoiceInspect, and eight test reports from my evaluation harness. Each report reuses the invoices and commands of the one before, so results can be compared. The reports are hosted on invoiceinspect.app.',
             'file' => null,
             'available' => true,
             'index_url' => 'https://invoiceinspect.app/eval-harness-reports',
@@ -294,6 +298,8 @@ return [
                 ['Report 4: Multi-page invoice fixes', 'Report 3 problems fixed and rescored: 99.98%, 20 of 20, 0 false alarms. The fixes were made on these invoices, so this does not show performance on other invoices. Older sets were rescored to check for regressions.', 'https://invoiceinspect.app/harness-reports/05-Multi-Page-Invoice-Fixes.pdf'],
                 ['Report 5: Fresh invoice test, rules and vision model', '30 new invoices (Corpus D). Rules extractor: 62.0%, 15 of 26, 30 false alarms. Vision extractor: 99.4%, 26 of 26, 0 false alarms; its instruction was refined after seeing Corpus D mistakes.', 'https://invoiceinspect.app/harness-reports/06-Fresh-Invoice-Test-Rules-and-Vision.pdf'],
                 ['Report 6: Rules extractor general improvements', 'General changes to how the rules extractor reads text, made to close the gaps Report 5 found, scored on the same 30 invoices (Corpus D). Rules extractor: 98.9% (was 62.0%), 26 of 26 planted errors found (was 15), 8 false alarms (was 30). The changes were made on these invoices, so this shows the gaps are closed, not how other invoices would read. Older sets were rescored to check for regressions.', 'https://invoiceinspect.app/harness-reports/07-Rules-Extractor-General-Improvements.pdf'],
+                ['Report 7: Fresh test, 50 invoices', 'A fresh set of 50 invoices (Corpus E): 20 from the generator and 30 in new page structures, countries, languages and number formats, with nothing changed beforehand. On the 30 new layouts the rules extractor scored 70.3% field accuracy (14 of 27 planted errors found, 53 false alarms) and the vision extractor 97.9% (27 of 27, 8 false alarms).', 'https://invoiceinspect.app/harness-reports/08-Fresh-Test-50-Invoices.pdf'],
+                ['Report 8: Rules extractor improvements on Corpus E', 'Improvements after Report 7 (currency signs, label words in more languages, date formats, some structures). Fixes were made on 40 of the 50 invoices; 10 were held back as an untuned check. All 50: 99.9% field accuracy (was 92.2%), 37 of 37 planted errors found (was 24), 2 false alarms (was 53). Held-out 10: 100% (was 64.9%), a small sample.', 'https://invoiceinspect.app/harness-reports/09-Rules-Extractor-Improvements-on-Corpus-E.pdf'],
             ],
             'extra_links' => [
                 ['All test invoices (every corpus)', 'https://invoiceinspect.app/eval-harness-reports/invoices'],
