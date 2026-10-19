@@ -1,7 +1,7 @@
 @php($projects = config('research.projects'))
-<x-layouts.app title="Projects" description="Applied AI projects by Aliyan Faisal: Cuelara, InvoiceInspect, ManaJet and a provincial data dashboard.">
-    <h1 class="mt-8 font-serif text-3xl font-bold">Projects</h1>
-    <p class="mt-3">Systems I have designed and built. Each page describes the problem, the approach and what it taught me. Written reports are listed under <a href="{{ route('reports') }}">Reports</a>.</p>
+<x-layouts.app title="My Own Projects" description="Applied AI projects by Aliyan Faisal: InvoiceInspect, Cuelara, ManaJet and a provincial data dashboard.">
+    <h1 class="mt-8 font-serif text-3xl font-bold">My Own Projects</h1>
+    <p class="mt-3">Products and systems I have designed and built myself. I have also delivered many client projects as a freelancer, which are not listed here. Each page describes the problem, the approach and what it taught me. Written reports are listed under <a href="{{ route('reports') }}">Reports</a>.</p>
 
     <div class="mt-8 space-y-8">
         @foreach ($projects as $slug => $project)
@@ -10,10 +10,9 @@
                 <p class="text-sm text-neutral-600">{{ $project['role'] }} · {{ $project['status'] }}</p>
                 <p class="mt-2">{{ $project['summary'] }}</p>
                 <p class="mt-2 text-sm text-neutral-600">{{ implode(' · ', $project['stack']) }}</p>
-                <p class="mt-2 text-sm"><a href="{{ route('projects.show', $slug) }}">Read more</a></p>
+                <p class="mt-2 text-sm"><a href="{{ route('projects.show', $slug) }}">Read more</a>@if ($project['url']) · <a href="{{ $project['url'] }}" rel="noopener">{{ parse_url($project['url'], PHP_URL_HOST) }}</a>@endif @if (! empty($project['repo'])) · <a href="{{ $project['repo'] }}" rel="noopener">GitHub</a>@endif @foreach ($project['report_links'] ?? [] as [$linkTitle, $linkUrl]) · <a href="{{ $linkUrl }}" rel="noopener">{{ $linkTitle }}</a>@endforeach</p>
             </article>
         @endforeach
 
-        <p class="text-neutral-500">{{ config('research.coming_soon.projects') }}</p>
     </div>
 </x-layouts.app>

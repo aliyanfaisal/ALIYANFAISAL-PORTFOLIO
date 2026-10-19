@@ -30,6 +30,42 @@ return [
             'related' => ['invoiceinspect', 'manajet'],
         ],
         [
+            'name' => 'Uncertainty, calibration and abstention',
+            'text' => 'My tools return "could not verify" when two readings of a document disagree. That works, but the decision is a hand-set rule. I want to understand when a model\'s own confidence can be trusted, how to calibrate it, and when a system should decline to answer instead of guessing.',
+            'questions' => [
+                'When two independent extractors disagree, can the disagreement itself be used as a calibrated confidence signal?',
+                'How should a system trade off wrong answers against "I could not tell", and how should that trade-off be measured?',
+            ],
+            'related' => ['invoiceinspect'],
+        ],
+        [
+            'name' => 'Evaluation methodology and test-set leakage',
+            'text' => 'While evaluating InvoiceInspect I found how easily a score gets inflated: fixing problems on a test set makes that set stop being a fair test. I now label every score as tuned or fresh. I am interested in the methods behind trustworthy evaluation of applied LLM systems, not only in the numbers.',
+            'questions' => [
+                'How much does tuning on a test set inflate reported accuracy, and how can that be detected and reported?',
+                'How should synthetic test data with planted errors be built so that results transfer to real documents?',
+            ],
+            'related' => ['invoiceinspect'],
+        ],
+        [
+            'name' => 'Efficient and small language models',
+            'text' => 'Large models are expensive to run and often out of reach for individuals and small teams. I am interested in how much quality can be kept with small, quantized or local models, and in the systems side of running them on ordinary hardware. I run local models and Linux servers myself, and my coursework in operating systems, networks and distributed systems covers the systems side.',
+            'questions' => [
+                'What is the best quality a small or quantized model can reach on a given task using commodity hardware?',
+                'Which steps of a pipeline can use a smaller or local model without hurting the result, and can routing between models be decided from the input?',
+            ],
+            'related' => ['cuelara'],
+        ],
+        [
+            'name' => 'Misinformation and fact-checking in low-resource languages',
+            'text' => 'Most work on detecting false claims is done in English. Urdu is my native language, and I want to study how well current language models can check claims in Urdu and in languages with little data, where misinformation spreads and tools are scarce. I have not built a project in this area yet.',
+            'questions' => [
+                'How well do current models verify claims in Urdu and in mixed Urdu-English text, compared with English?',
+                'What evaluation data and sources of evidence are missing for fact-checking in low-resource languages?',
+            ],
+            'related' => [],
+        ],
+        [
             'name' => 'Retrieval-augmented generation (RAG)',
             'text' => 'RAG is how most LLM systems get grounded in real documents. I want to understand the parts that decide whether it works: document parsing, chunking, embeddings, retrieval quality and how a model should behave when the evidence is weak or contradictory.',
             'questions' => [
@@ -63,36 +99,18 @@ return [
             ],
             'related' => ['gov-dashboard'],
         ],
+        [
+            'name' => 'AI for climate and disaster resilience in mountain regions',
+            'text' => 'I studied and worked in Gilgit-Baltistan, a mountain region exposed to floods, glacial lake outbursts and landslides, where data is sparse and planning depends on it. I am interested in whether low-cost AI methods can support early warning and planning under those conditions. My related experience is the planning-department data work, not climate modelling, and I would be learning this field.',
+            'questions' => [
+                'Can low-cost models give useful early warnings or risk estimates where sensor and historical data are sparse?',
+                'How should uncertainty be communicated to planners and communities who must act on a prediction?',
+            ],
+            'related' => ['gov-dashboard'],
+        ],
     ],
 
     'projects' => [
-        'cuelara' => [
-            'name' => 'Cuelara',
-            'tagline' => 'Tools for people whose prompts are not working.',
-            'blurb' => 'A prompt debugger, optimizer and token-reduction toolkit with an embedding-matched prompt book, also available through an API and an MCP server.',
-            'period' => '2025 – present',
-            'role' => 'Creator and lead engineer',
-            'status' => 'Live',
-            'url' => 'https://cuelara.com',
-            'image' => 'images/projects/cuelara.webp',
-            'summary' => 'A web toolkit and prompt book for people who use ChatGPT, Claude or Gemini and cannot get the answers they want, or whose prompts use more tokens than they should.',
-            'problem' => 'Many LLM users write prompts by trial and error. The prompts fail without explanation, cost more tokens than necessary, and cannot be reused. Starting a prompt from a document or from a website\'s design is slow to do by hand.',
-            'what' => [
-                ['Fixing prompts that do not work', 'A prompt debugger, optimizer and formatter that find why a prompt keeps failing, sharpen it and clean it up. A score shows how a prompt can be improved.'],
-                ['Reducing token use', 'A token optimizer compresses a prompt, and a compare-and-estimate tool compares two versions and estimates cost.'],
-                ['Creating a prompt from a document', 'The user uploads a PDF or DOCX and the relevant parts are pulled out with retrieval and turned into a prompt.'],
-                ['Creating a design prompt from a website', 'A website\'s design or content is turned into a prompt that can be given to an AI tool.'],
-            ],
-            'approach' => [
-                'The user describes the problem in their own words. Text embeddings match that description to the right tool and to relevant prompts in the prompt book, and the tool runs on the same page.',
-                'The same tools are available through a public API and an MCP server, so they can be used from Claude, Cursor and other clients, and through a browser extension that works on sites the user already uses.',
-                'Usage is controlled with rate limiting based on the plan a user has bought, so each plan has its own limits.',
-            ],
-            'stack' => ['Next.js 16', 'React 19', 'TypeScript', 'Prisma 7', 'PostgreSQL', 'Text embeddings', 'MCP'],
-            'research' => 'Cuelara is where I became interested in prompt optimization and token reduction as research questions: what makes a prompt effective, how it can be measured, and how much context is actually needed.',
-            'reports' => ['A written report on Cuelara is in preparation.'],
-        ],
-
         'invoiceinspect' => [
             'name' => 'InvoiceInspect',
             'tagline' => 'Find invoice errors before you pay.',
@@ -118,14 +136,48 @@ return [
             'limits' => 'It checks arithmetic and internal consistency. It does not prove that an invoice is genuine, and it is not accounting, tax or legal advice.',
             'evaluation' => [
                 'title' => 'Evaluation',
-                'note' => 'Measured end to end with my own evaluation harness. The test set is small, and I am expanding it and improving the evaluation, so this figure will be updated.',
+                'note' => 'Measured with my own evaluation harness on separate invoice sets (corpora), each with planted errors. Scores on a corpus used for tuning are marked and are not a fresh measure. These runs replace the earlier figure of about 82% on 70 invoices.',
                 'metrics' => [
-                    ['Accuracy', '~82%', '70 invoices: 40 from my own generator, 30 generated by Claude'],
+                    ['Baseline, rules extractor (Corpus A)', '84.5% field accuracy', '25 of 32 planted errors found, 30 false alarms'],
+                    ['Unseen multi-page invoices (Corpus C, 40 invoices)', '72.2% field accuracy', '13 of 20 planted errors found, 50 false alarms'],
+                    ['Fresh set, rules extractor (Corpus D, 30 invoices)', '62.0% field accuracy', '15 of 26 planted errors found, 30 false alarms'],
+                    ['Fresh set, vision extractor (Corpus D, 30 invoices)', '99.4% field accuracy', '26 of 26 planted errors found, 0 false alarms; the vision instruction was refined after seeing Corpus D mistakes, so this is not a fresh measure'],
                 ],
             ],
             'planned' => 'Next: a contract-matching module that uses retrieval-augmented generation to compare an invoice with the terms of its contract. It is in design and is not part of the current product.',
             'research' => 'This project is the clearest example of my interest in reliability: separating reading from verification, cross-checking independent signals, and being explicit about what could not be verified.',
             'reports' => [],
+            'report_links' => [
+                ['Research report', 'https://invoiceinspect.app/research/InvoiceInspect-Research-Report.pdf'],
+                ['Evaluation harness reports', 'https://invoiceinspect.app/eval-harness-reports'],
+            ],
+        ],
+
+        'cuelara' => [
+            'name' => 'Cuelara',
+            'tagline' => 'Tools for people whose prompts are not working.',
+            'blurb' => 'A prompt debugger, optimizer and token-reduction toolkit with an embedding-matched prompt book, also available through an API and an MCP server.',
+            'period' => '2025 – present',
+            'role' => 'Creator and lead engineer',
+            'status' => 'Live',
+            'url' => 'https://cuelara.com',
+            'image' => 'images/projects/cuelara.webp',
+            'summary' => 'A web toolkit and prompt book for people who use ChatGPT, Claude or Gemini and cannot get the answers they want, or whose prompts use more tokens than they should.',
+            'problem' => 'Many LLM users write prompts by trial and error. The prompts fail without explanation, cost more tokens than necessary, and cannot be reused. Starting a prompt from a document or from a website\'s design is slow to do by hand.',
+            'what' => [
+                ['Fixing prompts that do not work', 'A prompt debugger, optimizer and formatter that find why a prompt keeps failing, sharpen it and clean it up. A score shows how a prompt can be improved.'],
+                ['Reducing token use', 'A token optimizer compresses a prompt, and a compare-and-estimate tool compares two versions and estimates cost.'],
+                ['Creating a prompt from a document', 'The user uploads a PDF or DOCX and the relevant parts are pulled out with retrieval and turned into a prompt.'],
+                ['Creating a design prompt from a website', 'A website\'s design or content is turned into a prompt that can be given to an AI tool.'],
+            ],
+            'approach' => [
+                'The user describes the problem in their own words. Text embeddings match that description to the right tool and to relevant prompts in the prompt book, and the tool runs on the same page.',
+                'The same tools are available through a public API and an MCP server, so they can be used from Claude, Cursor and other clients, and through a browser extension that works on sites the user already uses.',
+                'Usage is controlled with rate limiting based on the plan a user has bought, so each plan has its own limits.',
+            ],
+            'stack' => ['Next.js 16', 'React 19', 'TypeScript', 'Prisma 7', 'PostgreSQL', 'Text embeddings', 'MCP'],
+            'research' => 'Cuelara is where I became interested in prompt optimization and token reduction as research questions: what makes a prompt effective, how it can be measured, and how much context is actually needed.',
+            'reports' => ['A written report on Cuelara is in preparation.'],
         ],
 
         'manajet' => [
@@ -227,14 +279,25 @@ return [
     'reports' => [
         [
             'project' => 'invoiceinspect',
-            'title' => 'InvoiceInspect: evaluation harness results',
-            'summary' => 'Results from my evaluation harness for invoice field extraction and error detection.',
+            'title' => 'InvoiceInspect: research report and evaluation harness reports',
+            'summary' => 'The research question behind InvoiceInspect, and five test reports from my evaluation harness. Each report reuses the invoices and commands of the one before, so results can be compared. The reports are hosted on invoiceinspect.app.',
             'file' => null,
             'available' => true,
+            'index_url' => 'https://invoiceinspect.app/eval-harness-reports',
+            'documents' => [
+                ['Research Report', 'The research question, how the tool is built to answer it, what the measurements show and where it falls short.', 'https://invoiceinspect.app/research/InvoiceInspect-Research-Report.pdf'],
+                ['Evaluation Harness: Complete Guide', 'How the harness works end to end, the five extractors it can score, how to read results and its limits.', 'https://invoiceinspect.app/harness-reports/01-Evaluation-Harness-Guide.pdf'],
+                ['Report 1: Baseline', 'The tool as it stands on two invoice sets. Corpus A: 84.5% field accuracy, 25 of 32 planted errors found, 30 false alarms. Corpus B: 99.9%, 20 of 20, 0 false alarms.', 'https://invoiceinspect.app/harness-reports/02-Test-Report-1-Baseline.pdf'],
+                ['Report 2: Baseline after fixes', 'Six reading problems fixed and the same invoices rescored. Corpus A rose to 98.1% (31 of 32, 6 false alarms), but it was used for tuning, so it reads higher than a fresh set would.', 'https://invoiceinspect.app/harness-reports/03-Test-Report-2-After-Fixes.pdf'],
+                ['Report 3: Multi-page invoice testing and issues found', '40 new, unseen multi-page invoices (Corpus C): 72.2% field accuracy, 13 of 20 planted errors found, 50 false alarms.', 'https://invoiceinspect.app/harness-reports/04-Multi-Page-Invoice-Testing-and-Issues-Found.pdf'],
+                ['Report 4: Multi-page invoice fixes', 'Report 3 problems fixed and rescored: 99.98%, 20 of 20, 0 false alarms. The fixes were made on these invoices, so this does not show performance on other invoices. Older sets were rescored to check for regressions.', 'https://invoiceinspect.app/harness-reports/05-Multi-Page-Invoice-Fixes.pdf'],
+                ['Report 5: Fresh invoice test, rules and vision model', '30 new invoices (Corpus D). Rules extractor: 62.0%, 15 of 26, 30 false alarms. Vision extractor: 99.4%, 26 of 26, 0 false alarms; its instruction was refined after seeing Corpus D mistakes.', 'https://invoiceinspect.app/harness-reports/06-Fresh-Invoice-Test-Rules-and-Vision.pdf'],
+            ],
+            'extra_links' => [
+                ['All test invoices (every corpus)', 'https://invoiceinspect.app/eval-harness-reports/invoices'],
+            ],
         ],
         ['project' => 'cuelara', 'title' => 'Cuelara: report', 'summary' => 'In preparation.', 'file' => null, 'available' => false],
-        ['project' => 'manajet', 'title' => 'ManaJet: final year project report', 'summary' => 'In preparation.', 'file' => null, 'available' => false],
-        ['project' => 'gov-dashboard', 'title' => 'Provincial data dashboard: report', 'summary' => 'In preparation.', 'file' => null, 'available' => false],
     ],
 
     'references' => [
@@ -265,15 +328,12 @@ return [
     ],
 
     'skills' => [
-        ['AI engineering', 'LLM APIs (OpenAI, Anthropic, Gemini, Groq, DeepSeek), local LLMs, tool and function calling, retrieval-augmented generation, vector embeddings, prompt optimization, context-window management, token reduction'],
-        ['Languages and backend', 'Python, PHP (Laravel), Node.js, Flask, TypeScript, JavaScript, REST APIs, SQL'],
-        ['Data and infrastructure', 'Pandas, NumPy, PostgreSQL, MySQL, MongoDB, vector databases, Docker, Git, Linux administration'],
+        ['AI engineering & RAG', 'LLM APIs (OpenAI, Gemini, Anthropic, Groq, DeepSeek), Local LLMs, Tool and Function Calling, Retrieval-Augmented Generation (RAG), Vector Embeddings, Prompt Optimization, Context Window Management, Token Reduction'],
+        ['Languages & backend', 'Python, PHP (Laravel), Node.js, Flask, TypeScript, JavaScript, RESTful APIs, SQL'],
+        ['Data & infrastructure', 'Pandas, NumPy, PostgreSQL, MySQL, MongoDB, Vector Databases, Docker, Git, Linux Administration'],
     ],
+
+    'interests_note' => 'More broadly, I would like to help with research on AI and its impact on people and society: how these systems behave across languages and communities, who benefits, who is left out, and how their risks can be measured and reduced. I am glad to contribute engineering, data collection and evaluation work to such projects while I learn from the researchers leading them.',
 
     'languages' => 'Urdu (native), English (C1)',
-
-    'coming_soon' => [
-        'projects' => 'More projects will be added here.',
-        'open_source' => 'More open-source work is coming.',
-    ],
 ];

@@ -4,7 +4,7 @@
     $openSource = config('research.open_source');
     $edu = config('research.education');
 @endphp
-<x-layouts.app description="AI engineer and aspiring researcher with a BSc in IT, applying to research-oriented MSc programs in AI and ML. Research interests: prompt engineering, retrieval-augmented generation, LLM reliability and data-centric systems.">
+<x-layouts.app description="AI engineer and aspiring researcher with a BSc in IT, applying to research-oriented MSc programs in AI and ML. Research interests: LLM reliability and evaluation, calibration, small and efficient language models, and AI for low-resource languages.">
     <section class="mt-8">
         <h1 class="font-serif text-3xl font-bold leading-tight">{{ $person['name'] }}</h1>
         <p class="mt-1 text-neutral-600">{{ $person['title'] }} · {{ $person['location'] }}</p>
@@ -20,24 +20,32 @@
 
     <x-section title="Research interests">
         <ul class="list-disc space-y-1 pl-5">
-            @foreach ($interests as $interest)
+            @foreach (array_filter($interests, fn ($interest) => ! empty($interest['related'])) as $interest)
                 <li>{{ $interest['name'] }}</li>
             @endforeach
         </ul>
-        <p class="mt-3 text-sm"><a href="{{ route('research') }}">Read more about my research interests</a></p>
+        <p class="mt-3 text-sm"><a href="{{ route('research') }}">See all my research interests</a></p>
     </x-section>
 
-    <x-section title="Selected projects">
+    <x-section title="My own projects">
         <ul class="space-y-3">
             @foreach ($projects as $slug => $project)
                 <li>
                     <a href="{{ route('projects.show', $slug) }}" class="font-semibold">{{ $project['name'] }}</a><br>
                     <span>{{ $project['blurb'] }}</span>
+                    @if ($project['url'] || ! empty($project['repo']))
+                        <br><span class="text-sm">
+                            @if ($project['url'])<a href="{{ $project['url'] }}" rel="noopener">{{ parse_url($project['url'], PHP_URL_HOST) }}</a>@endif
+                            @if (! empty($project['repo']))@if ($project['url']) · @endif<a href="{{ $project['repo'] }}" rel="noopener">GitHub</a>@endif
+                        </span>
+                    @endif
+                    @if (! empty($project['report_links']))
+                        <br><span class="text-sm">Reports: @foreach ($project['report_links'] as [$linkTitle, $linkUrl])<a href="{{ $linkUrl }}" rel="noopener">{{ $linkTitle }}</a>@if (! $loop->last) · @endif @endforeach</span>
+                    @endif
                 </li>
             @endforeach
-            <li class="text-neutral-500">{{ config('research.coming_soon.projects') }}</li>
         </ul>
-        <p class="mt-3 text-sm"><a href="{{ route('projects.index') }}">All projects</a> · <a href="{{ route('reports') }}">Reports</a></p>
+        <p class="mt-3 text-sm"><a href="{{ route('projects.index') }}">All my own projects</a> · <a href="{{ route('reports') }}">Reports</a></p>
     </x-section>
 
     <x-section title="Open source">
@@ -45,10 +53,18 @@
             @foreach ($openSource as $slug => $item)
                 <li>
                     <a href="{{ route('open-source.show', $slug) }}" class="font-semibold">{{ $item['name'] }}</a><br>
-                    <span>{{ $item['tagline'] }}</span>
+                    <span>{{ $item['tagline'] }}</span><br>
+                    <span class="text-sm"><a href="{{ $item['repo'] }}" rel="noopener">GitHub</a></span>
                 </li>
             @endforeach
-            <li class="text-neutral-500">{{ config('research.coming_soon.open_source') }}</li>
+        </ul>
+    </x-section>
+
+    <x-section title="Technical skills">
+        <ul class="space-y-2">
+            @foreach (config('research.skills') as [$group, $items])
+                <li><span class="font-semibold">{{ $group }}:</span> {{ $items }}.</li>
+            @endforeach
         </ul>
     </x-section>
 

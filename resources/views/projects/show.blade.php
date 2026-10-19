@@ -1,5 +1,5 @@
 <x-layouts.app :title="$project['name']" :description="\Illuminate\Support\Str::limit($project['summary'], 157)">
-    <p class="mt-6 text-sm"><a href="{{ route('projects.index') }}">&larr; All projects</a></p>
+    <p class="mt-6 text-sm"><a href="{{ route('projects.index') }}">&larr; All my own projects</a></p>
 
     <h1 class="mt-3 font-serif text-3xl font-bold">{{ $project['name'] }}</h1>
     <p class="mt-1 text-lg">{{ $project['tagline'] }}</p>
@@ -69,8 +69,15 @@
 
     <x-section title="Reports">
         @if ($slug === 'invoiceinspect')
-            <p>The evaluation results above come from my evaluation harness. A full written report is listed on the <a href="{{ route('reports') }}">Reports</a> page when it is ready.</p>
+            <p>The evaluation results above come from my evaluation harness. The research report and every harness test report are listed on the <a href="{{ route('reports') }}">Reports</a> page.</p>
         @endif
+        @isset($project['report_links'])
+            <ul class="mt-2 list-disc space-y-1 pl-5">
+                @foreach ($project['report_links'] as [$linkTitle, $linkUrl])
+                    <li><a href="{{ $linkUrl }}" rel="noopener">{{ $linkTitle }}</a></li>
+                @endforeach
+            </ul>
+        @endisset
         @foreach ($project['reports'] as $line)
             <p>{{ $line }}</p>
         @endforeach

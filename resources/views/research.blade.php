@@ -1,9 +1,9 @@
 @php($interests = config('research.interests'))
-<x-layouts.app title="Research interests" description="Research interests: prompt engineering and token efficiency, retrieval-augmented generation, LLM reliability and evaluation, multimodal document understanding and data-centric systems.">
+<x-layouts.app title="Research interests" description="Research interests of Aliyan Faisal: LLM reliability and evaluation, uncertainty and calibration, small and efficient language models, fact-checking in low-resource languages, retrieval-augmented generation, and AI for climate resilience.">
     <h1 class="mt-8 font-serif text-3xl font-bold">Research interests</h1>
     <p class="mt-3">
-        I want to study applied LLM systems more rigorously than building them allows. The areas below come directly from problems I ran into
-        while building the projects listed on this site. The questions are things I would like to investigate, not claims of results.
+        I want to study applied LLM systems more rigorously than building them allows. Most of the areas below come from problems I ran into
+        while building the projects listed on this site; one is an area I have not built in yet and say so. The questions are things I would like to investigate, not claims of results.
     </p>
 
     @foreach ($interests as $interest)
@@ -17,12 +17,18 @@
                 @endforeach
             </ul>
 
-            <p class="mt-4 text-sm">
-                <span class="font-semibold">Related work:</span>
-                @foreach ($interest['related'] as $slug)
-                    <a href="{{ route('projects.show', $slug) }}">{{ config("research.projects.$slug.name") }}</a>@unless ($loop->last), @endunless
-                @endforeach
-            </p>
+            @if (! empty($interest['related']))
+                <p class="mt-4 text-sm">
+                    <span class="font-semibold">Related work:</span>
+                    @foreach ($interest['related'] as $slug)
+                        <a href="{{ route('projects.show', $slug) }}">{{ config("research.projects.$slug.name") }}</a>@unless ($loop->last), @endunless
+                    @endforeach
+                </p>
+            @endif
         </x-section>
     @endforeach
+
+    <x-section title="Beyond these areas">
+        <p>{{ config('research.interests_note') }}</p>
+    </x-section>
 </x-layouts.app>

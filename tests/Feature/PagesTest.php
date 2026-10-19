@@ -31,22 +31,24 @@ class PagesTest extends TestCase
             ->assertSee('CGPA 3.80')
             ->assertSee('HEC Ehsaas Scholarship')
             ->assertSee('Master', false)
-            ->assertSee('Prompt engineering and token efficiency')
+            ->assertSee('Uncertainty, calibration and abstention')
+            ->assertDontSee('Structured output and constrained generation')
+            ->assertDontSee('Misinformation and fact-checking')
             ->assertSee('Notemind')
-            ->assertSee('More projects will be added here.')
-            ->assertSee('More open-source work is coming.');
+            ->assertDontSee('More projects will be added here.')
+            ->assertDontSee('More open-source work is coming.');
     }
 
     public function test_invoiceinspect_shows_its_evaluation_results(): void
     {
         $this->get('/projects/invoiceinspect')
-            ->assertSee('~82%')
-            ->assertSee('70 invoices')
+            ->assertSee('84.5% field accuracy')
+            ->assertSee('Corpus D')
             ->assertSee('contract-matching module')
             ->assertDontSee('99.5%')
             ->assertDontSee('93%');
 
-        $this->get('/reports')->assertSee('InvoiceInspect: evaluation harness results')->assertSee('~82%');
+        $this->get('/reports')->assertSee('InvoiceInspect: research report and evaluation harness reports')->assertSee('84.5% field accuracy');
     }
 
     public function test_retrieval_augmented_generation_is_not_claimed_for_invoiceinspect_as_a_current_feature(): void
