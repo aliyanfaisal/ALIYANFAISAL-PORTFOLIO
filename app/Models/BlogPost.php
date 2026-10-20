@@ -149,11 +149,18 @@ class BlogPost extends Model
             return;
         }
 
-        $path = "blog/{$this->slug}.webp";
+        // A unique name per upload, otherwise the URL never changes and browsers keep serving the cached old image.
+        $path = "blog/{$this->slug}-".substr(md5($result['contents']), 0, 8).'.webp';
         $disk->put($path, $result['contents']);
 
         if ($path !== $this->image_path) {
             $disk->delete($this->image_path);
+        }
+
+        $previous = $this->getOriginal('image_path');
+
+        if ($previous !== null && $previous !== $path) {
+            $disk->delete($previous);
         }
 
         $this->image_path = $path;
