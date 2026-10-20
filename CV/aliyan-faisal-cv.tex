@@ -34,7 +34,8 @@
 % HEADER
 %----------------------------------------------------------------------------------------
 \begin{center}
-    {\Huge \bfseries \color{primary} ALIYAN FAISAL} \\[4pt]
+    {\Huge \bfseries \color{primary} ALIYAN FAISAL} \\[3pt]
+    {\large \color{primary} AI Engineer \& Aspiring Researcher} \\[4pt]
     \small Islamabad, Pakistan \ $\cdot$ \ +92-315-5687559 \ $\cdot$ \href{mailto:research@aliyanfaisal.com}{research@aliyanfaisal.com}  \\
      \href{https://research.aliyanfaisal.com}{research.aliyanfaisal.com} \ $\cdot$ \
     \href{https://github.com/aliyanfaisal}{GitHub} \ $\cdot$ \ 
@@ -48,18 +49,21 @@
 % RESEARCH PROFILE
 %----------------------------------------------------------------------------------------
 \section{RESEARCH PROFILE}
-Software and AI Systems Developer with a background in Information Technology (CGPA 3.80/4.00) specializing in applied AI systems, LLM orchestration, and Retrieval-Augmented Generation (RAG) architectures. Experienced in building scalable data pipelines, prompt engineering toolkits, and intelligent decision-support platforms. Strong foundation in computer science fundamentals, backend system design, and API-driven automation. Seeking admission into a research-oriented Master's program in Artificial Intelligence or Machine Learning to move from building LLM-based systems to researching their reliability, evaluation and efficiency.
+AI Engineer and aspiring researcher with a BSc in Information Technology (CGPA 3.80/4.00), specializing in applied AI systems, LLM orchestration, and Retrieval-Augmented Generation (RAG) architectures. Experienced in building scalable data pipelines, prompt engineering toolkits, and intelligent decision-support platforms. Strong foundation in computer science fundamentals, backend system design, and API-driven automation. Seeking admission into a research-oriented Master's program in Artificial Intelligence or Machine Learning to move from building LLM-based systems to researching their reliability, evaluation and efficiency.
 
 %----------------------------------------------------------------------------------------
 % RESEARCH INTERESTS
 %----------------------------------------------------------------------------------------
 \section{RESEARCH INTERESTS}
 \begin{itemize}
-    \item \textbf{LLM Reliability \& Evaluation:} How can the correctness of LLM-based extraction and verification be measured, and how should confidence and ``could not verify'' be reported?
-    \item \textbf{Retrieval-Augmented Generation:} How do parsing, chunking and retrieval choices affect the faithfulness of grounded answers?
-    \item \textbf{Prompt Optimization \& Token Efficiency:} How much of a prompt can be removed or restructured before output quality drops?
-    \item \textbf{Multimodal Document Understanding:} When independent text and vision readings of a document disagree, how should they be combined?
-    \item \textbf{Data-Centric AI:} How do data pipelines and validation affect the quality of models built on them?
+    \item \textbf{LLM Reliability, Uncertainty \& Calibration:} Measuring correctness, and when to say ``could not verify''.
+    \item \textbf{Evaluation Methodology:} Detecting and reporting score inflation from tuning on test sets.
+    \item \textbf{Efficient \& Small Language Models:} Best quality from small or quantized models on commodity hardware.
+    \item \textbf{Fact-Checking in Low-Resource Languages:} Verifying claims in Urdu and mixed Urdu-English text.
+    \item \textbf{Retrieval-Augmented Generation:} How parsing, chunking and retrieval affect answer faithfulness.
+    \item \textbf{Prompt Optimization \& Token Efficiency:} How much of a prompt can go before quality drops.
+    \item \textbf{Multimodal Document Understanding \& Data-Centric AI:} Combining text and vision readings; data quality effects.
+    \item \textbf{AI for Climate \& Disaster Resilience in Mountain Regions:} Low-cost early warning where data is sparse.
 \end{itemize}
 
 %----------------------------------------------------------------------------------------
@@ -92,10 +96,9 @@ Software and AI Systems Developer with a background in Information Technology (C
 \noindent \textbf{Cuelara -- LLM Prompt Optimization \& Context Engineering Suite} \hfill \href{https://cuelara.com}{cuelara.com} \\
 \textit{Creator \& Lead Systems Engineer} \hfill \textbf{2025 -- Present}
 \begin{itemize}
-    \item Architected a web-based toolkit featuring a \textbf{Prompt Optimizer}, \textbf{Token Reducer}, \textbf{Context Extractor}, and \textbf{Prompt Debugger} to streamline LLM inference pipelines.
-    \item Engineered token-reduction algorithms and structural formatting rules to minimize context-window overhead and API latency while improving response consistency.
-    \item Implemented context extraction pipelines to isolate system instructions from input noise prior to API submission.
-    \item Shipped the toolkit through a web app, browser extension, public API and MCP server, with rate limiting based on the plan each user has purchased.
+    \item Built a toolkit with a \textbf{Prompt Optimizer}, \textbf{Token Reducer}, \textbf{Context Extractor} and \textbf{Prompt Debugger} to cut context-window overhead and improve response consistency.
+    \item Engineered token-reduction algorithms, formatting rules and context extraction that separates system instructions from input noise.
+    \item Shipped as a web app, browser extension, public API and MCP server, with plan-based rate limiting.
 \end{itemize}
 
 \vspace{6pt}
@@ -103,10 +106,10 @@ Software and AI Systems Developer with a background in Information Technology (C
 \noindent \textbf{InvoiceInspect -- Multimodal Invoice Verification \& Error Detection System} \hfill \href{https://invoiceinspect.app}{invoiceinspect.app} \\
 \textit{Creator \& Lead Systems Engineer} \hfill \textbf{2025 -- Present}
 \begin{itemize}
-    \item Built a system that finds arithmetic and consistency errors in PDF invoices (line totals, subtotals, tax, grand total, duplicate charges, missing fields) and reports each with evidence: expected value, printed value and page.
-    \item Designed dual-path extraction, combining native text and OCR (Tesseract) with a vision model, cross-checked field by field; disagreements are marked ``could not verify'' instead of guessed.
-    \item Kept verification deterministic: a rules engine decides, and the LLM only explains findings, with a provider-agnostic AI layer and fallback between providers.
-    \item Built an evaluation harness (dataset generator and scorer); currently \textbf{$\sim$82\%} end-to-end accuracy on a 70-invoice test set (40 from my own generator, 30 generated by Claude); the evaluation is being expanded. Next: RAG-based contract matching (in design).
+    \item Built a system that finds arithmetic and consistency errors in PDF invoices (totals, tax, duplicate charges, missing fields) and reports each with evidence: expected value, printed value and page.
+    \item Designed dual-path extraction (text/OCR with Tesseract plus a vision model), cross-checked field by field; disagreements are marked ``could not verify'' instead of guessed.
+    \item Kept verification deterministic: a rules engine decides and the LLM only explains findings, with provider fallback.
+    \item Built an evaluation harness and published a \href{https://invoiceinspect.app/research/InvoiceInspect-Research-Report.pdf}{research report} and \href{https://invoiceinspect.app/eval-harness-reports}{eight test reports}. On a fresh set of 30 new-layout invoices (no prior tuning), the rules extractor scored 70.3\% field accuracy and the vision extractor \textbf{97.9\%}; after rules improvements, the rules extractor reached 99.9\% on all 50 invoices of that corpus (tuned on 40) and 100\% on the 10 held out (small sample).
 \end{itemize}
 
 \vspace{6pt}
@@ -114,10 +117,9 @@ Software and AI Systems Developer with a background in Information Technology (C
 \noindent \textbf{ManaJet -- AI-Assisted Project \& Task Management for Small Software Teams} \hfill \textbf{Final Year Project} \\
 \textit{Lead System Developer} \hfill \textbf{2022 -- 2023}
 \begin{itemize}
-    \item Built an AI task planner using OpenAI APIs that generates task breakdowns, timeline estimates and dependencies from user requirements.
-    \item Constrained model output with JSON-schema validation and prompt rules, and validated it before it is stored.
+    \item Built an AI task planner (OpenAI APIs) that generates task breakdowns, estimates and dependencies, with output constrained by JSON schema and validated before storage.
     \item Built the REST API and relational MySQL schema for project state and task dependencies.
-    \item Final year project supervised by Dr. Sajid Hussain, Professor, Department of Computer Sciences, Karakoram International University.
+    \item Supervised by Dr. Sajid Hussain, Professor, Karakoram International University.
 \end{itemize}
 
 %----------------------------------------------------------------------------------------
@@ -128,9 +130,8 @@ Software and AI Systems Developer with a background in Information Technology (C
 \noindent \textbf{Notemind -- Claude Code Plugin for Notes and Reminders} \hfill \href{https://github.com/aliyanfaisal/notemind}{github.com/aliyanfaisal/notemind} \\
 \textit{Author} \hfill \textbf{MIT License}
 \begin{itemize}
-    \item Built a free plugin that lets developers add notes in plain words from a Claude Code chat; Claude resolves the date, and notes are saved in a local SQLite database.
-    \item Added a session-start hook (about 85 ms) that reports overdue and upcoming notes, and designed it with least privilege: only the user can add or close notes, never the model.
-    \item Implemented in standard-library Python with no network calls, versioned migrations and a release script.
+    \item Built a free plugin to add notes in plain words from a Claude Code chat (Claude resolves the date; notes live in local SQLite), with a session-start hook (about 85 ms) reporting overdue notes.
+    \item Designed with least privilege (only the user can add or close notes, never the model); standard-library Python, no network calls.
 \end{itemize}
 
 %----------------------------------------------------------------------------------------
@@ -155,7 +156,7 @@ Software and AI Systems Developer with a background in Information Technology (C
 
 \vspace{6pt}
 
-\noindent \textbf{Greymatter Ventures Pvt} \hfill Gilgit, Pakistan (Full-time) \\
+\noindent \textbf{Greymatter Ventures Pvt} \hfill Gilgit, Pakistan (Part-time) \\
 \textit{Full Stack Web Developer (Team Lead)} \hfill \textbf{2020 -- 2022}
 \begin{itemize}
     \item Designed modular backend architectures, relational schemas, and server-side logic to optimize application throughput and API reliability.
@@ -174,7 +175,7 @@ Software and AI Systems Developer with a background in Information Technology (C
 % LANGUAGES
 %----------------------------------------------------------------------------------------
 \section{LANGUAGES}
-\textbf{Urdu:} Native \ $\cdot$ \ \textbf{English:} C1 (Advanced)
+\textbf{Urdu:} Native \ $\cdot$ \ \textbf{English:} Professional working proficiency (proficiency test planned)
 
 %----------------------------------------------------------------------------------------
 % REFERENCES

@@ -53,7 +53,7 @@ class ExperienceSeeder extends Seeder
                 'title' => 'Full Stack Web Developer (Team Lead)',
                 'company' => 'GreyMatter Ventures',
                 'description' => 'Custom full-stack web application development with Custom WordPress and the Laravel framework, designing backend architectures and relational schemas. Later led the web development team, mentoring junior developers and remote interns on code optimization, system design and deployment.',
-                'employment_type' => 'Full-time',
+                'employment_type' => 'Part-time',
                 'start_date' => '2020-09-09',
                 'end_date' => '2022-02-14',
                 'current' => false,
