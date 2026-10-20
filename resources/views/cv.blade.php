@@ -3,8 +3,8 @@
 @endphp
 <x-layouts.app title="CV" description="Education, experience and skills of Aliyan Faisal: BSc in Information Technology (CGPA 3.80), software and applied AI engineering.">
     <h1 class="mt-8 font-serif text-3xl font-bold">Curriculum vitae</h1>
-    <p class="mt-3 text-sm">
-        @if ($hasCv)<a href="{{ route('cv.file') }}">Download CV (PDF)</a>@else<span class="text-neutral-500">CV (PDF): coming soon</span>@endif
+    <p class="mt-3">
+        @if ($hasCv)<a href="{{ route('cv.file') }}" target="_blank" rel="noopener" class="font-semibold">Download CV (PDF)</a>@else<span class="text-neutral-500">CV (PDF): coming soon</span>@endif
     </p>
 
     <x-section title="Education">
@@ -33,17 +33,6 @@
                 <li><span class="font-semibold">{{ $group }}:</span> {{ $items }}.</li>
             @endforeach
         </ul>
-    </x-section>
-
-    <x-section title="References">
-        <div class="space-y-4">
-            @foreach (config('research.references') as $ref)
-                <div>
-                    <p class="flex flex-wrap justify-between gap-x-4"><span class="font-semibold">{{ $ref['name'] }}</span><a href="mailto:{{ $ref['email'] }}">{{ $ref['email'] }}</a></p>
-                    <p>{{ $ref['title'] }}</p>
-                </div>
-            @endforeach
-        </div>
     </x-section>
 
     <x-section title="Languages"><p>{{ config('research.languages') }}</p></x-section>

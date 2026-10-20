@@ -1,7 +1,7 @@
 @php($reports = config('research.reports'))
 <x-layouts.app title="Reports" description="Written reports and evaluation results for projects by Aliyan Faisal.">
     <h1 class="mt-8 font-serif text-3xl font-bold">Reports</h1>
-    <p class="mt-3">Written reports for the projects on this site. Reports are added here as they are completed.</p>
+    <p class="mt-3">Written reports for the projects on this site.</p>
 
     <div class="mt-8 space-y-6">
         @foreach ($reports as $report)
@@ -49,4 +49,6 @@
             </article>
         @endforeach
     </div>
+
+    <p class="mt-6 text-sm text-neutral-600">Further evaluations, including for Cuelara, are in progress.</p>
 </x-layouts.app>

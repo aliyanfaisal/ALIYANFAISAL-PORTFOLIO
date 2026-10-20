@@ -305,13 +305,6 @@ return [
                 ['All test invoices (every corpus)', 'https://invoiceinspect.app/eval-harness-reports/invoices'],
             ],
         ],
-        ['project' => 'cuelara', 'title' => 'Cuelara: report', 'summary' => 'In preparation.', 'file' => null, 'available' => false],
-    ],
-
-    'references' => [
-        ['name' => 'Dr. Aftab Ahmed Khan', 'email' => 'aftab.ahmed@kiu.edu.pk', 'title' => 'Associate Professor, Department of Computer Sciences, Karakoram International University, Gilgit-Baltistan, Pakistan (Ph.D., TU Munich)'],
-        ['name' => 'Dr. Sajid Hussain', 'email' => 'sajid.hussain@kiu.edu.pk', 'title' => 'Professor, Department of Computer Sciences, Karakoram International University, Gilgit-Baltistan, Pakistan'],
-        ['name' => 'Dr. Sabit Rahim', 'email' => 'sabit.rahim@kiu.edu.pk', 'title' => 'Professor, Department of Computer Sciences, Karakoram International University, Gilgit-Baltistan, Pakistan'],
     ],
 
     'education' => [
