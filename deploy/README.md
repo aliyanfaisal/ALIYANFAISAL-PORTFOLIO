@@ -21,7 +21,7 @@ It reuses the repository secrets/variables (`CPANEL_SSH_KEY`, `CPANEL_SSH_KEY_PA
 
 ## After the first deploy
 - Visit https://research.aliyanfaisal.com and check `/sitemap.xml`.
-- Put the compiled CV at `public/cv/aliyan-faisal-cv.pdf` (commit it); the download links then appear.
+- Put the compiled CV at `public/documents/aliyan-faisal-cv.pdf` (commit it; never use a `public/cv/` folder, it would shadow the `/cv` page); the download links then appear.
 - Add `research@aliyanfaisal.com` as a mailbox, and check SPF/DKIM in cPanel -> Email Deliverability.
 
 ## Notes
