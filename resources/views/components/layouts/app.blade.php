@@ -21,6 +21,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>{{ $pageTitle }}</title>
     <meta name="description" content="{{ $pageDescription }}">
+    <link rel="icon" type="image/svg+xml" href="{{ asset('favicon.svg') }}">
+    <link rel="icon" type="image/x-icon" sizes="48x48" href="{{ asset('favicon.ico') }}">
+    <link rel="apple-touch-icon" href="{{ asset('apple-touch-icon.png') }}">
     <link rel="canonical" href="{{ url()->current() }}">
     <meta property="og:type" content="website">
     <meta property="og:title" content="{{ $pageTitle }}">
