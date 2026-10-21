@@ -45,7 +45,7 @@
                 </li>
             @endforeach
         </ul>
-        <p class="mt-3 text-sm"><a href="{{ route('projects.index') }}">All my own projects</a> · <a href="{{ route('reports') }}">Reports</a></p>
+        <p class="mt-3 text-sm"><a href="{{ route('projects.index') }}">All my own projects</a></p>
     </x-section>
 
     <x-section title="Open source">
