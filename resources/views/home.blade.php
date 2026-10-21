@@ -71,7 +71,7 @@
                     </div>
                     <div>
                         <dt class="text-2xl font-bold text-zinc-900 dark:text-white">3.80 CGPA</dt>
-                        <dd class="text-xs text-zinc-500 dark:text-zinc-400">BSc IT, Karakoram International University</dd>
+                        <dd class="text-xs text-zinc-500 dark:text-zinc-400">BSc IT, Karakoram International University. Ranked 1st in class in all 8 semesters</dd>
                     </div>
                 </dl>
             </div>
