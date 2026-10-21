@@ -40,8 +40,8 @@
             @foreach ($volunteering as $job)
                 <li><span class="font-semibold">Volunteering work: {{ trim(str_replace('(Voluntary Work)', '', $job['role'])) }}, {{ $job['org'] }} ({{ $job['years'] }}).</span> <a href="{{ route('voluntary') }}">Details</a></li>
             @endforeach
-            @foreach ($ach['other'] as [$title, $text])
-                <li><span class="font-semibold">{{ $title }}.</span> {{ $text }}</li>
+            @foreach ($ach['other'] as [$title, $text, $file])
+                <li><span class="font-semibold">{{ $title }}.</span> {{ $text }}@if ($file && file_exists(public_path($file))) <a href="{{ asset($file) }}" target="_blank" rel="noopener">Certificate (image)</a>@endif</li>
             @endforeach
         </ul>
     </x-section>

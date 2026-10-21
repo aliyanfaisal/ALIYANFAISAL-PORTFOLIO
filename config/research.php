@@ -334,8 +334,8 @@ return [
             'text' => 'client reviews across Fiverr and Upwork, from more than five years of independent engineering work for international clients.',
         ],
         'other' => [
-            ['Certificate of Appreciation, Ismaili Boy Scouts Prince Town', 'For a contribution to volunteerism.'],
-            ['Merit Certificate, Public Schools & Colleges Jutial (2017)', 'For performing at the opening and closing ceremony of Annual Sports 2017 as a member of the College Band Team.'],
+            ['Certificate of Appreciation, Ismaili Boy Scouts Prince Town', 'For a contribution to volunteerism.', 'documents/certificate-ismaili-boy-scouts.jpg'],
+            ['Merit Certificate, Public Schools & Colleges Jutial (2017)', 'For performing at the opening and closing ceremony of Annual Sports 2017 as a member of the College Band Team.', 'documents/certificate-school-merit-2017.jpg'],
         ],
     ],
 
