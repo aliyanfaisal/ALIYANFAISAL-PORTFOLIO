@@ -354,5 +354,5 @@ return [
 
     'interests_note' => 'More broadly, I would like to help with research on AI and its impact on people and society: how these systems behave across languages and communities, who benefits, who is left out, and how their risks can be measured and reduced. I am glad to contribute engineering, data collection and evaluation work to such projects while I learn from the researchers leading them.',
 
-    'languages' => 'Urdu (native), English (professional working proficiency; proficiency test planned)',
+    'languages' => 'Urdu (native), English (professional working proficiency)',
 ];
