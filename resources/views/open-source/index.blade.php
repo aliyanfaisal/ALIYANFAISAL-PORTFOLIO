@@ -9,7 +9,7 @@
                 <h2 class="font-serif text-xl font-bold"><a href="{{ route('open-source.show', $slug) }}" class="text-neutral-900">{{ $item['name'] }}</a></h2>
                 <p class="text-sm text-neutral-600">{{ $item['status'] }} · v{{ $item['version'] }}</p>
                 <p class="mt-2">{{ $item['summary'] }}</p>
-                <p class="mt-2 text-sm"><a href="{{ route('open-source.show', $slug) }}">Read more</a> · <a href="{{ $item['repo'] }}" rel="noopener">GitHub</a></p>
+                <p class="mt-2 text-sm"><a href="{{ route('open-source.show', $slug) }}">Read more</a> · <a href="{{ $item['repo'] }}" target="_blank" rel="noopener">GitHub</a></p>
             </article>
         @endforeach
     </div>

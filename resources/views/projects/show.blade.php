@@ -1,13 +1,13 @@
 <x-layouts.app :title="$project['name']" :description="\Illuminate\Support\Str::limit($project['summary'], 157)">
-    <p class="mt-6 text-sm"><a href="{{ route('projects.index') }}">&larr; All my own projects</a></p>
+    <p class="mt-6 text-sm"><a href="{{ $backUrl ?? route('projects.index') }}">&larr; {{ $backLabel ?? 'All my own projects' }}</a></p>
 
     <h1 class="mt-3 font-serif text-3xl font-bold">{{ $project['name'] }}</h1>
     <p class="mt-1 text-lg">{{ $project['tagline'] }}</p>
     <p class="mt-1 text-sm text-neutral-600">{{ $project['role'] }} · {{ $project['status'] }}</p>
 
     <p class="mt-3 text-sm">
-        @if ($project['url'])<a href="{{ $project['url'] }}" rel="noopener">{{ parse_url($project['url'], PHP_URL_HOST) }}</a>@endif
-        @if (! empty($project['repo']))@if ($project['url']) · @endif<a href="{{ $project['repo'] }}" rel="noopener">Repository</a>@endif
+        @if ($project['url'])<a href="{{ $project['url'] }}" target="_blank" rel="noopener">{{ parse_url($project['url'], PHP_URL_HOST) }}</a>@endif
+        @if (! empty($project['repo']))@if ($project['url']) · @endif<a href="{{ $project['repo'] }}" target="_blank" rel="noopener">Repository</a>@endif
     </p>
 
     @if ($project['image'] && file_exists(public_path($project['image'])))
@@ -73,7 +73,7 @@
             @isset($project['report_links'])
                 <ul class="mt-2 list-disc space-y-1 pl-5">
                     @foreach ($project['report_links'] as [$linkTitle, $linkUrl])
-                        <li><a href="{{ $linkUrl }}" rel="noopener">{{ $linkTitle }}</a></li>
+                        <li><a href="{{ $linkUrl }}" target="_blank" rel="noopener">{{ $linkTitle }}</a></li>
                     @endforeach
                 </ul>
             @endisset

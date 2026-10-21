@@ -31,6 +31,19 @@ class PageController extends Controller
         return view('projects.show', $this->shared() + ['project' => $project, 'slug' => $slug]);
     }
 
+    public function voluntaryWork()
+    {
+        $project = config('research.voluntary_work.gov-dashboard');
+        abort_if($project === null, 404);
+
+        return view('projects.show', $this->shared() + [
+            'project' => $project,
+            'slug' => 'gov-dashboard',
+            'backUrl' => route('home'),
+            'backLabel' => 'Home',
+        ]);
+    }
+
     public function openSource()
     {
         return view('open-source.index', $this->shared());
@@ -74,7 +87,7 @@ class PageController extends Controller
 
     public function sitemap(): Response
     {
-        $urls = collect([route('home'), route('research'), route('projects.index'), route('open-source.index'), route('reports'), route('achievements'), route('cv'), route('contact')])
+        $urls = collect([route('home'), route('research'), route('projects.index'), route('open-source.index'), route('voluntary'), route('reports'), route('achievements'), route('cv'), route('contact')])
             ->merge(collect(config('research.projects'))->keys()->map(fn ($slug) => route('projects.show', $slug)))
             ->merge(collect(config('research.open_source'))->keys()->map(fn ($slug) => route('open-source.show', $slug)));
 

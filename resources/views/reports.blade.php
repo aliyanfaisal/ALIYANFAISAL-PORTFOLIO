@@ -28,19 +28,19 @@
                     <ul class="mt-4 space-y-3">
                         @foreach ($report['documents'] as [$docTitle, $docText, $docUrl])
                             <li>
-                                <a href="{{ $docUrl }}" rel="noopener" class="font-semibold">{{ $docTitle }}</a> <span class="text-sm text-neutral-500">(PDF)</span><br>
+                                <a href="{{ $docUrl }}" target="_blank" rel="noopener" class="font-semibold">{{ $docTitle }}</a> <span class="text-sm text-neutral-500">(PDF)</span><br>
                                 <span class="text-sm text-neutral-600">{{ $docText }}</span>
                             </li>
                         @endforeach
                     </ul>
                     <p class="mt-3 text-sm">
-                        <a href="{{ $report['index_url'] }}" rel="noopener">All harness reports</a>
-                        @foreach ($report['extra_links'] ?? [] as [$linkTitle, $linkUrl]) · <a href="{{ $linkUrl }}" rel="noopener">{{ $linkTitle }}</a>@endforeach
+                        <a href="{{ $report['index_url'] }}" target="_blank" rel="noopener">All harness reports</a>
+                        @foreach ($report['extra_links'] ?? [] as [$linkTitle, $linkUrl]) · <a href="{{ $linkUrl }}" target="_blank" rel="noopener">{{ $linkTitle }}</a>@endforeach
                     </p>
                 @else
                     <p class="mt-2 text-sm">
                         @if ($report['file'] && file_exists(public_path($report['file'])))
-                            <a href="{{ asset($report['file']) }}">Download report (PDF)</a>
+                            <a href="{{ asset($report['file']) }}" target="_blank" rel="noopener">Download report (PDF)</a>
                         @else
                             <span class="text-neutral-500">Full report (PDF): coming soon</span>
                         @endif

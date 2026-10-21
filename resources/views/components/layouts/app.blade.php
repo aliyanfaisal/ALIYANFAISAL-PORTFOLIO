@@ -48,8 +48,8 @@
         <footer class="mt-14 border-t border-neutral-300 pt-4 text-sm text-neutral-600">
             <p>
                 <a href="mailto:{{ $person['email'] }}">{{ $person['email'] }}</a>
-                · <a href="{{ $person['github'] }}" rel="noopener">GitHub</a>
-                · <a href="{{ $person['linkedin'] }}" rel="noopener">LinkedIn</a>
+                · <a href="{{ $person['github'] }}" target="_blank" rel="noopener">GitHub</a>
+                · <a href="{{ $person['linkedin'] }}" target="_blank" rel="noopener">LinkedIn</a>
             </p>
             <p class="mt-1">&copy; {{ date('Y') }} {{ $person['name'] }}</p>
         </footer>

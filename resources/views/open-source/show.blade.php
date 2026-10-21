@@ -4,7 +4,7 @@
     <h1 class="mt-3 font-serif text-3xl font-bold">{{ $item['name'] }}</h1>
     <p class="mt-1 text-lg">{{ $item['tagline'] }}</p>
     <p class="mt-1 text-sm text-neutral-600">{{ $item['status'] }} · v{{ $item['version'] }} · {{ $item['requires'] }}</p>
-    <p class="mt-3 text-sm"><a href="{{ $item['repo'] }}" rel="noopener">Repository on GitHub</a></p>
+    <p class="mt-3 text-sm"><a href="{{ $item['repo'] }}" target="_blank" rel="noopener">Repository on GitHub</a></p>
 
     <x-section title="Summary"><p>{{ $item['summary'] }}</p></x-section>
 

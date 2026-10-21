@@ -14,7 +14,7 @@
         @endforeach
 
         @if ($hasCv)
-            <p class="mt-4 text-sm"><a href="{{ route('cv.file') }}">Download CV (PDF)</a></p>
+            <p class="mt-4 text-sm"><a href="{{ route('cv.file') }}" target="_blank" rel="noopener">Download CV (PDF)</a></p>
         @endif
     </section>
 
@@ -35,12 +35,12 @@
                     <span>{{ $project['blurb'] }}</span>
                     @if ($project['url'] || ! empty($project['repo']))
                         <br><span class="text-sm">
-                            @if ($project['url'])<a href="{{ $project['url'] }}" rel="noopener">{{ parse_url($project['url'], PHP_URL_HOST) }}</a>@endif
-                            @if (! empty($project['repo']))@if ($project['url']) · @endif<a href="{{ $project['repo'] }}" rel="noopener">GitHub</a>@endif
+                            @if ($project['url'])<a href="{{ $project['url'] }}" target="_blank" rel="noopener">{{ parse_url($project['url'], PHP_URL_HOST) }}</a>@endif
+                            @if (! empty($project['repo']))@if ($project['url']) · @endif<a href="{{ $project['repo'] }}" target="_blank" rel="noopener">GitHub</a>@endif
                         </span>
                     @endif
                     @if (! empty($project['report_links']))
-                        <br><span class="text-sm">Reports: @foreach ($project['report_links'] as [$linkTitle, $linkUrl])<a href="{{ $linkUrl }}" rel="noopener">{{ $linkTitle }}</a>@if (! $loop->last) · @endif @endforeach</span>
+                        <br><span class="text-sm">Reports: @foreach ($project['report_links'] as [$linkTitle, $linkUrl])<a href="{{ $linkUrl }}" target="_blank" rel="noopener">{{ $linkTitle }}</a>@if (! $loop->last) · @endif @endforeach</span>
                     @endif
                 </li>
             @endforeach
@@ -53,8 +53,19 @@
             @foreach ($openSource as $slug => $item)
                 <li>
                     <a href="{{ route('open-source.show', $slug) }}" class="font-semibold">{{ $item['name'] }}</a><br>
-                    <span>{{ $item['tagline'] }}</span><br>
-                    <span class="text-sm"><a href="{{ $item['repo'] }}" rel="noopener">GitHub</a></span>
+                    <span>{{ $item['summary'] ?? $item['tagline'] }}</span><br>
+                    <span class="text-sm"><a href="{{ $item['repo'] }}" target="_blank" rel="noopener">GitHub</a></span>
+                </li>
+            @endforeach
+        </ul>
+    </x-section>
+
+    <x-section title="Voluntary public-sector work">
+        <ul class="space-y-3">
+            @foreach (config('research.voluntary_work') as $item)
+                <li>
+                    <a href="{{ route('voluntary') }}" class="font-semibold">{{ $item['name'] }}</a><br>
+                    <span>{{ $item['blurb'] }}</span>
                 </li>
             @endforeach
         </ul>

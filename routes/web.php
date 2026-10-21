@@ -6,7 +6,9 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', [PageController::class, 'home'])->name('home');
 Route::get('/research', [PageController::class, 'research'])->name('research');
 Route::get('/projects', [PageController::class, 'projects'])->name('projects.index');
+Route::redirect('/projects/gov-dashboard', '/voluntary-work', 301); // moved out of "my projects"
 Route::get('/projects/{slug}', [PageController::class, 'project'])->name('projects.show');
+Route::get('/voluntary-work', [PageController::class, 'voluntaryWork'])->name('voluntary');
 Route::get('/open-source', [PageController::class, 'openSource'])->name('open-source.index');
 Route::get('/open-source/{slug}', [PageController::class, 'openSourceProject'])->name('open-source.show');
 Route::get('/reports', [PageController::class, 'reports'])->name('reports');

@@ -213,17 +213,20 @@ return [
             'research' => 'ManaJet was my first use of an LLM inside a real product, and the first time I had to make model output structured and predictable enough to store.',
             'reports' => [],
         ],
+    ],
 
+    // Work done for the public sector. Not one of my own projects, so it has its own section and page (/voluntary-work).
+    'voluntary_work' => [
         'gov-dashboard' => [
             'name' => 'Provincial data dashboard',
-            'tagline' => 'Data collection and analytics for a government planning department.',
-            'blurb' => 'Dashboard and data-management system for the Planning & Development Department of Gilgit-Baltistan, built to collect and analyse provincial data.',
-            'period' => '2024 – 2025',
-            'role' => 'Backend developer and data analyst',
-            'status' => 'Delivered',
+            'tagline' => 'Data collection and analytics for a government planning department. Voluntary public-sector work, not my product.',
+            'blurb' => 'Dashboard and data-management system of the Planning & Development Department of Gilgit-Baltistan, which I worked on as voluntary public-sector work.',
+            'period' => 'Feb 2025 – Jul 2025',
+            'role' => 'Backend developer and data analyst (volunteer)',
+            'status' => 'Voluntary public-sector work',
             'url' => null,
             'image' => null,
-            'summary' => 'A dashboard and data-management system for the Planning & Development Department of the Government of Gilgit-Baltistan, built to collect, manage and analyse provincial data.',
+            'summary' => 'A dashboard and data-management system for collecting, managing and analysing provincial data. I worked on it as voluntary work for the public sector, as a backend developer and data analyst. The system belongs to the Planning & Development Department of the Government of Gilgit-Baltistan, not to me.',
             'problem' => 'Project and planning data was collected on paper and in spreadsheets, which made it slow to gather, hard to keep consistent and difficult to analyse across the province.',
             'what' => [
                 ['Centralized data management', 'Records from spreadsheets (XLS, CSV) and a MySQL database were brought into one system.'],
@@ -338,7 +341,7 @@ return [
 
     'experience' => [
         ['role' => 'Founder & CEO', 'org' => 'UrbanSofts, a remote software development team', 'place' => 'Remote', 'years' => '2023 – present', 'text' => 'Founded and lead a remote team of 4–10 developers that delivers client software projects together: I take on projects and bring in the right team members for each, such as app developers, and we build them collaboratively. The team has served 50+ clients.'],
-        ['role' => 'Backend Developer & Data Analyst', 'org' => 'Planning & Development Department, Government of Gilgit-Baltistan', 'place' => 'Gilgit, Pakistan', 'years' => '2024 – 2025 (4–5 months)', 'text' => 'Built centralized data analytics dashboards over public-sector records (XLS, CSV, MySQL) using Python (Pandas) and a Laravel backend, and digitized paper workflows into structured reporting for regional planning.'],
+        ['role' => 'Backend Developer & Data Analyst (Voluntary Work)', 'org' => 'Planning & Development Department, Government of Gilgit-Baltistan', 'place' => 'Gilgit, Pakistan', 'years' => 'Feb 2025 – Jul 2025', 'text' => 'Built centralized data analytics dashboards over public-sector records (XLS, CSV, MySQL) using Python (Pandas) and a Laravel backend, and digitized paper workflows into structured reporting for regional planning.'],
         ['role' => 'Full Stack Web Developer (Team Lead)', 'org' => 'GreyMatter Ventures', 'place' => 'Gilgit, Pakistan, part-time', 'years' => '2021 – 2023', 'text' => 'Designed backend architectures, relational schemas and server-side logic, and led the web development team, mentoring junior developers and remote interns.'],
         ['role' => 'Applied AI & Backend Engineer', 'org' => 'Freelance', 'place' => 'Remote', 'years' => '2020 – present (5+ years)', 'text' => 'Built production applications integrating LLM APIs (OpenAI, Claude, Gemini) for document summarization, data extraction and e-commerce processing.'],
     ],

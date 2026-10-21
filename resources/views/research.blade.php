@@ -21,7 +21,11 @@
                 <p class="mt-4 text-sm">
                     <span class="font-semibold">Related work:</span>
                     @foreach ($interest['related'] as $slug)
-                        <a href="{{ route('projects.show', $slug) }}">{{ config("research.projects.$slug.name") }}</a>@unless ($loop->last), @endunless
+                        @if (config("research.voluntary_work.$slug"))
+                            <a href="{{ route('voluntary') }}">{{ config("research.voluntary_work.$slug.name") }}</a>@unless ($loop->last), @endunless
+                        @else
+                            <a href="{{ route('projects.show', $slug) }}">{{ config("research.projects.$slug.name") }}</a>@unless ($loop->last), @endunless
+                        @endif
                     @endforeach
                 </p>
             @endif
