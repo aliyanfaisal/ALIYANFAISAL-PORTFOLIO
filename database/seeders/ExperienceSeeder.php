@@ -9,6 +9,10 @@ class ExperienceSeeder extends Seeder
 {
     public function run(): void
     {
+        // Renamed in place so re-seeding never duplicates the row.
+        Experience::where(['title' => 'Web Developer & Data Scientist', 'company' => 'Planning & Development Department, Gilgit-Baltistan'])
+            ->update(['title' => 'Backend Developer & Data Analyst']);
+
         $experiences = [
             [
                 'title' => 'Full Stack Web Developer',
@@ -20,10 +24,10 @@ class ExperienceSeeder extends Seeder
                 'current' => true,
             ],
             [
-                'title' => 'Web Developer & Data Scientist',
+                'title' => 'Backend Developer & Data Analyst',
                 'company' => 'Planning & Development Department, Gilgit-Baltistan',
-                'description' => 'Collaborated with the Planning & Development Department on the Data Gathering and Analytics Dashboard initiative. Led the digitization of paper-based workflows, streamlining the collection, management, and analysis of project data across Gilgit-Baltistan.',
-                'employment_type' => 'Freelance',
+                'description' => 'Voluntary work for the public sector: collaborated with the Planning & Development Department on the Data Gathering and Analytics Dashboard initiative. Led the digitization of paper-based workflows, streamlining the collection, management, and analysis of project data across Gilgit-Baltistan.',
+                'employment_type' => 'Voluntary work',
                 'start_date' => '2025-02-01',
                 'end_date' => '2025-07-31',
                 'current' => false,
