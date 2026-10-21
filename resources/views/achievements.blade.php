@@ -2,6 +2,8 @@
     $edu = config('research.education');
     $ach = config('research.achievements');
     $hasTranscript = file_exists(public_path($edu['transcript_file']));
+    // Voluntary roles are listed under "Volunteering", not under professional experience.
+    [$volunteering, $jobs] = collect(config('research.experience'))->partition(fn ($job) => str_contains($job['role'], 'Voluntary'));
 @endphp
 <x-layouts.app title="Achievements" description="Academic record, research-relevant work, experience and recognition of Aliyan Faisal.">
     <h1 class="mt-8 font-serif text-3xl font-bold">Achievements</h1>
@@ -25,7 +27,7 @@
 
     <x-section title="Professional experience">
         <ul class="space-y-2">
-            @foreach (config('research.experience') as $job)
+            @foreach ($jobs as $job)
                 <li><span class="font-semibold">{{ $job['role'] }}</span>, {{ $job['org'] }} ({{ $job['years'] }}).</li>
             @endforeach
             <li><span class="font-semibold">{{ $ach['freelance']['reviews'] }}</span> {{ $ach['freelance']['text'] }}</li>
@@ -35,6 +37,9 @@
 
     <x-section title="Volunteering and school recognition">
         <ul class="space-y-2">
+            @foreach ($volunteering as $job)
+                <li><span class="font-semibold">Volunteering work: {{ trim(str_replace('(Voluntary Work)', '', $job['role'])) }}, {{ $job['org'] }} ({{ $job['years'] }}).</span> <a href="{{ route('voluntary') }}">Details</a></li>
+            @endforeach
             @foreach ($ach['other'] as [$title, $text])
                 <li><span class="font-semibold">{{ $title }}.</span> {{ $text }}</li>
             @endforeach
