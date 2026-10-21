@@ -40,6 +40,7 @@
         </div>
     </x-section>
 
+    @if (! empty($item['roadmap']))
     <x-section title="Where it is headed">
         <ul class="list-disc space-y-1 pl-5">
             @foreach ($item['roadmap'] as $line)
@@ -47,4 +48,5 @@
             @endforeach
         </ul>
     </x-section>
+    @endif
 </x-layouts.app>
