@@ -34,9 +34,9 @@ class ExperienceSeeder extends Seeder
             [
                 'title' => 'Backend Developer & Data Analyst',
                 'company' => 'Planning & Development Department, Gilgit-Baltistan',
-                'description' => 'A project engagement of about 4–5 months: built the Data Gathering and Analytics Dashboard for the Planning & Development Department, Government of Gilgit-Baltistan: centralized dashboards over public-sector records (XLS, CSV, MySQL) using Python (Pandas) and a Laravel backend. Led the digitization of paper-based workflows into structured reporting that supports regional planning decisions.',
-                'employment_type' => 'Freelance',
-                'start_date' => '2024-01-01',
+                'description' => 'Voluntary work for the public sector: built the Data Gathering and Analytics Dashboard for the Planning & Development Department, Government of Gilgit-Baltistan: centralized dashboards over public-sector records (XLS, CSV, MySQL) using Python (Pandas) and a Laravel backend. Led the digitization of paper-based workflows into structured reporting that supports regional planning decisions.',
+                'employment_type' => 'Voluntary work',
+                'start_date' => '2025-02-01',
                 'end_date' => '2025-07-31',
                 'current' => false,
             ],
