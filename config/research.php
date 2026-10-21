@@ -313,6 +313,8 @@ return [
         'degree' => 'Bachelor of Science in Information Technology',
         'years' => '2019 – 2023',
         'cgpa' => '3.80 / 4.00',
+        'rank' => 'Ranked 1st in class in all 8 semesters of the BSIT program',
+        'transcript_file' => 'documents/aliyan-faisal-transcript.pdf', // inside public/. The link only appears when the file exists.
         'scholarship' => 'HEC Ehsaas Scholarship (fully funded for the entire degree)',
         'coursework' => [
             'Data Structures & Algorithms', 'Linear Algebra', 'Probability & Statistics', 'Database Systems',
@@ -321,10 +323,22 @@ return [
         'focus' => 'Applied computing, system architecture, database design and algorithmic problem-solving.',
     ],
 
+    // Shown on /achievements. Only claims that can be backed by a document or a public profile.
+    'achievements' => [
+        'freelance' => [
+            'reviews' => '230+', // Fiverr 207 + Upwork 24 when checked on 2026-10-22. Raise only with a verifiable count.
+            'text' => 'client reviews across Fiverr and Upwork, from more than five years of independent engineering work for international clients.',
+        ],
+        'other' => [
+            ['Certificate of Appreciation, Ismaili Boy Scouts Prince Town', 'For a contribution to volunteerism.'],
+            ['Merit Certificate, Public Schools & Colleges Jutial (2017)', 'For performing at the opening and closing ceremony of Annual Sports 2017 as a member of the College Band Team.'],
+        ],
+    ],
+
     'experience' => [
-        ['role' => 'Founder & CEO', 'org' => 'UrbanSofts, a remote software development team', 'place' => 'Remote', 'years' => '2022 – present', 'text' => 'Founded and lead a remote team of 4–10 developers that delivers client software projects together: I take on projects and bring in the right team members for each, such as app developers, and we build them collaboratively. The team has served 50+ clients.'],
+        ['role' => 'Founder & CEO', 'org' => 'UrbanSofts, a remote software development team', 'place' => 'Remote', 'years' => '2023 – present', 'text' => 'Founded and lead a remote team of 4–10 developers that delivers client software projects together: I take on projects and bring in the right team members for each, such as app developers, and we build them collaboratively. The team has served 50+ clients.'],
         ['role' => 'Backend Developer & Data Analyst', 'org' => 'Planning & Development Department, Government of Gilgit-Baltistan', 'place' => 'Gilgit, Pakistan', 'years' => '2024 – 2025 (4–5 months)', 'text' => 'Built centralized data analytics dashboards over public-sector records (XLS, CSV, MySQL) using Python (Pandas) and a Laravel backend, and digitized paper workflows into structured reporting for regional planning.'],
-        ['role' => 'Full Stack Web Developer (Team Lead)', 'org' => 'GreyMatter Ventures', 'place' => 'Gilgit, Pakistan, part-time', 'years' => '2020 – 2022', 'text' => 'Designed backend architectures, relational schemas and server-side logic, and led the web development team, mentoring junior developers and remote interns.'],
+        ['role' => 'Full Stack Web Developer (Team Lead)', 'org' => 'GreyMatter Ventures', 'place' => 'Gilgit, Pakistan, part-time', 'years' => '2021 – 2023', 'text' => 'Designed backend architectures, relational schemas and server-side logic, and led the web development team, mentoring junior developers and remote interns.'],
         ['role' => 'Applied AI & Backend Engineer', 'org' => 'Freelance', 'place' => 'Remote', 'years' => '2020 – present (5+ years)', 'text' => 'Built production applications integrating LLM APIs (OpenAI, Claude, Gemini) for document summarization, data extraction and e-commerce processing.'],
     ],
 

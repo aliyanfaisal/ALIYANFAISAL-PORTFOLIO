@@ -71,6 +71,7 @@
     <x-section title="Education">
         <p><span class="font-semibold">{{ $edu['school'] }}</span>, {{ $edu['place'] }}</p>
         <p>{{ $edu['degree'] }} · CGPA {{ $edu['cgpa'] }} · {{ $edu['years'] }}</p>
+        <p>{{ $edu['rank'] }}</p>
         <p>{{ $edu['scholarship'] }}</p>
         <p class="mt-2 text-sm"><a href="{{ route('cv') }}">Education, experience and skills</a></p>
     </x-section>

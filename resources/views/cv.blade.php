@@ -10,7 +10,8 @@
     <x-section title="Education">
         <p class="flex flex-wrap justify-between gap-x-4"><span class="font-semibold">{{ $edu['school'] }}</span><span>{{ $edu['place'] }}</span></p>
         <p class="flex flex-wrap justify-between gap-x-4"><span class="italic">{{ $edu['degree'] }}</span><span>CGPA {{ $edu['cgpa'] }} · {{ $edu['years'] }}</span></p>
-        <p class="mt-2"><span class="font-semibold">Scholarship:</span> {{ $edu['scholarship'] }}.</p>
+        <p class="mt-2"><span class="font-semibold">Class rank:</span> {{ $edu['rank'] }}.@if (file_exists(public_path($edu['transcript_file']))) Semester-wise CGPA in the <a href="{{ asset($edu['transcript_file']) }}" target="_blank" rel="noopener">transcript (PDF)</a>.@endif</p>
+        <p class="mt-1"><span class="font-semibold">Scholarship:</span> {{ $edu['scholarship'] }}.</p>
         <p class="mt-1"><span class="font-semibold">Coursework:</span> {{ implode(', ', $edu['coursework']) }}.</p>
         <p class="mt-1"><span class="font-semibold">Focus:</span> {{ $edu['focus'] }}</p>
     </x-section>

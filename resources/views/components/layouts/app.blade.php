@@ -9,6 +9,7 @@
         ['My Projects', 'projects.index', 'projects*'],
         ['Open source', 'open-source.index', 'open-source*'],
         ['Reports', 'reports', 'reports'],
+        ['Achievements', 'achievements', 'achievements'],
         ['CV', 'cv', 'cv'],
         ['Contact', 'contact', 'contact'],
     ];

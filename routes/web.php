@@ -10,6 +10,7 @@ Route::get('/projects/{slug}', [PageController::class, 'project'])->name('projec
 Route::get('/open-source', [PageController::class, 'openSource'])->name('open-source.index');
 Route::get('/open-source/{slug}', [PageController::class, 'openSourceProject'])->name('open-source.show');
 Route::get('/reports', [PageController::class, 'reports'])->name('reports');
+Route::get('/achievements', [PageController::class, 'achievements'])->name('achievements');
 Route::get('/cv', [PageController::class, 'cv'])->name('cv');
 Route::get('/cv.pdf', [PageController::class, 'cvFile'])->name('cv.file');
 Route::get('/contact', [PageController::class, 'contact'])->name('contact');

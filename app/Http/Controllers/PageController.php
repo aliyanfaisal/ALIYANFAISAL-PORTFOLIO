@@ -49,6 +49,11 @@ class PageController extends Controller
         return view('reports', $this->shared());
     }
 
+    public function achievements()
+    {
+        return view('achievements', $this->shared());
+    }
+
     public function cv()
     {
         return view('cv', $this->shared());
@@ -69,7 +74,7 @@ class PageController extends Controller
 
     public function sitemap(): Response
     {
-        $urls = collect([route('home'), route('research'), route('projects.index'), route('open-source.index'), route('reports'), route('cv'), route('contact')])
+        $urls = collect([route('home'), route('research'), route('projects.index'), route('open-source.index'), route('reports'), route('achievements'), route('cv'), route('contact')])
             ->merge(collect(config('research.projects'))->keys()->map(fn ($slug) => route('projects.show', $slug)))
             ->merge(collect(config('research.open_source'))->keys()->map(fn ($slug) => route('open-source.show', $slug)));
 
