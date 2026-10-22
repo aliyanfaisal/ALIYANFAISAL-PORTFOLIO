@@ -215,29 +215,36 @@
             </div>
         </section>
 
-        <section id="newsletter-post" aria-label="Newsletter and channels" class="mt-6 scroll-mt-24 rounded-2xl border border-zinc-200 bg-white p-6 dark:border-white/10 dark:bg-zinc-900">
-            <div class="grid gap-8 {{ ($settings->telegram_channel_url || $settings->whatsapp_channel_url) ? 'md:grid-cols-2' : '' }}">
-                <div>
-                    <h2 class="text-lg font-bold text-zinc-900 dark:text-white">Get new posts in your inbox</h2>
-                    <p class="mt-1 text-sm text-zinc-600 dark:text-zinc-400">The best new articles, daily, twice a week or weekly. Pick the topics you care about. Unsubscribe anytime.</p>
-                    @include('partials.newsletter-form', ['anchor' => 'newsletter-post'])
+        <section id="newsletter-post" aria-label="Newsletter and channels" class="mt-6 scroll-mt-24 overflow-hidden rounded-2xl border border-zinc-200 bg-gradient-to-br from-indigo-50 via-white to-white dark:border-white/10 dark:from-indigo-500/10 dark:via-zinc-900 dark:to-zinc-900">
+            <div class="p-6 sm:p-8">
+                <div class="flex items-start gap-4">
+                    <span class="grid size-11 shrink-0 place-items-center rounded-full bg-indigo-500/10 text-indigo-500 dark:text-indigo-400">
+                        <x-icon name="envelope" class="size-5" />
+                    </span>
+                    <div>
+                        <h2 class="text-lg font-bold text-zinc-900 dark:text-white">Get new posts in your inbox</h2>
+                        <p class="mt-1 text-sm text-zinc-600 dark:text-zinc-400">The best new articles, daily, twice a week or weekly. Choose your topics. No spam, unsubscribe anytime.</p>
+                    </div>
                 </div>
 
-                @if ($settings->telegram_channel_url || $settings->whatsapp_channel_url)
-                    <div>
-                        <h2 class="text-lg font-bold text-zinc-900 dark:text-white">Or follow on your favourite app</h2>
-                        <p class="mt-1 text-sm text-zinc-600 dark:text-zinc-400">Join the channel and get new posts as they go live.</p>
-                        <div class="mt-4 flex flex-wrap gap-3">
-                            @if ($settings->telegram_channel_url)
-                                <a href="{{ $settings->telegram_channel_url }}" target="_blank" rel="noopener" class="inline-flex items-center gap-2 rounded-full border border-zinc-300 px-4 py-2 text-sm font-medium text-zinc-700 transition hover:border-indigo-400 hover:text-indigo-500 dark:border-white/15 dark:text-zinc-200"><x-brand-icon name="telegram" class="size-4" /> Telegram channel</a>
-                            @endif
-                            @if ($settings->whatsapp_channel_url)
-                                <a href="{{ $settings->whatsapp_channel_url }}" target="_blank" rel="noopener" class="inline-flex items-center gap-2 rounded-full border border-zinc-300 px-4 py-2 text-sm font-medium text-zinc-700 transition hover:border-indigo-400 hover:text-indigo-500 dark:border-white/15 dark:text-zinc-200"><x-brand-icon name="whatsapp" class="size-4" /> WhatsApp channel</a>
-                            @endif
-                        </div>
-                    </div>
-                @endif
+                <div class="mt-5 max-w-xl sm:pl-15">
+                    @include('partials.newsletter-form', ['anchor' => 'newsletter-post'])
+                </div>
             </div>
+
+            @if ($settings->telegram_channel_url || $settings->whatsapp_channel_url)
+                <div class="flex flex-col gap-3 border-t border-zinc-200 bg-zinc-50/70 px-6 py-4 sm:flex-row sm:items-center sm:justify-between sm:px-8 dark:border-white/10 dark:bg-white/5">
+                    <p class="text-sm font-medium text-zinc-600 dark:text-zinc-400">Prefer an app? Get posts as they go live.</p>
+                    <div class="flex flex-wrap gap-2">
+                        @if ($settings->telegram_channel_url)
+                            <a href="{{ $settings->telegram_channel_url }}" target="_blank" rel="noopener" class="inline-flex items-center gap-2 rounded-full bg-white px-4 py-2 text-sm font-medium text-zinc-700 shadow-sm ring-1 ring-zinc-200 transition hover:text-indigo-500 hover:ring-indigo-300 dark:bg-zinc-900 dark:text-zinc-200 dark:ring-white/15 dark:hover:ring-indigo-400/50"><x-brand-icon name="telegram" class="size-4" /> Telegram</a>
+                        @endif
+                        @if ($settings->whatsapp_channel_url)
+                            <a href="{{ $settings->whatsapp_channel_url }}" target="_blank" rel="noopener" class="inline-flex items-center gap-2 rounded-full bg-white px-4 py-2 text-sm font-medium text-zinc-700 shadow-sm ring-1 ring-zinc-200 transition hover:text-indigo-500 hover:ring-indigo-300 dark:bg-zinc-900 dark:text-zinc-200 dark:ring-white/15 dark:hover:ring-indigo-400/50"><x-brand-icon name="whatsapp" class="size-4" /> WhatsApp</a>
+                        @endif
+                    </div>
+                </div>
+            @endif
         </section>
 
         @if ($related->isNotEmpty())
