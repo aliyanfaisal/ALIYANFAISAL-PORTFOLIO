@@ -9,5 +9,5 @@ Artisan::command('inspire', function () {
 })->purpose('Display an inspiring quote');
 
 Schedule::command('blog:publish-scheduled')->everyMinute();
-Schedule::command('newsletter:send')->dailyAt('03:00');
+Schedule::command('newsletter:send')->dailyAt('08:00');
 Schedule::command('model:prune', ['--model' => \App\Models\EmailLog::class])->daily();

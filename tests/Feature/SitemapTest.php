@@ -61,7 +61,7 @@ class SitemapTest extends TestCase
         $this->assertStringContainsString('/blog/category/developer-productivity', $xml);
         $this->assertStringNotContainsString('/blog/category/empty', $xml);
         $this->assertMatchesRegularExpression(
-            '#<loc>[^<]*/blog/category/developer-productivity</loc>\s*<lastmod>2026-09-20T10:00:00\+00:00</lastmod>#',
+            '#<loc>[^<]*/blog/category/developer-productivity</loc>\s*<lastmod>2026-09-20T10:00:00\+05:00</lastmod>#',
             $xml,
         );
     }
@@ -78,6 +78,6 @@ class SitemapTest extends TestCase
 
         $this->get('/blog/published-post')->assertOk();
 
-        $this->assertStringContainsString('<lastmod>2026-09-20T10:00:00+00:00</lastmod>', $this->get('/sitemap.xml')->getContent());
+        $this->assertStringContainsString('<lastmod>2026-09-20T10:00:00+05:00</lastmod>', $this->get('/sitemap.xml')->getContent());
     }
 }
