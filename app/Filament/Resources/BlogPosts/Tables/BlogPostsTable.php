@@ -3,6 +3,7 @@
 namespace App\Filament\Resources\BlogPosts\Tables;
 
 use App\Filament\Resources\BlogPosts\Actions\SendToCuelaraAction;
+use App\Filament\Resources\BlogPosts\Actions\SendToTelegramAction;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
@@ -49,6 +50,15 @@ class BlogPostsTable
                     ->formatStateUsing(fn ($record): string => $record->cuelara_synced_at?->format('M j, Y H:i') ?? 'Send to Cuelara')
                     ->tooltip(fn ($record): string => $record->cuelara_synced_at ? 'Click to resend' : 'Click to send')
                     ->action(SendToCuelaraAction::make()),
+                TextColumn::make('telegram_posted_at')
+                    ->label('Telegram')
+                    ->sortable()
+                    ->badge()
+                    ->icon(fn ($record): string => $record->telegram_posted_at ? 'heroicon-o-check-circle' : 'heroicon-o-paper-airplane')
+                    ->color(fn ($record): string => $record->telegram_posted_at ? 'success' : 'gray')
+                    ->formatStateUsing(fn ($record): string => $record->telegram_posted_at?->format('M j, Y H:i') ?? 'Not posted')
+                    ->tooltip(fn ($record): ?string => $record->status === 'published' ? ($record->telegram_posted_at ? 'Click to repost' : 'Click to post') : null)
+                    ->action(SendToTelegramAction::make()),
                 TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()

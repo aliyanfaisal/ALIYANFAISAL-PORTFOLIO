@@ -97,4 +97,24 @@ class NewsletterControllerTest extends TestCase
         $this->put(route('newsletter.preferences.update', $subscriber->token), ['frequency' => 'weekly', 'topics' => 'all']);
         $this->assertSame(0, $subscriber->categories()->count());
     }
+
+    public function test_the_post_page_shows_the_newsletter_and_channel_section_under_the_author_box(): void
+    {
+        \App\Models\Setting::current()->update(['telegram_channel_url' => 'https://t.me/chan', 'whatsapp_channel_url' => 'https://whatsapp.com/channel/x']);
+        \App\Models\BlogPost::create(['title' => 'Hi', 'slug' => 'hi', 'excerpt' => 'e', 'body' => 'x', 'status' => 'published']);
+
+        $this->get('/blog/hi')
+            ->assertOk()
+            ->assertSeeInOrder(['About the author', 'id="newsletter-post"', 'https://t.me/chan', 'https://whatsapp.com/channel/x'], false);
+    }
+
+    public function test_the_code_box_appears_only_in_the_form_that_was_used(): void
+    {
+        \App\Models\BlogPost::create(['title' => 'Hi', 'slug' => 'hi', 'excerpt' => 'e', 'body' => 'x', 'status' => 'published']);
+
+        $this->withSession(['newsletter_pending_email' => 'a@example.com', 'newsletter_form' => 'newsletter-post'])
+            ->get('/blog/hi')
+            ->assertSee('id="newsletter-post-code"', false)
+            ->assertDontSee('id="newsletter-code"', false);
+    }
 }

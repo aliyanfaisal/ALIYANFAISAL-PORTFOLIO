@@ -44,6 +44,16 @@
                                 class="inline-flex items-center gap-2 hover:text-indigo-500 dark:hover:text-indigo-400"><x-brand-icon
                                     name="linkedin" class="size-4" /> LinkedIn</a></li>
                     @endif
+                    @if ($settings->telegram_channel_url)
+                        <li><a href="{{ $settings->telegram_channel_url }}" target="_blank" rel="noopener"
+                                class="inline-flex items-center gap-2 hover:text-indigo-500 dark:hover:text-indigo-400"><x-brand-icon
+                                    name="telegram" class="size-4" /> Telegram channel</a></li>
+                    @endif
+                    @if ($settings->whatsapp_channel_url)
+                        <li><a href="{{ $settings->whatsapp_channel_url }}" target="_blank" rel="noopener"
+                                class="inline-flex items-center gap-2 hover:text-indigo-500 dark:hover:text-indigo-400"><x-brand-icon
+                                    name="whatsapp" class="size-4" /> WhatsApp channel</a></li>
+                    @endif
                     @if ($settings->contact_email)
                         <li><a href="mailto:{{ $settings->contact_email }}"
                                 class="inline-flex items-start gap-2 break-all hover:text-indigo-500 dark:hover:text-indigo-400"><x-icon
@@ -55,60 +65,7 @@
             <div id="newsletter" class="col-span-2 scroll-mt-24 sm:col-span-1">
                 <h3 class="text-sm font-semibold text-zinc-900 dark:text-white">Newsletter</h3>
                 <p class="mt-3 text-sm text-zinc-500 dark:text-zinc-400">Get new articles in your inbox. No spam.</p>
-                @if (session('newsletter_pending_email'))
-                    <form action="{{ route('newsletter.verify') }}" method="POST" class="mt-3">
-                        @csrf
-                        <input type="hidden" name="email" value="{{ session('newsletter_pending_email') }}">
-                        <p class="mb-2 text-xs text-zinc-500 dark:text-zinc-400">Code sent to {{ session('newsletter_pending_email') }}</p>
-                        <div class="flex gap-2">
-                            <label for="footer-newsletter-code" class="sr-only">6-digit code</label>
-                            <input
-                                type="text"
-                                id="footer-newsletter-code"
-                                name="code"
-                                inputmode="numeric"
-                                autocomplete="one-time-code"
-                                maxlength="6"
-                                pattern="[0-9]{6}"
-                                placeholder="123456"
-                                required
-                                autofocus
-                                class="w-full min-w-0 rounded-full border border-zinc-300 bg-white px-4 py-2 text-sm tracking-widest text-zinc-700 placeholder:text-zinc-400 focus:border-indigo-400 focus:outline-none dark:border-white/15 dark:bg-zinc-900 dark:text-zinc-200"
-                            >
-                            <button type="submit" class="shrink-0 rounded-full bg-zinc-900 px-4 py-2 text-sm font-medium text-white transition hover:bg-indigo-600 dark:bg-white dark:text-zinc-900 dark:hover:bg-indigo-400">
-                                Confirm
-                            </button>
-                        </div>
-                        @error('code', 'newsletter')
-                            <p class="mt-2 text-xs text-rose-500">{{ $message }}</p>
-                        @enderror
-                    </form>
-                @else
-                <form action="{{ route('newsletter.store') }}" method="POST" class="mt-3">
-                    @csrf
-                    <div class="flex gap-2">
-                        <label for="footer-newsletter-email" class="sr-only">Email address</label>
-                        <input
-                            type="email"
-                            id="footer-newsletter-email"
-                            name="email"
-                            value="{{ old('email') }}"
-                            placeholder="you@example.com"
-                            required
-                            class="w-full min-w-0 rounded-full border border-zinc-300 bg-white px-4 py-2 text-sm text-zinc-700 placeholder:text-zinc-400 focus:border-indigo-400 focus:outline-none dark:border-white/15 dark:bg-zinc-900 dark:text-zinc-200"
-                        >
-                        <button
-                            type="submit"
-                            class="shrink-0 rounded-full bg-zinc-900 px-4 py-2 text-sm font-medium text-white transition hover:bg-indigo-600 dark:bg-white dark:text-zinc-900 dark:hover:bg-indigo-400"
-                        >
-                            Subscribe
-                        </button>
-                    </div>
-                    @error('email')
-                        <p class="mt-2 text-xs text-rose-500">{{ $message }}</p>
-                    @enderror
-                </form>
-                @endif
+                @include('partials.newsletter-form', ['anchor' => 'newsletter'])
             </div>
         </div>
 

@@ -28,18 +28,18 @@ class NewsletterController extends Controller
         $subscriber = NewsletterSubscriber::firstOrCreate(['email' => $data['email']]);
 
         if ($subscriber->isVerified() && $subscriber->isSubscribed()) {
-            return $this->backToForm()->with('status', "You're already subscribed.");
+            return $this->backToForm($request)->with('status', "You're already subscribed.");
         }
 
         if ($subscriber->otpCooldownActive()) {
-            return $this->backToForm()
+            return $this->backToForm($request)
                 ->with('newsletter_pending_email', $subscriber->email)
                 ->with('status', 'A code was just sent. Give it a minute before asking for another.');
         }
 
         Mail::to($subscriber->email)->send(new NewsletterOtpMail($subscriber->issueOtp()));
 
-        return $this->backToForm()
+        return $this->backToForm($request)
             ->with('newsletter_pending_email', $subscriber->email)
             ->with('status', 'We emailed you a 6-digit code. Enter it below to confirm.');
     }
@@ -57,19 +57,23 @@ class NewsletterController extends Controller
         $subscriber = NewsletterSubscriber::where('email', $data['email'])->first();
 
         if (! $subscriber || ! $subscriber->attemptOtp($data['code'])) {
-            return $this->backToForm()
+            return $this->backToForm($request)
                 ->with('newsletter_pending_email', $data['email'])
                 ->withErrors(['code' => 'That code is wrong or has expired. Request a new one by submitting your email again.'], 'newsletter');
         }
 
         Mail::to($subscriber->email)->queue(new NewsletterWelcomeMail($subscriber));
 
-        return $this->backToForm()->with('status', "You're subscribed! Check your inbox for a welcome email.");
+        return $this->backToForm($request)->with('status', "You're subscribed! Check your inbox for a welcome email.");
     }
 
-    private function backToForm(): RedirectResponse
+    private function backToForm(Request $request): RedirectResponse
     {
-        return redirect(url()->previous().'#newsletter');
+        $anchor = in_array($request->input('newsletter_form'), ['newsletter', 'newsletter-post'], true)
+            ? $request->input('newsletter_form')
+            : 'newsletter';
+
+        return redirect(url()->previous().'#'.$anchor)->with('newsletter_form', $anchor);
     }
 
     public function preferences(string $token): View

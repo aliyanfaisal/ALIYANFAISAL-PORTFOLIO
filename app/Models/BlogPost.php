@@ -2,12 +2,14 @@
 
 namespace App\Models;
 
+use App\Jobs\PostBlogPostToTelegram;
 use App\Jobs\PushBlogPostToCuelara;
 use App\Jobs\SubmitUrlToGoogleIndexing;
 use App\Services\BlogPostContentEnhancer;
 use App\Services\BlogPostFaqFormatter;
 use App\Services\GoogleIndexingService;
 use App\Services\ImageOptimizer;
+use App\Services\TelegramService;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Model;
@@ -55,6 +57,10 @@ class BlogPost extends Model
             // A brand-new post reclaiming a slug that used to redirect elsewhere should render
             // normally, not get bounced away by a stale redirect from whatever was deleted before it.
             BlogPostRedirect::where('from_slug', $post->slug)->delete();
+
+            if ($post->status === 'published') {
+                $post->queueTelegramPost();
+            }
         });
 
         static::updated(function (BlogPost $post): void {
@@ -71,6 +77,7 @@ class BlogPost extends Model
             // never on an ordinary edit to an already-published or still-draft post.
             if ($post->wasChanged('status') && $post->status === 'published') {
                 PushBlogPostToCuelara::dispatch($post)->afterCommit();
+                $post->queueTelegramPost();
             }
         });
 
@@ -177,6 +184,22 @@ class BlogPost extends Model
 
         // Redirects that pointed at the old URL would otherwise chain through it.
         BlogPostRedirect::where('to_url', route('blog.show', ['slug' => $oldSlug]))->update(['to_url' => route('blog.show', $this)]);
+    }
+
+    /**
+     * Announces the post on Telegram per the admin settings: off, immediately, or after a delay.
+     */
+    private function queueTelegramPost(): void
+    {
+        $settings = Setting::current();
+
+        if (! $settings->telegram_enabled || $this->telegram_posted_at !== null || ! app(TelegramService::class)->isConfigured($settings)) {
+            return;
+        }
+
+        PostBlogPostToTelegram::dispatch($this)
+            ->delay($settings->telegram_delay_minutes > 0 ? now()->addMinutes($settings->telegram_delay_minutes) : null)
+            ->afterCommit();
     }
 
     private function notifyGoogleOfChange(): void

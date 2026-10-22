@@ -215,6 +215,31 @@
             </div>
         </section>
 
+        <section id="newsletter-post" aria-label="Newsletter and channels" class="mt-6 scroll-mt-24 rounded-2xl border border-zinc-200 bg-white p-6 dark:border-white/10 dark:bg-zinc-900">
+            <div class="grid gap-8 {{ ($settings->telegram_channel_url || $settings->whatsapp_channel_url) ? 'md:grid-cols-2' : '' }}">
+                <div>
+                    <h2 class="text-lg font-bold text-zinc-900 dark:text-white">Get new posts in your inbox</h2>
+                    <p class="mt-1 text-sm text-zinc-600 dark:text-zinc-400">The best new articles, daily, twice a week or weekly. Pick the topics you care about. Unsubscribe anytime.</p>
+                    @include('partials.newsletter-form', ['anchor' => 'newsletter-post'])
+                </div>
+
+                @if ($settings->telegram_channel_url || $settings->whatsapp_channel_url)
+                    <div>
+                        <h2 class="text-lg font-bold text-zinc-900 dark:text-white">Or follow on your favourite app</h2>
+                        <p class="mt-1 text-sm text-zinc-600 dark:text-zinc-400">Join the channel and get new posts as they go live.</p>
+                        <div class="mt-4 flex flex-wrap gap-3">
+                            @if ($settings->telegram_channel_url)
+                                <a href="{{ $settings->telegram_channel_url }}" target="_blank" rel="noopener" class="inline-flex items-center gap-2 rounded-full border border-zinc-300 px-4 py-2 text-sm font-medium text-zinc-700 transition hover:border-indigo-400 hover:text-indigo-500 dark:border-white/15 dark:text-zinc-200"><x-brand-icon name="telegram" class="size-4" /> Telegram channel</a>
+                            @endif
+                            @if ($settings->whatsapp_channel_url)
+                                <a href="{{ $settings->whatsapp_channel_url }}" target="_blank" rel="noopener" class="inline-flex items-center gap-2 rounded-full border border-zinc-300 px-4 py-2 text-sm font-medium text-zinc-700 transition hover:border-indigo-400 hover:text-indigo-500 dark:border-white/15 dark:text-zinc-200"><x-brand-icon name="whatsapp" class="size-4" /> WhatsApp channel</a>
+                            @endif
+                        </div>
+                    </div>
+                @endif
+            </div>
+        </section>
+
         @if ($related->isNotEmpty())
             <section aria-labelledby="related-posts" class="mt-14">
                 <h2 id="related-posts" class="text-xl font-bold text-zinc-900 dark:text-white">Related posts</h2>
