@@ -294,7 +294,7 @@ class BlogPost extends Model
 
     public function comments(): HasMany
     {
-        return $this->hasMany(Comment::class)->whereNull('parent_id')->latest();
+        return $this->hasMany(Comment::class)->whereNull('parent_id')->where('status', Comment::STATUS_APPROVED)->latest();
     }
 
     public function reactions(): HasMany

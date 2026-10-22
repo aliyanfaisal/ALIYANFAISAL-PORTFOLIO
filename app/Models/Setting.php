@@ -8,11 +8,12 @@ class Setting extends Model
 {
     protected $fillable = [
         'site_name', 'site_description', 'default_og_image', 'contact_email',
-        'auto_approve_posts', 'github_url', 'linkedin_url', 'fiverr_url', 'upwork_url',
+        'auto_approve_posts', 'auto_approve_comments', 'github_url', 'linkedin_url', 'fiverr_url', 'upwork_url',
     ];
 
     protected $casts = [
         'auto_approve_posts' => 'boolean',
+        'auto_approve_comments' => 'boolean',
     ];
 
     public static function current(): self
@@ -20,6 +21,7 @@ class Setting extends Model
         return self::query()->firstOrCreate(['id' => 1], [
             'site_name' => config('app.name'),
             'auto_approve_posts' => true,
+            'auto_approve_comments' => true,
         ]);
     }
 }

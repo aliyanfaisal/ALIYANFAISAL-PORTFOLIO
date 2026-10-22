@@ -16,7 +16,7 @@ class CommentReactionController extends Controller
     {
         $post = BlogPost::published()->where('slug', $slug)->firstOrFail();
 
-        abort_unless($comment->blog_post_id === $post->id, 404);
+        abort_unless($comment->blog_post_id === $post->id && $comment->isApproved(), 404);
 
         $data = $request->validate([
             'emoji' => ['required', Rule::in(CommentReaction::EMOJIS)],

@@ -2,14 +2,21 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Comment extends Model
 {
+    public const STATUS_PENDING = 'pending';
+
+    public const STATUS_APPROVED = 'approved';
+
+    public const STATUS_REJECTED = 'rejected';
+
     protected $fillable = [
-        'blog_post_id', 'parent_id', 'name', 'email', 'body', 'session_id',
+        'blog_post_id', 'parent_id', 'name', 'email', 'body', 'status', 'session_id',
     ];
 
     /**
@@ -26,6 +33,24 @@ class Comment extends Model
         ];
     }
 
+    /**
+     * Status for a newly submitted comment, following the "auto approve comments" setting.
+     */
+    public static function initialStatus(): string
+    {
+        return Setting::current()->auto_approve_comments ? self::STATUS_APPROVED : self::STATUS_PENDING;
+    }
+
+    public function scopeApproved(Builder $query): Builder
+    {
+        return $query->where('status', self::STATUS_APPROVED);
+    }
+
+    public function isApproved(): bool
+    {
+        return $this->status === self::STATUS_APPROVED;
+    }
+
     public function blogPost(): BelongsTo
     {
         return $this->belongsTo(BlogPost::class);
@@ -38,7 +63,7 @@ class Comment extends Model
 
     public function replies(): HasMany
     {
-        return $this->hasMany(Comment::class, 'parent_id')->oldest();
+        return $this->hasMany(Comment::class, 'parent_id')->where('status', self::STATUS_APPROVED)->oldest();
     }
 
     public function reactions(): HasMany
