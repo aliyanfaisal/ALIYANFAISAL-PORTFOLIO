@@ -86,6 +86,36 @@ class NewsletterScheduleTest extends TestCase
         Mail::assertQueued(NewsletterMail::class, fn ($m) => $m->hasTo('all@example.com') && $m->posts->count() === 2);
     }
 
+    public function test_emails_are_released_in_batches(): void
+    {
+        \Illuminate\Support\Facades\Queue::fake();
+        config(['newsletter.batch_size' => 2, 'newsletter.batch_interval_minutes' => 3]);
+        $this->makePost(10, '-2 hours');
+        foreach (range(1, 5) as $n) {
+            NewsletterSubscriber::create(['verified_at' => now(), 'email' => "u{$n}@example.com", 'frequency' => 'daily']);
+        }
+
+        app(NewsletterSender::class)->run(NewsletterFrequency::Daily, now());
+
+        $minutes = collect(\Illuminate\Support\Facades\Queue::pushed(\Illuminate\Mail\SendQueuedMailable::class))
+            ->map(fn ($job) => (int) round(now()->diffInMinutes($job->delay, false)))
+            ->sort()->values()->all();
+        $this->assertSame([0, 0, 3, 3, 6], $minutes);
+    }
+
+    public function test_a_permanently_failed_send_frees_the_posts_for_a_later_run(): void
+    {
+        Mail::fake();
+        $this->makePost(10, '-2 hours');
+        $subscriber = NewsletterSubscriber::create(['verified_at' => now(), 'email' => 'a@example.com', 'frequency' => 'daily']);
+        app(NewsletterSender::class)->run(NewsletterFrequency::Daily, now());
+        $this->assertDatabaseCount('newsletter_deliveries', 1);
+
+        Mail::assertQueued(NewsletterMail::class, fn ($mail) => tap($mail)->failed(new \RuntimeException('smtp down')));
+
+        $this->assertDatabaseCount('newsletter_deliveries', 0);
+    }
+
     public function test_a_cadence_only_runs_once_per_day(): void
     {
         Mail::fake();

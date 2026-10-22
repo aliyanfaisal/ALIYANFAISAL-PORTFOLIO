@@ -11,6 +11,7 @@ class Setting extends Model
         'auto_approve_posts', 'auto_approve_comments', 'github_url', 'linkedin_url', 'fiverr_url', 'upwork_url',
         'telegram_enabled', 'telegram_chat_id', 'telegram_delay_minutes', 'telegram_include_excerpt',
         'telegram_include_hashtags', 'telegram_channel_url', 'whatsapp_channel_url',
+        'email_logging_enabled',
     ];
 
     protected $casts = [
@@ -19,6 +20,7 @@ class Setting extends Model
         'telegram_enabled' => 'boolean',
         'telegram_include_excerpt' => 'boolean',
         'telegram_include_hashtags' => 'boolean',
+        'email_logging_enabled' => 'boolean',
     ];
 
     public static function current(): self
@@ -27,6 +29,11 @@ class Setting extends Model
             'site_name' => config('app.name'),
             'auto_approve_posts' => true,
             'auto_approve_comments' => true,
+            'telegram_enabled' => true,
+            'telegram_delay_minutes' => 0,
+            'telegram_include_excerpt' => true,
+            'telegram_include_hashtags' => true,
+            'email_logging_enabled' => true,
         ]);
     }
 }

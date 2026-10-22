@@ -50,10 +50,12 @@ class NewsletterSender
 
         $sentPostIds = [];
         $recipients = 0;
+        $batchSize = config('newsletter.batch_size');
+        $interval = config('newsletter.batch_interval_minutes');
 
         NewsletterSubscriber::active()
             ->where('frequency', $frequency->value)
-            ->chunkById(200, function ($subscribers) use ($newsletter, $candidates, $frequency, $now, &$sentPostIds, &$recipients): void {
+            ->chunkById(200, function ($subscribers) use ($newsletter, $candidates, $frequency, $now, $batchSize, $interval, &$sentPostIds, &$recipients): void {
                 $delivered = DB::table('newsletter_deliveries')
                     ->whereIn('newsletter_subscriber_id', $subscribers->modelKeys())
                     ->whereIn('blog_post_id', $candidates->modelKeys())
@@ -88,7 +90,8 @@ class NewsletterSender
                         'created_at' => $now,
                     ])->all());
 
-                    Mail::to($subscriber->email)->queue(new NewsletterMail($newsletter, $subscriber, new Collection($posts->all())));
+                    // Each batch of subscribers is released a few minutes after the previous one to stay under SMTP limits.
+                    Mail::to($subscriber->email)->later(now()->addMinutes(intdiv($recipients, $batchSize) * $interval), new NewsletterMail($newsletter, $subscriber, new Collection($posts->all())));
 
                     $subscriber->forceFill(['last_sent_at' => $now])->saveQuietly();
 
