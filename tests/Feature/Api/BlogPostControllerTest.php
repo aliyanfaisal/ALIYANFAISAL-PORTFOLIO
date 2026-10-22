@@ -164,9 +164,9 @@ class BlogPostControllerTest extends TestCase
         $response->assertStatus(201);
 
         $post = BlogPost::where('slug', 'with-image')->firstOrFail();
-        $this->assertSame('blog/with-image.webp', $post->image_path);
+        $this->assertMatchesRegularExpression('#^blog/with-image-[0-9a-f]{8}\.webp$#', $post->image_path);
         $this->assertSame('https://example.com/cover.jpg', $post->source_image_url);
-        Storage::disk('public')->assertExists('blog/with-image.webp');
+        Storage::disk('public')->assertExists($post->image_path);
 
         // 699x764 source: cropped to 16:9 and never upscaled.
         $this->assertSame(699, $post->image_width);
@@ -249,11 +249,11 @@ class BlogPostControllerTest extends TestCase
         ], $this->headers());
 
         $response->assertStatus(201)
-            ->assertJsonPath('image_url', asset('storage/blog/reuse-post.webp'));
+            ->assertJsonPath('image_url', asset('storage/'.BlogPost::firstOrFail()->image_path));
 
         Http::assertNothingSent();
-        $this->assertSame('blog/reuse-post.webp', BlogPost::firstOrFail()->image_path);
-        Storage::disk('public')->assertExists('blog/reuse-post.webp');
+        $this->assertMatchesRegularExpression('#^blog/reuse-post-[0-9a-f]{8}\.webp$#', BlogPost::firstOrFail()->image_path);
+        Storage::disk('public')->assertExists(BlogPost::firstOrFail()->image_path);
     }
 
     public function test_it_does_not_reuse_paths_that_escape_the_upload_directory(): void
@@ -268,7 +268,7 @@ class BlogPostControllerTest extends TestCase
             'image_url' => asset('storage/generated/../secret.png'),
         ], $this->headers())->assertStatus(201);
 
-        $this->assertSame('blog/traversal-post.webp', BlogPost::firstOrFail()->image_path);
+        $this->assertMatchesRegularExpression('#^blog/traversal-post-[0-9a-f]{8}\.webp$#', BlogPost::firstOrFail()->image_path);
     }
 
     public function test_it_queues_a_push_to_cuelara_by_default(): void
@@ -463,5 +463,22 @@ class BlogPostControllerTest extends TestCase
             ->assertStatus(422)->assertJsonValidationErrors(['categories.0']);
         $this->postJson('/api/blog-posts', ['title' => 'T', 'body' => 'B', 'categories' => [['name' => 'X', 'description' => str_repeat('a', 301)]]], $this->headers())
             ->assertStatus(422)->assertJsonValidationErrors(['categories.0']);
+    }
+
+    public function test_replacing_a_cover_image_gets_a_new_url_and_removes_the_old_file(): void
+    {
+        Storage::fake('public');
+        Http::fake(['example.com/a.png' => Http::response(file_get_contents(base_path('public/images/aliyan-headshot-cutout.png')), 200, ['Content-Type' => 'image/png'])]);
+        Http::fake(['example.com/b.png' => Http::response(file_get_contents(base_path('public/images/og-default.png')), 200, ['Content-Type' => 'image/png'])]);
+
+        $this->postJson('/api/blog-posts', ['title' => 'Swap', 'body' => 'x', 'image_url' => 'https://example.com/a.png'], $this->headers())->assertStatus(201);
+        $first = BlogPost::firstOrFail()->image_path;
+
+        $this->patchJson('/api/blog-posts/swap', ['image_url' => 'https://example.com/b.png'], $this->headers())->assertOk();
+        $second = BlogPost::firstOrFail()->image_path;
+
+        $this->assertNotSame($first, $second);
+        Storage::disk('public')->assertMissing($first);
+        Storage::disk('public')->assertExists($second);
     }
 }

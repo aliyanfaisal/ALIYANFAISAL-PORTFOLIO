@@ -11,7 +11,7 @@ class ImageOptimizer
 
     public const HEIGHT = 900;
 
-    public const QUALITY = 80;
+    public const QUALITY = 92;
 
     /**
      * Cover-crop an image to 16:9, scale it down to at most 1600x900 (never upscaling) and encode as WebP.

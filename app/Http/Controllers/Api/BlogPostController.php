@@ -144,7 +144,7 @@ class BlogPostController extends Controller
         ]);
 
         if (array_key_exists('image_url', $data) && $data['image_url']) {
-            $image = $this->storeOptimizedImage($data['image_url'], $blogPost->slug);
+            $image = $this->storeOptimizedImage($data['image_url'], $blogPost->slug, $blogPost->image_path);
             $blogPost->image_path = $image['path'];
             $blogPost->image_width = $image['width'];
             $blogPost->image_height = $image['height'];
@@ -368,7 +368,7 @@ class BlogPostController extends Controller
      *
      * @return array{path: string, width: int, height: int}
      */
-    private function storeOptimizedImage(string $url, string $slug): array
+    private function storeOptimizedImage(string $url, string $slug, ?string $previousPath = null): array
     {
         $uploadedPath = $this->resolveUploadedImagePath($url);
         $contents = $uploadedPath !== null
@@ -383,8 +383,14 @@ class BlogPostController extends Controller
             ]);
         }
 
-        $path = "blog/{$slug}.webp";
+        // A unique name per image: reusing one path overwrites the file under the same URL, so browsers
+        // and CDNs keep serving the old picture while the admin shows the new one.
+        $path = "blog/{$slug}-".substr(md5($result['contents']), 0, 8).'.webp';
         Storage::disk('public')->put($path, $result['contents']);
+
+        if ($previousPath !== null && $previousPath !== $path && str_starts_with($previousPath, 'blog/')) {
+            Storage::disk('public')->delete($previousPath);
+        }
 
         return ['path' => $path, 'width' => $result['width'], 'height' => $result['height']];
     }
