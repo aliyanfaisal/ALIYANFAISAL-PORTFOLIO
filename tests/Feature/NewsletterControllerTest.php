@@ -2,39 +2,99 @@
 
 namespace Tests\Feature;
 
+use App\Mail\NewsletterOtpMail;
+use App\Mail\NewsletterWelcomeMail;
+use App\Models\Category;
 use App\Models\NewsletterSubscriber;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\Mail;
 use Tests\TestCase;
 
 class NewsletterControllerTest extends TestCase
 {
     use RefreshDatabase;
 
-    public function test_it_subscribes_a_new_email(): void
+    public function test_signup_sends_a_code_and_does_not_subscribe_until_confirmed(): void
     {
+        Mail::fake();
+
         $this->post('/newsletter', ['email' => 'reader@example.com'])
             ->assertRedirect()
-            ->assertSessionHas('status');
+            ->assertSessionHas('newsletter_pending_email', 'reader@example.com');
 
-        $this->assertDatabaseHas('newsletter_subscribers', ['email' => 'reader@example.com']);
+        Mail::assertSent(NewsletterOtpMail::class);
+        $this->assertFalse(NewsletterSubscriber::first()->isVerified());
+        $this->assertSame(0, NewsletterSubscriber::active()->count());
     }
 
-    public function test_it_does_not_duplicate_an_existing_subscriber(): void
+    public function test_the_correct_code_activates_the_subscription_and_sends_a_welcome(): void
     {
-        NewsletterSubscriber::create(['email' => 'reader@example.com']);
+        Mail::fake();
 
-        $this->post('/newsletter', ['email' => 'reader@example.com'])
-            ->assertRedirect()
-            ->assertSessionHas('status');
+        $this->post('/newsletter', ['email' => 'reader@example.com']);
+        $subscriber = NewsletterSubscriber::first();
+        $code = null;
+        Mail::assertSent(NewsletterOtpMail::class, function ($mail) use (&$code) {
+            $code = $mail->code;
 
-        $this->assertSame(1, NewsletterSubscriber::where('email', 'reader@example.com')->count());
+            return true;
+        });
+
+        $this->post('/newsletter/verify', ['email' => 'reader@example.com', 'code' => $code])->assertSessionHas('status');
+
+        $this->assertTrue($subscriber->fresh()->isVerified());
+        $this->assertSame(1, NewsletterSubscriber::active()->count());
+        Mail::assertQueued(NewsletterWelcomeMail::class);
+    }
+
+    public function test_a_wrong_code_is_rejected_and_burns_after_five_tries(): void
+    {
+        Mail::fake();
+        $this->post('/newsletter', ['email' => 'reader@example.com']);
+        $subscriber = NewsletterSubscriber::first();
+        $code = null;
+        Mail::assertSent(NewsletterOtpMail::class, function ($mail) use (&$code) {
+            $code = $mail->code;
+
+            return true;
+        });
+        $wrong = $code === '000000' ? '111111' : '000000';
+
+        foreach (range(1, 5) as $_) {
+            $this->post('/newsletter/verify', ['email' => 'reader@example.com', 'code' => $wrong])->assertSessionHasErrors('code', null, 'newsletter');
+        }
+
+        $this->post('/newsletter/verify', ['email' => 'reader@example.com', 'code' => $code])->assertSessionHasErrors('code', null, 'newsletter');
+        $this->assertFalse($subscriber->fresh()->isVerified());
+    }
+
+    public function test_an_expired_code_is_rejected(): void
+    {
+        $subscriber = NewsletterSubscriber::create(['email' => 'reader@example.com']);
+        $code = $subscriber->issueOtp();
+        $this->travel(11)->minutes();
+
+        $this->assertFalse($subscriber->fresh()->attemptOtp($code));
     }
 
     public function test_it_validates_the_email(): void
     {
-        $this->post('/newsletter', ['email' => 'not-an-email'])
-            ->assertSessionHasErrors('email');
+        $this->post('/newsletter', ['email' => 'not-an-email'])->assertSessionHasErrors('email');
 
         $this->assertDatabaseCount('newsletter_subscribers', 0);
+    }
+
+    public function test_category_preferences_are_saved_and_cleared(): void
+    {
+        $subscriber = NewsletterSubscriber::create(['email' => 'a@example.com', 'verified_at' => now()]);
+        $category = Category::create(['name' => 'Laravel', 'slug' => 'laravel']);
+
+        $this->put(route('newsletter.preferences.update', $subscriber->token), [
+            'frequency' => 'weekly', 'topics' => 'selected', 'categories' => [$category->id],
+        ]);
+        $this->assertSame([$category->id], $subscriber->categories()->pluck('categories.id')->all());
+
+        $this->put(route('newsletter.preferences.update', $subscriber->token), ['frequency' => 'weekly', 'topics' => 'all']);
+        $this->assertSame(0, $subscriber->categories()->count());
     }
 }

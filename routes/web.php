@@ -43,7 +43,12 @@ Route::get('/services/{path?}', fn (?string $path = null) => redirect()->away(rt
 Route::get('/contact', [ContactController::class, 'create'])->name('contact.create');
 Route::post('/contact', [ContactController::class, 'store'])->name('contact.store');
 Route::get('/privacy-policy', [PrivacyPolicyController::class, 'index'])->name('privacy-policy');
-Route::post('/newsletter', [NewsletterController::class, 'store'])->name('newsletter.store');
+Route::post('/newsletter', [NewsletterController::class, 'store'])->middleware('throttle:5,1')->name('newsletter.store');
+Route::post('/newsletter/verify', [NewsletterController::class, 'verify'])->middleware('throttle:10,1')->name('newsletter.verify');
+Route::get('/newsletter/{token}/preferences', [NewsletterController::class, 'preferences'])->name('newsletter.preferences');
+Route::put('/newsletter/{token}/preferences', [NewsletterController::class, 'updatePreferences'])->middleware('throttle:20,1')->name('newsletter.preferences.update');
+Route::post('/newsletter/{token}/unsubscribe', [NewsletterController::class, 'unsubscribe'])->middleware('throttle:20,1')->name('newsletter.unsubscribe');
+Route::post('/newsletter/{token}/unsubscribe/one-click', [NewsletterController::class, 'oneClickUnsubscribe'])->middleware('throttle:20,1')->name('newsletter.unsubscribe.one-click');
 
 Route::get('/auth/linkedin', [LinkedInAuthController::class, 'redirect'])->name('auth.linkedin.redirect');
 Route::get('/auth/linkedin/callback', [LinkedInAuthController::class, 'callback'])->name('auth.linkedin.callback');
