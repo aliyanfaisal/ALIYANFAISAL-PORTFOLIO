@@ -41,7 +41,7 @@ Route::post('/products/manajet/demo', [DemoRequestController::class, 'store'])->
 // (and their backlinks) just redirect there permanently.
 Route::get('/services/{path?}', fn (?string $path = null) => redirect()->away(rtrim(config('seo.freelance_url'), '/').'/services'.($path ? '/'.$path : ''), 301))->where('path', '.*');
 Route::get('/contact', [ContactController::class, 'create'])->name('contact.create');
-Route::post('/contact', [ContactController::class, 'store'])->name('contact.store');
+Route::post('/contact', [ContactController::class, 'store'])->middleware('throttle:5,1')->name('contact.store');
 Route::get('/privacy-policy', [PrivacyPolicyController::class, 'index'])->name('privacy-policy');
 Route::post('/newsletter', [NewsletterController::class, 'store'])->middleware('throttle:5,1')->name('newsletter.store');
 Route::post('/newsletter/verify', [NewsletterController::class, 'verify'])->middleware('throttle:10,1')->name('newsletter.verify');

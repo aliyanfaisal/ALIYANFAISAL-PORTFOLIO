@@ -69,10 +69,23 @@
                     @error('message') <p class="mt-1 text-xs text-red-500">{{ $message }}</p> @enderror
                 </div>
 
+                {{-- Honeypot: real visitors never see or fill this field. --}}
+                <div class="absolute -left-[9999px]" aria-hidden="true">
+                    <label for="website">Website</label>
+                    <input type="text" name="website" id="website" tabindex="-1" autocomplete="off">
+                </div>
+
+                <div>
+                    <div class="cf-turnstile" data-sitekey="{{ config('services.turnstile.site_key') }}"></div>
+                    @error('cf-turnstile-response') <p class="mt-1 text-xs text-red-500">{{ $message }}</p> @enderror
+                </div>
+
                 <button type="submit" class="w-full rounded-full bg-zinc-900 px-6 py-3 text-sm font-semibold text-white transition hover:bg-indigo-600 dark:bg-white dark:text-zinc-900 dark:hover:bg-indigo-400">
                     Send Message
                 </button>
             </form>
         </div>
     </section>
+
+<script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
 </x-layouts.app>
