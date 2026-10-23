@@ -52,6 +52,13 @@ class Settings extends Page
                             ->disk('public')
                             ->directory('settings'),
                         TextInput::make('contact_email')
+                            ->label('Public contact email')
+                            ->helperText('Shown on the site (footer, privacy policy).')
+                            ->email()
+                            ->maxLength(255),
+                        TextInput::make('admin_email')
+                            ->label('Admin email')
+                            ->helperText('Private. New contact messages and demo requests are emailed here. Leave empty to use the server default.')
                             ->email()
                             ->maxLength(255),
                     ]),

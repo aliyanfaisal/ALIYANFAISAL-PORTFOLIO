@@ -7,15 +7,15 @@ use App\Models\Setting;
 use Illuminate\Mail\Events\MessageSending;
 use Illuminate\Mail\Events\MessageSent;
 use Symfony\Component\Mime\Address;
+use Symfony\Component\Mime\Message;
 use Throwable;
-use WeakMap;
 
 class EmailLogger
 {
     /**
-     * @var WeakMap<object, EmailLog>|null
+     * Symfony clones the message before sending, so the log id travels in a header rather than an object map.
      */
-    private static ?WeakMap $pending = null;
+    private const HEADER = 'X-Email-Log-Id';
 
     public function sending(MessageSending $event): void
     {
@@ -30,8 +30,7 @@ class EmailLogger
                 'status' => 'sending',
             ]);
 
-            self::$pending ??= new WeakMap;
-            self::$pending[$event->message] = $log;
+            $event->message->getHeaders()->addTextHeader(self::HEADER, (string) $log->id);
         } catch (Throwable $exception) {
             // Logging must never stop an email from being sent.
             report($exception);
@@ -42,11 +41,10 @@ class EmailLogger
     {
         try {
             $message = $event->sent->getOriginalMessage();
-            $log = self::$pending[$message] ?? null;
+            $id = $message instanceof Message ? $message->getHeaders()->getHeaderBody(self::HEADER) : null;
 
-            if ($log !== null) {
-                $log->update(['status' => 'sent']);
-                unset(self::$pending[$message]);
+            if ($id !== null) {
+                EmailLog::whereKey($id)->update(['status' => 'sent']);
             }
         } catch (Throwable $exception) {
             report($exception);

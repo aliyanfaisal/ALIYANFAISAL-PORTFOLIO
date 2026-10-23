@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Mail\ContactMessageMail;
 use App\Models\ContactMessage;
+use App\Models\Setting;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
@@ -24,9 +25,9 @@ class ContactController extends Controller
             'message' => ['required', 'string', 'max:5000'],
         ]);
 
-        $contactMessage = ContactMessage::create($data);
+        $contactMessage = ContactMessage::create($data + ContactMessage::senderDetails($request));
 
-        $notifyEmail = config('mail.contact_recipient');
+        $notifyEmail = Setting::adminRecipient();
 
         if ($notifyEmail) {
             Mail::to($notifyEmail)->send(new ContactMessageMail($contactMessage));

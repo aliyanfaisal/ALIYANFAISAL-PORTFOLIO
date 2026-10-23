@@ -1,5 +1,10 @@
 @props(['anchor' => 'newsletter'])
-@if (session('newsletter_pending_email') && session('newsletter_form', 'newsletter') === $anchor)
+@if (session('status') && session('newsletter_form') === $anchor && ! session('newsletter_pending_email'))
+    <div role="status" class="mt-3 flex items-start gap-2 rounded-xl border border-emerald-500/30 bg-emerald-500/10 px-4 py-3 text-sm text-emerald-600 dark:text-emerald-400">
+        <x-icon name="badge-check" class="mt-0.5 size-4 shrink-0" />
+        <span>{{ session('status') }}</span>
+    </div>
+@elseif (session('newsletter_pending_email') && session('newsletter_form', 'newsletter') === $anchor)
     <form action="{{ route('newsletter.verify') }}" method="POST" class="mt-3">
         @csrf
         <input type="hidden" name="email" value="{{ session('newsletter_pending_email') }}">

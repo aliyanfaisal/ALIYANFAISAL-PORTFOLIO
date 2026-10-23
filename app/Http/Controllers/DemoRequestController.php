@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Mail\ContactMessageMail;
 use App\Models\ContactMessage;
+use App\Models\Setting;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
@@ -36,9 +37,9 @@ class DemoRequestController extends Controller
                 '',
                 $data['message'] ?? null,
             ], fn ($line) => $line !== null)),
-        ]);
+        ] + ContactMessage::senderDetails($request));
 
-        if ($notifyEmail = config('mail.contact_recipient')) {
+        if ($notifyEmail = Setting::adminRecipient()) {
             Mail::to($notifyEmail)->send(new ContactMessageMail($message));
         }
 
