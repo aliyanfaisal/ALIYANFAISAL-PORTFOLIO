@@ -63,12 +63,25 @@ class SafeComment implements ValidationRule
     ];
 
     /**
+     * @param  array<int, string>  $allow  Pattern labels to permit, e.g. 'an email address', 'a phone number'.
+     * @param  string  $action  Verb used in spam messages ("posted" for comments, "sent" for forms).
+     */
+    public function __construct(protected array $allow = [], protected string $action = 'posted')
+    {
+    }
+
+    /**
      * @param  Closure(string, ?string=): PotentiallyTranslatedString  $fail
      */
     public function validate(string $attribute, mixed $value, Closure $fail): void
     {
         if (! is_string($value)) {
             return;
+        }
+
+        // Allowed emails are removed first, otherwise "name@gmail.com" would trip the link check.
+        if (in_array('an email address', $this->allow, true)) {
+            $value = preg_replace('/[^\s@]+@[^\s@]+\.[a-z]{2,}/i', ' ', $value) ?? $value;
         }
 
         $text = $this->normalise($value);
@@ -80,6 +93,10 @@ class SafeComment implements ValidationRule
         }
 
         foreach ($this->patterns as $label => $pattern) {
+            if (in_array($label, $this->allow, true)) {
+                continue;
+            }
+
             if (preg_match($pattern, $value) === 1 || preg_match($pattern, $text) === 1) {
                 $fail("The :attribute must not contain {$label}.");
 
@@ -94,13 +111,13 @@ class SafeComment implements ValidationRule
         }
 
         if ($this->containsSpamPhrase($text)) {
-            $fail('The :attribute looks like spam or promotion and cannot be posted.');
+            $fail("The :attribute looks like spam or promotion and cannot be {$this->action}.");
 
             return;
         }
 
         if ($reason = $this->spamHeuristic($value)) {
-            $fail("The :attribute looks like spam ({$reason}) and cannot be posted.");
+            $fail("The :attribute looks like spam ({$reason}) and cannot be {$this->action}.");
         }
     }
 
