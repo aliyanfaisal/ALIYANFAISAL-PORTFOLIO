@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Http\Request;
 
 class ContactMessage extends Model
@@ -11,6 +12,11 @@ class ContactMessage extends Model
         'name', 'email', 'subject', 'message',
         'ip_address', 'country', 'city', 'user_agent', 'page_url', 'read_at',
     ];
+
+    public function replies(): HasMany
+    {
+        return $this->hasMany(ContactMessageReply::class)->latest();
+    }
 
     protected function casts(): array
     {

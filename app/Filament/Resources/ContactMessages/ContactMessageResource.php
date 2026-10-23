@@ -7,6 +7,7 @@ use App\Filament\Resources\ContactMessages\Pages\ViewContactMessage;
 use App\Filament\Resources\ContactMessages\Tables\ContactMessagesTable;
 use App\Models\ContactMessage;
 use BackedEnum;
+use Filament\Infolists\Components\RepeatableEntry;
 use Filament\Infolists\Components\TextEntry;
 use Filament\Resources\Resource;
 use Filament\Schemas\Components\Section;
@@ -45,6 +46,18 @@ class ContactMessageResource extends Resource
                         ->columnSpanFull()
                         ->prose()
                         ->extraAttributes(['class' => 'whitespace-pre-line']),
+                ]),
+            Section::make('Replies')
+                ->visible(fn (ContactMessage $record) => $record->replies()->exists())
+                ->schema([
+                    RepeatableEntry::make('replies')
+                        ->hiddenLabel()
+                        ->schema([
+                            TextEntry::make('subject'),
+                            TextEntry::make('created_at')->label('Sent')->dateTime(),
+                            TextEntry::make('body')->label('Message')->columnSpanFull()->extraAttributes(['class' => 'whitespace-pre-line']),
+                        ])
+                        ->columns(2),
                 ]),
             Section::make('Sender details')
                 ->columns(2)
