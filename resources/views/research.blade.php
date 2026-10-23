@@ -1,5 +1,5 @@
 @php($interests = config('research.interests'))
-<x-layouts.app title="Research interests" description="Research interests of Aliyan Faisal: LLM reliability and evaluation, uncertainty and calibration, small and efficient language models, retrieval-augmented generation, and AI for climate resilience.">
+<x-layouts.app title="Research interests" description="Research interests of Aliyan Faisal: LLM reliability and evaluation, uncertainty and calibration, small and efficient language models, token efficiency across languages, retrieval-augmented generation, and AI for climate resilience.">
     <h1 class="mt-8 font-serif text-3xl font-bold">Research interests</h1>
     <p class="mt-3">
         I want to study applied LLM systems more rigorously than building them allows. Most of the areas below come from problems I ran into

@@ -66,11 +66,12 @@ return [
             'related' => ['cuelara'],
         ],
         [
-            'name' => 'Prompt engineering and token efficiency',
-            'text' => 'Prompts are the interface to every LLM application, and most are written by trial and error. I am interested in treating prompts as something that can be measured, compressed and debugged: how much context a model needs, what can be removed without changing the answer, and how to score a prompt before it is run.',
+            'name' => 'Prompt engineering, token efficiency and tokenization across languages',
+            'text' => 'Prompts are the interface to every LLM application, and most are written by trial and error. I am interested in treating prompts as something that can be measured, compressed and debugged: how much context a model needs, what can be removed without changing the answer, and how to score a prompt before it is run. The same text also takes a different number of tokens in different languages, which changes cost and usable context length. I want to study how large those gaps are and whether compression can reduce them. I have not run a study on this yet.',
             'questions' => [
                 'How much of a prompt can be removed or restructured before output quality drops?',
                 'Can the reasons a prompt fails be diagnosed automatically and explained to the user?',
+                'How much does the token count for the same text differ across languages and tokenizers, and can prompt compression reduce the gap?',
             ],
             'related' => ['cuelara'],
         ],

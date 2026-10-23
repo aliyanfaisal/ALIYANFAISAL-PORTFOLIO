@@ -4,7 +4,7 @@
     $openSource = config('research.open_source');
     $edu = config('research.education');
 @endphp
-<x-layouts.app description="AI engineer and aspiring researcher with a BSc in IT, applying to research-oriented MSc programs in AI and ML. Research interests: LLM reliability and evaluation, calibration, small and efficient language models, and retrieval-augmented generation.">
+<x-layouts.app description="AI engineer and aspiring researcher with a BSc in IT, applying to research-oriented MSc programs in AI and ML. Research interests: LLM reliability and evaluation, calibration, small and efficient language models, tokenization across languages, and retrieval-augmented generation.">
     <section class="mt-8">
         <h1 class="font-serif text-3xl font-bold leading-tight">{{ $person['name'] }}</h1>
         <p class="mt-1 text-neutral-600">{{ $person['title'] }} · {{ $person['location'] }}</p>
