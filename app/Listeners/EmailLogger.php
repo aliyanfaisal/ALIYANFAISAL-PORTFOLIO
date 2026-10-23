@@ -6,6 +6,7 @@ use App\Models\EmailLog;
 use App\Models\Setting;
 use Illuminate\Mail\Events\MessageSending;
 use Illuminate\Mail\Events\MessageSent;
+use Illuminate\Support\Facades\Log;
 use Symfony\Component\Mime\Address;
 use Symfony\Component\Mime\Message;
 use Throwable;
@@ -45,6 +46,8 @@ class EmailLogger
 
             if ($id !== null) {
                 EmailLog::whereKey($id)->update(['status' => 'sent']);
+            } elseif (Setting::current()->email_logging_enabled) {
+                Log::warning('Sent email could not be matched to its email log row.', ['message_class' => get_debug_type($message)]);
             }
         } catch (Throwable $exception) {
             report($exception);
