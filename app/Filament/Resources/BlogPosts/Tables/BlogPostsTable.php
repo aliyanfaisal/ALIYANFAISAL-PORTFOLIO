@@ -40,6 +40,17 @@ class BlogPostsTable
                     ->dateTime()
                     ->sortable()
                     ->placeholder('—'),
+                TextColumn::make('views')
+                    ->label('Views')
+                    ->numeric()
+                    ->sortable()
+                    ->icon('heroicon-o-eye'),
+                TextColumn::make('comments_count')
+                    ->label('Comments')
+                    ->counts('comments')
+                    ->numeric()
+                    ->sortable()
+                    ->icon('heroicon-o-chat-bubble-left'),
                 TextColumn::make('cuelara_synced_at')
                     ->label('Sent to Cuelara')
                     ->sortable()
