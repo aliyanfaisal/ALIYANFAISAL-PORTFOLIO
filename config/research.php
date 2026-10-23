@@ -57,15 +57,6 @@ return [
             'related' => ['cuelara'],
         ],
         [
-            'name' => 'Misinformation and fact-checking in low-resource languages',
-            'text' => 'Most work on detecting false claims is done in English. Urdu is my native language, and I want to study how well current language models can check claims in Urdu and in languages with little data, where misinformation spreads and tools are scarce. I have not built a project in this area yet.',
-            'questions' => [
-                'How well do current models verify claims in Urdu and in mixed Urdu-English text, compared with English?',
-                'What evaluation data and sources of evidence are missing for fact-checking in low-resource languages?',
-            ],
-            'related' => [],
-        ],
-        [
             'name' => 'Retrieval-augmented generation (RAG)',
             'text' => 'RAG is how most LLM systems get grounded in real documents. I want to understand the parts that decide whether it works: document parsing, chunking, embeddings, retrieval quality and how a model should behave when the evidence is weak or contradictory.',
             'questions' => [
