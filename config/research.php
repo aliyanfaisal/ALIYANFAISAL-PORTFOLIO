@@ -329,8 +329,8 @@ return [
         ],
         [
             'project' => 'cuelara',
-            'title' => 'Cuelara Token Counter: token cost by language',
-            'summary' => 'A measurement of how many tokens the same 20 sentences take in 108 languages across 28 writing systems, counted with OpenAI\'s o200k_base and cl100k_base tokenizers. The median language costs 1.80x English under o200k_base, and 27 languages cost 2x or more. Only these two tokenizers were tested, so the results do not describe Claude, Gemini or other models. The data feeds the Token Counter tool on Cuelara. The report is hosted on cuelara.com.',
+            'title' => 'Cuelara (Token Counter tool only): token cost by language',
+            'summary' => 'This is a report for the Token Counter tool only, not for the rest of Cuelara. It measures how many tokens the same 20 sentences take in 108 languages across 28 writing systems, counted with OpenAI\'s o200k_base and cl100k_base tokenizers. The median language costs 1.80x English under o200k_base, and 27 languages cost 2x or more. Only these two tokenizers were tested, so the results do not describe Claude, Gemini or other models. The data feeds the Token Counter tool on Cuelara. The report is hosted on cuelara.com.',
             'file' => null,
             'available' => true,
             'index_url' => 'https://cuelara.com/research/token-cost-by-language',

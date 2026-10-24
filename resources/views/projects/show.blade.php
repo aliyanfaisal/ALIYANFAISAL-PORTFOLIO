@@ -72,7 +72,7 @@
             @if ($slug === 'invoiceinspect')
                 <p>The evaluation results above come from my evaluation harness. The research report and every harness test report are listed on the <a href="{{ route('reports') }}">Reports</a> page.</p>
             @else
-                <p>The Token Counter tool has a written report on how token counts differ across languages. It is also listed on the <a href="{{ route('reports') }}">Reports</a> page.</p>
+                <p>Only Token Counter Tool Reports. Reports exist for this one tool only, not for the rest of Cuelara. It is also listed on the <a href="{{ route('reports') }}">Reports</a> page.</p>
             @endif
             @isset($project['report_links'])
                 <ul class="mt-2 list-disc space-y-1 pl-5">
