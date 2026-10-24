@@ -50,5 +50,5 @@
         @endforeach
     </div>
 
-    <p class="mt-6 text-sm text-neutral-600">Further evaluations, including for Cuelara, are in progress.</p>
+    <p class="mt-6 text-sm text-neutral-600">Further evaluations are in progress.</p>
 </x-layouts.app>

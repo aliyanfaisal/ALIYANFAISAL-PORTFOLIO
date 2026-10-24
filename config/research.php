@@ -193,6 +193,11 @@ return [
             'stack' => ['Next.js 16', 'React 19', 'TypeScript', 'Prisma 7', 'PostgreSQL', 'Text embeddings', 'MCP'],
             'research' => 'Cuelara is where I became interested in prompt optimization and token reduction as research questions: what makes a prompt effective, how it can be measured, and how much context is actually needed.',
             'reports' => [],
+            'report_links' => [
+                ['Token cost by language: report page', 'https://cuelara.com/research/token-cost-by-language'],
+                ['Formal report (PDF)', 'https://cuelara.com/research/token-cost-by-language.pdf'],
+                ['Results (CSV)', 'https://cuelara.com/research/token-language-results.csv'],
+            ],
         ],
 
         'manajet' => [
@@ -322,13 +327,28 @@ return [
                 ['All test invoices (every corpus)', 'https://invoiceinspect.app/eval-harness-reports/invoices'],
             ],
         ],
+        [
+            'project' => 'cuelara',
+            'title' => 'Cuelara Token Counter: token cost by language',
+            'summary' => 'A measurement of how many tokens the same 20 sentences take in 108 languages across 28 writing systems, counted with OpenAI\'s o200k_base and cl100k_base tokenizers. The median language costs 1.80x English under o200k_base, and 27 languages cost 2x or more. Only these two tokenizers were tested, so the results do not describe Claude, Gemini or other models. The data feeds the Token Counter tool on Cuelara. The report is hosted on cuelara.com.',
+            'file' => null,
+            'available' => true,
+            'index_url' => 'https://cuelara.com/research/token-cost-by-language',
+            'documents' => [
+                ['Token Cost by Language: formal report', 'Method, results and limits of the measurement, from the FLORES-200 devtest sentences.', 'https://cuelara.com/research/token-cost-by-language.pdf'],
+            ],
+            'extra_links' => [
+                ['Results (CSV)', 'https://cuelara.com/research/token-language-results.csv'],
+                ['Token Counter tool', 'https://cuelara.com/tools/token-counter'],
+            ],
+        ],
     ],
 
     'education' => [
         'school' => 'Karakoram International University',
         'place' => 'Gilgit, Pakistan',
         'degree' => 'Bachelor of Science in Information Technology',
-        'years' => '2019 – 2023',
+        'years' => '2024',
         'cgpa' => '3.80 / 4.00',
         'rank' => 'Ranked 1st in class in all 8 semesters of the BSIT program',
         'transcript_file' => 'documents/aliyan-faisal-transcript.pdf', // inside public/. The link only appears when the file exists.
