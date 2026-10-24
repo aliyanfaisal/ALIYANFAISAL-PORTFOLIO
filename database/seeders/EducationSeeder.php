@@ -14,8 +14,8 @@ class EducationSeeder extends Seeder
                 'degree' => 'BSc, Information Technology',
                 'school' => 'Karakoram International University',
                 'country' => 'Gilgit-Baltistan, Pakistan',
-                'from_year' => 2019,
-                'to_year' => 2023,
+                'from_year' => null,
+                'to_year' => 2024,
                 'cgpa' => '3.80 / 4.00',
             ],
         ];
