@@ -84,6 +84,24 @@ return [
             'related' => ['invoiceinspect'],
         ],
         [
+            'name' => 'Learned versus rule-based information extraction',
+            'text' => 'In InvoiceInspect a hand-written rules extractor and a vision model read the same invoices, and their results differed a lot on new layouts: 70.3% field accuracy for the rules and 97.9% for the vision model. I want to understand why a learned model generalizes where rules do not, what training data it needs, and what is lost in cost, speed and explainability. I have used pre-trained models through APIs but have not trained or fine-tuned one, and I would like to build those foundations in a master\'s program.',
+            'questions' => [
+                'How much labelled or synthetic data does a learned extractor need to match a rules extractor on unseen layouts?',
+                'Can a learned model and a rules engine be combined so that each covers the other\'s failures?',
+            ],
+            'related' => ['invoiceinspect'],
+        ],
+        [
+            'name' => 'Machine learning foundations for evaluating and improving prompts',
+            'text' => 'Cuelara treats a prompt as something that can be scored and compressed, but its scoring and compression rules are designed by hand. I am interested in treating prompt improvement as a learning and optimization problem: what is optimized, how quality is measured, and how to avoid optimizing for the metric instead of the task, which is the same leakage problem I met in evaluation. This is an interest, not completed research, and I would be learning the machine-learning methods behind it.',
+            'questions' => [
+                'Which parts of prompt optimization can be learned from data instead of fixed by rules, and how is the result evaluated fairly?',
+                'How can a prompt-quality score be validated so it predicts real output quality?',
+            ],
+            'related' => ['cuelara'],
+        ],
+        [
             'name' => 'Data-centric systems for machine learning',
             'text' => 'Much of the work in applied AI is data pipelines, schemas, storage and decision-support tooling. My work for a provincial planning department on data collection and analytics dashboards gave me a view of how data quality shapes what any model can do.',
             'questions' => [
