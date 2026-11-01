@@ -5,6 +5,7 @@ namespace Tests\Feature;
 use App\Mail\ContactMessageMail;
 use App\Models\ContactMessage;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Mail;
 use Tests\TestCase;
 
@@ -52,16 +53,31 @@ class ProductPagesTest extends TestCase
     public function test_demo_request_is_stored_and_emailed(): void
     {
         Mail::fake();
+        Http::fake(['challenges.cloudflare.com/*' => Http::response(['success' => true])]);
         config(['mail.contact_recipient' => 'me@example.test']);
 
         $this->post('/products/manajet/demo', [
             'name' => 'Sam', 'email' => 'sam@acme.test', 'company' => 'Acme', 'team_size' => '6-15', 'message' => 'Agency of 10.',
+            'cf-turnstile-response' => 'test-token',
         ])->assertRedirect(route('products.show', 'manajet').'#demo');
 
         $stored = ContactMessage::firstOrFail();
         $this->assertSame('ManaJet demo request', $stored->subject);
         $this->assertStringContainsString('Company: Acme', $stored->message);
         Mail::assertSent(ContactMessageMail::class);
+    }
+
+    public function test_demo_request_is_rejected_when_turnstile_fails(): void
+    {
+        Mail::fake();
+        Http::fake(['challenges.cloudflare.com/*' => Http::response(['success' => false])]);
+
+        $this->post('/products/manajet/demo', [
+            'name' => 'Sam', 'email' => 'sam@acme.test', 'cf-turnstile-response' => 'bad',
+        ])->assertSessionHasErrors('cf-turnstile-response');
+
+        $this->assertSame(0, ContactMessage::count());
+        Mail::assertNothingSent();
     }
 
     public function test_demo_request_validates_and_ignores_honeypot_spam(): void

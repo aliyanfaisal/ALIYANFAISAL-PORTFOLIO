@@ -5,13 +5,14 @@ namespace App\Http\Controllers;
 use App\Mail\ContactMessageMail;
 use App\Models\ContactMessage;
 use App\Models\Setting;
+use App\Services\TurnstileService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 
 class DemoRequestController extends Controller
 {
-    public function store(Request $request): RedirectResponse
+    public function store(Request $request, TurnstileService $turnstile): RedirectResponse
     {
         // Honeypot: real visitors never see or fill this field.
         if ($request->filled('website')) {
@@ -24,7 +25,12 @@ class DemoRequestController extends Controller
             'company' => ['nullable', 'string', 'max:150'],
             'team_size' => ['nullable', 'in:1-5,6-15,16-50,50+'],
             'message' => ['nullable', 'string', 'max:3000'],
-        ]);
+            'cf-turnstile-response' => ['required', 'string'],
+        ], ['cf-turnstile-response.required' => 'Please complete the verification.']);
+
+        if (! $turnstile->verify($data['cf-turnstile-response'], $request->ip())) {
+            return back()->withErrors(['cf-turnstile-response' => 'Verification failed. Please try again.'])->withInput();
+        }
 
         $message = ContactMessage::create([
             'name' => $data['name'],

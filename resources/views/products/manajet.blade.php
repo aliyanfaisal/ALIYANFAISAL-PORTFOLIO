@@ -326,6 +326,11 @@
                             @error('message') <p class="mt-1 text-xs text-red-500">{{ $message }}</p> @enderror
                         </div>
 
+                        <div>
+                            <div class="cf-turnstile" data-sitekey="{{ config('services.turnstile.site_key') }}"></div>
+                            @error('cf-turnstile-response') <p class="mt-1 text-xs text-red-500">{{ $message }}</p> @enderror
+                        </div>
+
                         <button type="submit" class="w-full rounded-full bg-orange-500 px-6 py-3.5 text-sm font-bold text-white shadow-lg shadow-orange-500/30 transition hover:bg-orange-600">Request my demo</button>
                     </form>
                 </div>
@@ -356,4 +361,5 @@
             @endforeach
         </section>
     </div>
+<script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
 </x-layouts.app>
