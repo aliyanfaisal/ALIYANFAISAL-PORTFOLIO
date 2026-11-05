@@ -44,10 +44,10 @@ class ExperienceSeeder extends Seeder
             [
                 'title' => 'Full Stack Web Developer (Team Lead)',
                 'company' => 'GreyMatter Ventures',
-                'description' => 'Worked for over 2 years on custom full-stack web application development using Custom WordPress and the Laravel framework, later leading the web development team.',
+                'description' => 'Worked for 3 years on custom full-stack web application development using Custom WordPress and the Laravel framework, later leading the web development team.',
                 'employment_type' => 'Part-time',
                 'start_date' => '2021-01-01',
-                'end_date' => '2023-01-01',
+                'end_date' => '2023-12-31',
                 'current' => false,
             ],
         ];
