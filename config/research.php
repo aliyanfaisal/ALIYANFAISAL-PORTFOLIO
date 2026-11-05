@@ -204,7 +204,7 @@ return [
             'name' => 'ManaJet',
             'tagline' => 'AI-assisted project and task management for small software teams.',
             'blurb' => 'My final year project: project, team, task and client management for small software companies, with AI-assisted task planning.',
-            'period' => '2022 – 2023',
+            'period' => '2023',
             'role' => 'Lead developer · final year project, team of two',
             'status' => 'Final year project',
             'url' => null,
@@ -375,7 +375,7 @@ return [
     'experience' => [
         ['role' => 'Founder & CEO', 'org' => 'UrbanSofts, a remote software development team', 'place' => 'Remote', 'years' => '2023 – present', 'text' => 'Founded and lead a remote team of 4–10 developers that delivers client software projects together: I take on projects and bring in the right team members for each, such as app developers, and we build them collaboratively. The team has served 50+ clients.'],
         ['role' => 'Backend Developer & Data Analyst (Voluntary Work)', 'org' => 'Planning & Development Department, Government of Gilgit-Baltistan', 'place' => 'Gilgit, Pakistan', 'years' => 'Feb 2025 – Jul 2025', 'text' => 'Built centralized data analytics dashboards over public-sector records (XLS, CSV, MySQL) using Python (Pandas) and a Laravel backend, and digitized paper workflows into structured reporting for regional planning.'],
-        ['role' => 'Full Stack Web Developer (Team Lead)', 'org' => 'GreyMatter Ventures', 'place' => 'Gilgit, Pakistan, part-time', 'years' => '2021 – 2023', 'text' => 'Designed backend architectures, relational schemas and server-side logic, and led the web development team, mentoring junior developers and remote interns.'],
+        ['role' => 'Full Stack Web Developer (Team Lead)', 'org' => 'GreyMatter Ventures', 'place' => 'Gilgit, Pakistan, part-time', 'years' => 'Jan 2021 – Dec 2023', 'text' => 'Designed backend architectures, relational schemas and server-side logic, and led the web development team, mentoring junior developers and remote interns.'],
         ['role' => 'Applied AI & Backend Engineer', 'org' => 'Freelance', 'place' => 'Remote', 'years' => '2020 – present (5+ years)', 'text' => 'Built production applications integrating LLM APIs (OpenAI, Claude, Gemini) for document summarization, data extraction and e-commerce processing.'],
     ],
 
