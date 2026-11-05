@@ -72,11 +72,11 @@ AI Engineer and aspiring researcher with a BSc in Information Technology (CGPA 3
 %----------------------------------------------------------------------------------------
 \section{EDUCATION}
 \textbf{Karakoram International University} \hfill Gilgit, Pakistan \\
-\textit{Bachelor of Science in Information Technology} \hfill \textbf{CGPA: 3.80 / 4.00} (2024)
+\textit{Bachelor of Science in Information Technology} \hfill \textbf{CGPA: 3.80 / 4.00} (2019 -- 2023; result declared May 2024)
 \begin{itemize}
-    \item \textbf{Class Rank:} Ranked 1st in class in all 8 semesters of the BSIT program (semester-wise CGPA in the attached transcript).
+    \item \textbf{Class Rank:} Ranked 1st in class in all 8 semesters of the BSIT program.
     \item \textbf{Scholarship:} HEC Ehsaas Scholarship (fully funded for the entire degree).
-    \item \textbf{Core Coursework:} Data Structures \& Algorithms, Linear Algebra, Probability \& Statistics, Database Systems, Operating Systems, Computer Networks, Distributed Systems, Software Engineering.
+    \item \textbf{Core Coursework:} Data Structures \& Algorithms, Discrete Structures, Linear Algebra, Probability \& Statistics, Database Systems, Operating Systems, Computer Network, Information Security, Software Engineering.
     \item \textbf{Academic Focus:} Applied computing, system architecture, database design, and algorithmic problem-solving.
 \end{itemize}
 
@@ -95,33 +95,35 @@ AI Engineer and aspiring researcher with a BSc in Information Technology (CGPA 3
 %----------------------------------------------------------------------------------------
 \section{FEATURED AI \& SOFTWARE PROJECTS}
 
-\noindent \textbf{Cuelara -- LLM Prompt Optimization \& Context Engineering Suite} \hfill \href{https://cuelara.com}{cuelara.com} \\
-\textit{Creator \& Lead Systems Engineer} \hfill \textbf{2025 -- Present}
-\begin{itemize}
-    \item Built a toolkit with a \textbf{Prompt Optimizer}, \textbf{Token Reducer}, \textbf{Context Extractor} and \textbf{Prompt Debugger} to cut context-window overhead and improve response consistency.
-    \item Engineered token-reduction algorithms, formatting rules and context extraction that separates system instructions from input noise.
-    \item Shipped as a web app, browser extension, public API and MCP server, with plan-based rate limiting.
-\end{itemize}
-
-\vspace{6pt}
-
 \noindent \textbf{InvoiceInspect -- Multimodal Invoice Verification \& Error Detection System} \hfill \href{https://invoiceinspect.app}{invoiceinspect.app} \\
 \textit{Creator \& Lead Systems Engineer} \hfill \textbf{2025 -- Present}
 \begin{itemize}
     \item Built a system that finds arithmetic and consistency errors in PDF invoices (totals, tax, duplicate charges, missing fields) and reports each with evidence: expected value, printed value and page.
     \item Designed dual-path extraction (text/OCR with Tesseract plus a vision model), cross-checked field by field; disagreements are marked ``could not verify'' instead of guessed.
     \item Kept verification deterministic: a rules engine decides and the LLM only explains findings, with provider fallback.
+    \item \textit{In development:} a RAG chat on the results page to ask questions about a verified invoice and its findings (not yet released).
     \item Built an evaluation harness and published a \href{https://invoiceinspect.app/research/InvoiceInspect-Research-Report.pdf}{research report} and \href{https://invoiceinspect.app/eval-harness-reports}{eight test reports}. On a fresh set of 30 new-layout invoices (no prior tuning), the rules extractor scored 70.3\% field accuracy and the vision extractor \textbf{97.9\%}; after rules improvements, the rules extractor reached 99.9\% on all 50 invoices of that corpus (tuned on 40) and 100\% on the 10 held out (small sample).
 \end{itemize}
 
 \vspace{6pt}
 
+\noindent \textbf{Cuelara -- LLM Prompt Optimization \& Context Engineering Suite} \hfill \href{https://cuelara.com}{cuelara.com} \\
+\textit{Creator \& Lead Systems Engineer} \hfill \textbf{2025 -- Present}
+\begin{itemize}
+    \item Built a toolkit with a \textbf{Prompt Optimizer}, \textbf{Token Reducer}, \textbf{Context Extractor} and \textbf{Prompt Debugger} to cut context-window overhead and improve response consistency.
+    \item Engineered token-reduction algorithms, formatting rules and context extraction that separates system instructions from input noise.
+    \item Built the \textbf{Document to Prompt} tool using Retrieval-Augmented Generation (RAG): relevant passages are retrieved from an uploaded document and turned into a focused prompt.
+    \item Shipped as a web app, browser extension, public API and MCP server, with plan-based rate limiting.
+\end{itemize}
+
+\vspace{6pt}
+
 \noindent \textbf{ManaJet -- AI-Assisted Project \& Task Management for Small Software Teams} \hfill \textbf{Final Year Project} \\
-\textit{Lead System Developer} \hfill \textbf{2022 -- 2023}
+\textit{Lead System Developer (team of two)} \hfill \textbf{2023}
 \begin{itemize}
     \item Built an AI task planner (OpenAI APIs) that generates task breakdowns, estimates and dependencies, with output constrained by JSON schema and validated before storage.
     \item Built the REST API and relational MySQL schema for project state and task dependencies.
-    \item Supervised by Dr. Sajid Hussain, Professor, Karakoram International University.
+    \item Developed together with one teammate as a two-person final-year project team.
 \end{itemize}
 
 %----------------------------------------------------------------------------------------
@@ -158,8 +160,8 @@ AI Engineer and aspiring researcher with a BSc in Information Technology (CGPA 3
 
 \vspace{6pt}
 
-\noindent \textbf{Greymatter Ventures Pvt} \hfill Gilgit, Pakistan (Part-time) \\
-\textit{Full Stack Web Developer (Team Lead)} \hfill \textbf{2021 -- 2023}
+\noindent \textbf{Greymatter Ventures Pvt} \hfill Gilgit, Pakistan \\
+\textit{Full Stack Web Developer (Team Lead), Part-time} \hfill \textbf{Jan 2021 -- Dec 2023}
 \begin{itemize}
     \item Designed modular backend architectures, relational schemas, and server-side logic to optimize application throughput and API reliability.
     \item Led the web development team, mentoring junior developers and remote interns on code optimization, system design, and deployment workflows.

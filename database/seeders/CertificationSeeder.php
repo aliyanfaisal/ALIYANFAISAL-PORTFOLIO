@@ -14,7 +14,7 @@ class CertificationSeeder extends Seeder
             ['name' => 'PHP', 'issuer' => 'Sololearn / Udemy', 'year' => 2018],
             ['name' => 'E-Commerce', 'issuer' => 'Udemy', 'year' => 2020],
             ['name' => 'PHP Laravel', 'issuer' => 'Udemy', 'year' => 2019],
-            ['name' => 'Custom WordPress Development', 'issuer' => 'GreyMatter Ventures', 'year' => 2019],
+            ['name' => 'Custom WordPress Development', 'issuer' => 'GreyMatter Ventures', 'year' => 2021],
         ];
 
         foreach ($certifications as $i => $certification) {

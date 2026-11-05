@@ -55,7 +55,7 @@ class ExperienceSeeder extends Seeder
                 'description' => 'Custom full-stack web application development with Custom WordPress and the Laravel framework, designing backend architectures and relational schemas. Later led the web development team, mentoring junior developers and remote interns on code optimization, system design and deployment.',
                 'employment_type' => 'Part-time',
                 'start_date' => '2021-01-01',
-                'end_date' => '2023-01-01',
+                'end_date' => '2023-12-31',
                 'current' => false,
             ],
             [
