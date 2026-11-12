@@ -20,7 +20,7 @@
     ];
 
     $steps = [
-        ['Upload', 'Drop in a PDF invoice. No account needed.'],
+        ['Upload', 'Drop in one PDF invoice or several at once. No account needed.'],
         ['Read', 'Two independent readings: the PDF text layer (OCR for scans) and a vision AI reading the page images.'],
         ['Verify', 'Deterministic code recalculates every number. Exact, explainable, never a guess.'],
         ['Review', 'Each check ends as passed, warning, error or could not verify, with the evidence.'],
@@ -81,7 +81,7 @@
 
             <div class="mx-auto mt-6 flex max-w-xl flex-wrap items-center justify-center gap-x-4 gap-y-1 text-xs text-slate-500">
                 <span class="text-indigo-300">Free · No signup required</span>
-                <span>3 checks a day</span><span>Files up to 5 MB</span><span>Up to 5 pages</span>
+                <span>3 checks a day</span><span>Several PDFs at once</span><span>Files up to 5 MB</span><span>Up to 5 pages</span>
             </div>
 
             {{-- screenshot in browser frame --}}
@@ -107,6 +107,7 @@
                     <ul class="mt-6 space-y-3 text-sm">
                         <li class="flex gap-3"><span class="mt-0.5 grid size-5 shrink-0 place-items-center rounded-full bg-emerald-500/15 text-emerald-400">✓</span>One printed mistake gives one finding, not a pile of noise.</li>
                         <li class="flex gap-3"><span class="mt-0.5 grid size-5 shrink-0 place-items-center rounded-full bg-emerald-500/15 text-emerald-400">✓</span>Rules only fail on high-confidence values.</li>
+                        <li class="flex gap-3"><span class="mt-0.5 grid size-5 shrink-0 place-items-center rounded-full bg-emerald-500/15 text-emerald-400">✓</span>Upload several invoices at once: each one is a check, and each review appears as soon as it is done.</li>
                         <li class="flex gap-3"><span class="mt-0.5 grid size-5 shrink-0 place-items-center rounded-full bg-emerald-500/15 text-emerald-400">✓</span>Low-confidence values go to “Please confirm” so you stay in control.</li>
                     </ul>
                 </div>
