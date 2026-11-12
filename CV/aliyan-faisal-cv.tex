@@ -60,10 +60,10 @@ AI Engineer and aspiring researcher with a BSc in Information Technology (CGPA 3
     \item \textbf{Evaluation Methodology:} Detecting and reporting score inflation from tuning on test sets.
     \item \textbf{Efficient \& Small Language Models:} Best quality from small or quantized models on commodity hardware.
     \item \textbf{Retrieval-Augmented Generation:} How parsing, chunking and retrieval affect answer faithfulness.
-    \item \textbf{Prompt Optimization, Token Efficiency \& Tokenization Across Languages:} How much of a prompt can go before quality drops; why the same text costs different tokens in different languages.
-    \item \textbf{Multimodal Document Understanding \& Data-Centric AI:} Combining text and vision readings; data quality effects.
-    \item \textbf{Learned vs.\ Rule-Based Information Extraction:} When a learned model beats rules on unseen layouts, and how to combine them.
-    \item \textbf{Machine Learning for Prompt Evaluation \& Optimization:} Which parts of prompt improvement can be learned, and how to validate the scores.
+    \item \textbf{Prompt Optimization, Token Efficiency \& Tokenization Across Languages:} How much prompt can go before quality drops; why token cost differs by language.
+    \item \textbf{Multimodal Document Understanding \& Data-Centric AI:} Combining text and vision readings.
+    \item \textbf{Learned vs.\ Rule-Based Information Extraction:} When learned models beat rules on unseen layouts.
+    \item \textbf{Machine Learning for Prompt Evaluation \& Optimization:} What can be learned, and how to validate scores.
     \item \textbf{AI for Climate \& Disaster Resilience in Mountain Regions:} Low-cost early warning where data is sparse.
 \end{itemize}
 
@@ -74,10 +74,9 @@ AI Engineer and aspiring researcher with a BSc in Information Technology (CGPA 3
 \textbf{Karakoram International University} \hfill Gilgit, Pakistan \\
 \textit{Bachelor of Science in Information Technology} \hfill \textbf{CGPA: 3.80 / 4.00} (2019 -- 2023; result declared May 2024)
 \begin{itemize}
-    \item \textbf{Class Rank:} Ranked 1st in class in all 8 semesters of the BSIT program.
+    \item \textbf{Class Rank:} Ranked 1st in class in the BSIT program.
     \item \textbf{Scholarship:} HEC Ehsaas Scholarship (fully funded for the entire degree).
     \item \textbf{Core Coursework:} Data Structures \& Algorithms, Discrete Structures, Linear Algebra, Probability \& Statistics, Database Systems, Operating Systems, Computer Network, Information Security, Software Engineering.
-    \item \textbf{Academic Focus:} Applied computing, system architecture, database design, and algorithmic problem-solving.
 \end{itemize}
 
 %----------------------------------------------------------------------------------------
@@ -101,8 +100,8 @@ AI Engineer and aspiring researcher with a BSc in Information Technology (CGPA 3
     \item Built a system that finds arithmetic and consistency errors in PDF invoices (totals, tax, duplicate charges, missing fields) and reports each with evidence: expected value, printed value and page.
     \item Designed dual-path extraction (text/OCR with Tesseract plus a vision model), cross-checked field by field; disagreements are marked ``could not verify'' instead of guessed.
     \item Kept verification deterministic: a rules engine decides and the LLM only explains findings, with provider fallback.
-    \item \textit{In development:} a RAG chat on the results page to ask questions about a verified invoice and its findings (not yet released).
-    \item Built an evaluation harness and published a \href{https://invoiceinspect.app/research/InvoiceInspect-Research-Report.pdf}{research report} and \href{https://invoiceinspect.app/eval-harness-reports}{eight test reports}. On a fresh set of 30 new-layout invoices (no prior tuning), the rules extractor scored 70.3\% field accuracy and the vision extractor \textbf{97.9\%}; after rules improvements, the rules extractor reached 99.9\% on all 50 invoices of that corpus (tuned on 40) and 100\% on the 10 held out (small sample).
+    \item \textit{In development:} RAG chat on the results page to ask questions about a verified invoice and its findings.
+    \item Built an evaluation harness and published a \href{https://invoiceinspect.app/research/InvoiceInspect-Research-Report.pdf}{research report} and \href{https://invoiceinspect.app/eval-harness-reports}{eight test reports}. On 30 unseen invoice layouts, the rules extractor scored 70.3\% field accuracy and the vision extractor \textbf{97.9\%}. After tuning, rules reached 100\% on 10 held-out invoices (small sample); I now report tuned and untuned scores separately after tuning inflated an earlier 99.9\%.
 \end{itemize}
 
 \vspace{6pt}
@@ -122,8 +121,7 @@ AI Engineer and aspiring researcher with a BSc in Information Technology (CGPA 3
 \textit{Lead System Developer (team of two)} \hfill \textbf{2023}
 \begin{itemize}
     \item Built an AI task planner (OpenAI APIs) that generates task breakdowns, estimates and dependencies, with output constrained by JSON schema and validated before storage.
-    \item Built the REST API and relational MySQL schema for project state and task dependencies.
-    \item Developed together with one teammate as a two-person final-year project team.
+    \item Built the REST API and MySQL schema for project state and task dependencies, together with one teammate.
 \end{itemize}
 
 %----------------------------------------------------------------------------------------
@@ -134,8 +132,8 @@ AI Engineer and aspiring researcher with a BSc in Information Technology (CGPA 3
 \noindent \textbf{Notemind -- Claude Code Plugin for Notes and Reminders} \hfill \href{https://github.com/aliyanfaisal/notemind}{github.com/aliyanfaisal/notemind} \\
 \textit{Author} \hfill \textbf{MIT License}
 \begin{itemize}
-    \item Built a free plugin to add notes in plain words from a Claude Code chat (Claude resolves the date; notes live in local SQLite), with a session-start hook (about 85 ms) reporting overdue notes.
-    \item Designed with least privilege (only the user can add or close notes, never the model); standard-library Python, no network calls.
+    \item Free plugin to add notes in plain words from a Claude Code chat (local SQLite), with a session-start hook (about 85 ms) reporting overdue notes.
+    \item Least-privilege design (only the user can add or close notes, never the model); no network calls.
 \end{itemize}
 
 %----------------------------------------------------------------------------------------
@@ -146,7 +144,7 @@ AI Engineer and aspiring researcher with a BSc in Information Technology (CGPA 3
 \noindent \textbf{UrbanSofts -- Remote Software Development Team} \hfill Remote \\
 \textit{Founder \& CEO} \hfill \textbf{2023 -- Present}
 \begin{itemize}
-    \item Founded and lead a remote team of 4--10 developers that delivers client software projects together: I take on projects and bring in the right team members for each, such as app developers, and we build them collaboratively. The team has served 50+ clients.
+    \item Founded and lead a remote team of 4--10 developers: I take on client projects and bring in the right members for each, and we build them together. The team has served 50+ clients.
 \end{itemize}
 
 \vspace{6pt}
@@ -186,14 +184,14 @@ AI Engineer and aspiring researcher with a BSc in Information Technology (CGPA 3
 %----------------------------------------------------------------------------------------
 \section{REFERENCES}
 \noindent \textbf{Dr. Aftab Ahmed Khan} \hfill \href{mailto:aftab.ahmed@kiu.edu.pk}{aftab.ahmed@kiu.edu.pk} \\
-Associate Professor, Department of Computer Sciences, Karakoram International University, Gilgit-Baltistan, Pakistan (Ph.D., TU Munich)
+Associate Professor, Department of Computer Sciences, Karakoram International University, Gilgit-Baltistan (Ph.D., TU Munich)
 
 \vspace{4pt}
 \noindent \textbf{Dr. Sajid Hussain} \hfill \href{mailto:sajid.hussain@kiu.edu.pk}{sajid.hussain@kiu.edu.pk} \\
-Professor, Department of Computer Sciences, Karakoram International University, Gilgit-Baltistan, Pakistan
+Professor, Department of Computer Sciences, Karakoram International University, Gilgit-Baltistan
 
 \vspace{4pt}
 \noindent \textbf{Dr. Sabit Rahim} \hfill \href{mailto:sabit.rahim@kiu.edu.pk}{sabit.rahim@kiu.edu.pk} \\
-Professor, Department of Computer Sciences, Karakoram International University, Gilgit-Baltistan, Pakistan
+Professor, Department of Computer Sciences, Karakoram International University, Gilgit-Baltistan
 
 \end{document}
