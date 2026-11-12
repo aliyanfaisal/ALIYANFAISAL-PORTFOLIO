@@ -135,6 +135,7 @@ return [
             'what' => [
                 ['Automated invoice checks', 'Line totals, subtotal, tax, grand total, required details and date logic are recalculated and compared with what is printed.'],
                 ['Evidence for every finding', 'Each result is passed, warning, error or "could not verify", with the expected value, the printed value, the difference and the page it came from.'],
+                ['Several invoices at once', 'A user can upload many PDFs in one go. Each file is one check, counted against the checks left on the plan, and each review appears as soon as that file is done. Guest files are processed in memory and not stored.'],
                 ['Plain-language explanation', 'A language model explains each finding and suggests a next step. It is always labelled as AI and cannot hide an error on its own.'],
             ],
             'approach' => [
