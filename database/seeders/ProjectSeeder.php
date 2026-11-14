@@ -152,6 +152,13 @@ class ProjectSeeder extends Seeder
                 'external_url' => 'https://bellarui.com/',
                 'featured' => false,
             ],
+            [
+                'title' => 'FlexFrame Eyewear',
+                'description' => 'Landing page for a tool-free, snap-on eyeglass frame repair product, with a pre-launch reservation flow powered by Stripe to gauge consumer demand.',
+                'categories' => ['Landing Page', 'WordPress'],
+                'external_url' => 'https://flexframeeyewear.com/',
+                'featured' => false,
+            ],
         ];
 
         foreach ($projects as $i => $project) {
