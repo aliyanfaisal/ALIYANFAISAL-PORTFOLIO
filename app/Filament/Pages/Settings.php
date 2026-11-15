@@ -69,6 +69,14 @@ class Settings extends Page
                             ->helperText('When on, posts submitted via POST /api/blog-posts go live immediately (or at their given "published_at"). When off, they are saved as drafts for you to review and publish manually from the Posts screen.')
                             ->default(true),
                     ]),
+                Section::make('Cuelara')
+                    ->description('Credentials live in the environment (CUELARA_API_URL, CUELARA_API_TOKEN).')
+                    ->schema([
+                        Toggle::make('cuelara_enabled')
+                            ->label('Automatically push published posts to Cuelara')
+                            ->helperText('When off, posts are not sent automatically. The manual "Send to Cuelara" button on a post still works.')
+                            ->default(true),
+                    ]),
                 Section::make('Telegram channel')
                     ->description('New posts are announced in your channel automatically. The bot token lives in the environment (TELEGRAM_BOT_TOKEN); the bot must be an admin of the channel.')
                     ->schema([

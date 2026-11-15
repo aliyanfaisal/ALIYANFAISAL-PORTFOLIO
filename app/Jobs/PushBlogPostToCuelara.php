@@ -3,6 +3,7 @@
 namespace App\Jobs;
 
 use App\Models\BlogPost;
+use App\Models\Setting;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Queue\Queueable;
 use Illuminate\Support\Facades\Http;
@@ -29,6 +30,10 @@ class PushBlogPostToCuelara implements ShouldQueue
 
     public function handle(): void
     {
+        if (! $this->force && ! Setting::current()->cuelara_enabled) {
+            return;
+        }
+
         $url = config('services.cuelara.url');
         $token = config('services.cuelara.token');
 
