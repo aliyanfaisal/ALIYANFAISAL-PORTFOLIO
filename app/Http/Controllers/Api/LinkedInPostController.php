@@ -8,6 +8,7 @@ use App\Http\Controllers\Controller;
 use App\Services\LinkedInService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class LinkedInPostController extends Controller
 {
@@ -23,11 +24,19 @@ class LinkedInPostController extends Controller
         } catch (LinkedInNotConnectedException $e) {
             return response()->json(['message' => $e->getMessage()], 400);
         } catch (LinkedInApiException $e) {
+            Log::error('LinkedIn post failed', [
+                'message' => $e->getMessage(),
+                'linkedin_status' => $e->status,
+                'linkedin_response' => $e->responseBody,
+                'image_url' => $data['image_url'],
+            ]);
+
+            // 500 rather than 502 so the JSON body isn't mistaken for (or masked as) a gateway error.
             return response()->json([
                 'message' => $e->getMessage(),
                 'linkedin_status' => $e->status,
                 'linkedin_response' => $e->responseBody,
-            ], 502);
+            ], 500);
         }
 
         return response()->json([

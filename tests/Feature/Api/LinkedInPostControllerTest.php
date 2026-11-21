@@ -87,7 +87,7 @@ class LinkedInPostControllerTest extends TestCase
         ]);
 
         $this->postJson('/api/linkedin-post', $this->postPayload(), ['Authorization' => 'Bearer test-token'])
-            ->assertStatus(502);
+            ->assertStatus(500);
 
         Http::assertNotSent(fn (Request $request) => $request->url() === 'https://api.linkedin.com/rest/posts');
     }
@@ -99,7 +99,7 @@ class LinkedInPostControllerTest extends TestCase
         ]);
 
         $this->postJson('/api/linkedin-post', $this->postPayload(), ['Authorization' => 'Bearer test-token'])
-            ->assertStatus(502);
+            ->assertStatus(500);
     }
 
     public function test_it_tolerates_a_post_that_cannot_be_read_back(): void

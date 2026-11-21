@@ -67,12 +67,33 @@ class LinkedInService
             return $token->access_token;
         }
 
+        if (blank($token->refresh_token)) {
+            Log::error('LinkedIn access token expired and no refresh token is stored; re-run the OAuth connect flow.', [
+                'expires_at' => $token->expires_at->toIso8601String(),
+            ]);
+
+            throw new LinkedInApiException(
+                'LinkedIn access token expired and no refresh token is stored. Reconnect via /auth/linkedin.',
+                401,
+                'missing_refresh_token',
+            );
+        }
+
         $response = Http::asForm()->post('https://www.linkedin.com/oauth/v2/accessToken', [
             'grant_type' => 'refresh_token',
             'refresh_token' => $token->refresh_token,
             'client_id' => config('services.linkedin.client_id'),
             'client_secret' => config('services.linkedin.client_secret'),
         ]);
+
+        if ($response->failed()) {
+            Log::error('LinkedIn token refresh failed', [
+                'status' => $response->status(),
+                'response' => $response->json() ?? $response->body(),
+                'expires_at' => $token->expires_at->toIso8601String(),
+                'token_updated_at' => $token->updated_at?->toIso8601String(),
+            ]);
+        }
 
         $this->assertSuccessful($response, 'Failed to refresh LinkedIn access token.');
 
